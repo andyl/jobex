@@ -7,33 +7,25 @@ defmodule Crow.MixProject do
       version: "0.0.1",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
       deps: deps()
     ]
   end
 
-  # Configuration for the OTP application.
-  #
-  # Type `mix help compile.app` for more information.
-  # def application do
-  #   [
-  #     mod: {Crow.Application, []},
-  #     extra_applications: [:logger, :runtime_tools, :timex]
-  #   ]
-  # end
-
-  # Specifies which paths to compile per environment.
-  # defp elixirc_paths(:test), do: ["lib", "test/support"]
-  # defp elixirc_paths(_), do: ["lib"]
-
-  # Specifies your project dependencies.
-  #
-  # Type `mix help deps` for examples and options.
   defp deps do
     [
       # ----- deployment
       {:distillery, "~> 2.1", warn_missing: false},
       # ----- development and test
       {:mix_test_watch, "~> 0.8", only: :dev}
+    ]
+  end
+
+  defp aliases do
+    [
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

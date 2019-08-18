@@ -5,12 +5,9 @@ defmodule CrowData.Application do
 
 
   def start(_type, _args) do
-    IO.inspect "***************************************************"
-    IO.inspect Application.get_env(:crow_data, Oban)
-    IO.inspect "***************************************************"
-
     children = [
       CrowData.Repo,
+      CrowData.Scheduler,
       {Oban, Application.get_env(:crow_data, Oban)}
     ]
 
