@@ -17,9 +17,6 @@ defmodule CrowWeb.MixProject do
     ]
   end
 
-  # Configuration for the OTP application.
-  #
-  # Type `mix help compile.app` for more information.
   def application do
     [
       mod: {CrowWeb.Application, []},
@@ -27,13 +24,9 @@ defmodule CrowWeb.MixProject do
     ]
   end
 
-  # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
-  # Specifies your project dependencies.
-  #
-  # Type `mix help deps` for examples and options.
   defp deps do
     [
       # ----- phoenix backend
@@ -52,7 +45,9 @@ defmodule CrowWeb.MixProject do
       {:observer_cli, "~> 1.5"},
       # ----- development and test
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:mix_test_watch, "~> 0.8", only: :dev}
+      {:mix_test_watch, "~> 0.8", only: :dev},
+      # ----- data
+      {:crow_data, in_umbrella: true}
     ]
   end
 end
