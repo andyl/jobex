@@ -1,0 +1,14 @@
+#/usr/bin/env bash
+
+echo '>>> package assets'
+npm run deploy --prefix assets
+
+echo '>>> digest assets'
+MIX_ENV=prod mix phx.digest
+
+echo '>>> create release'
+MIX_ENV=prod mix distillery.release 
+
+echo '>>> done'
+echo "Build the docker image with 'script/dk_build'"
+
