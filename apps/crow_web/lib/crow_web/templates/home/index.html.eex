@@ -1,0 +1,17 @@
+<div class="jumbotron text-center" style='padding: 1em;'>
+  <h1><%= gettext "Welcome to %{name}!", name: "CrowWeb" %></h1>
+  <p>Your Generated Phoenix App</p>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <h2>About</h2>
+    Text goes here<br/>
+    List of links
+  </div>
+
+  <div class="col-md-6">
+    <h2>Alt Header</h2>
+    enter your text
+  </div>
+</div>
