@@ -23,6 +23,10 @@ defmodule CrowJob.MixProject do
 
   defp deps do
     [
+      {:porcelain, "~> 2.0"},
+      {:oban,      "~> 0.5"},
+      {:quantum,   "~> 2.3"},
+      {:timex,     "~> 3.0"}
     ]
   end
 end

@@ -4,7 +4,7 @@ Cron-Like Workflow
 
 ## Goals
 
-- sort of like Airflow
+- like Airflow
 - but simpler
 - just for running scheduled bash jobs
 
@@ -19,6 +19,6 @@ Cron-Like Workflow
 ## Umbrella Apps
 
 - crow_data
-- crow_jobs
+- crow_job
 - crow_web
 
