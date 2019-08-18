@@ -2,7 +2,7 @@ defmodule CrowData.Ctx.Result do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias CrowData.Ctx.ObanJob
+  # alias CrowData.Ctx.ObanJob
 
   schema "results" do
     field :stdout, :string
@@ -11,7 +11,7 @@ defmodule CrowData.Ctx.Result do
 
     belongs_to :oban_job, ObanJob
 
-    timestamps()
+    # timestamps()
   end
 
   @doc false

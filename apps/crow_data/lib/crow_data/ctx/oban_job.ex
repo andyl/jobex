@@ -9,10 +9,9 @@ defmodule CrowData.Ctx.ObanJob do
     field :worker, :string
 
     field :args, :map
-    field :errors, :map
+    # field :errors, :list
 
-    field :status, :integer
-    field :attempts, :integer
+    field :attempt, :integer
     field :max_attempts, :integer
 
     field :inserted_at, :utc_datetime
@@ -20,6 +19,6 @@ defmodule CrowData.Ctx.ObanJob do
     field :attempted_at, :utc_datetime
     field :completed_at, :utc_datetime
 
-    has_one :result, Result
+    has_many :results, Result
   end
 end
