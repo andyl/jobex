@@ -12,6 +12,7 @@ defmodule CrowData.Worker.Shell do
       stdout: result.out,
       stderr: result.err,
       status: result.status,
+      attempt: job.attempt,
       oban_job_id: job.id
     }
 

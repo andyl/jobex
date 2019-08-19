@@ -9,7 +9,7 @@ defmodule CrowData.Ctx.ObanJob do
     field :worker, :string
 
     field :args, :map
-    # field :errors, :list
+    field :errors, {:array, :map}
 
     field :attempt, :integer
     field :max_attempts, :integer
