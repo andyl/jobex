@@ -3,11 +3,8 @@ defmodule CrowWeb.HomeController do
 
   def index(conn, _params) do
     conn
-    |> assign(:allcount,  CrowData.Query.all_count())
-    |> assign(:state_qry, CrowData.Query.job_states())
-    |> assign(:queue_qry, CrowData.Query.job_queues())
-    |> assign(:types_qry, CrowData.Query.job_types())
-    |> assign(:job_list,  CrowData.Query.job_all())
+    |> assign(:body_data, CrowData.Query.job_query())
+    |> assign(:side_data, CrowData.Query.side_data())
     |> assign(:uistate,   %{field: nil, value: nil})
     |> render("index.html")
   end

@@ -5,6 +5,15 @@ defmodule CrowData.Query do
   import Ecto.Query
   import Modex.AltMap
 
+  def side_data do
+    %{
+      all_count: all_count(),
+      job_states: job_states(),
+      job_queues: job_queues(),
+      job_types: job_types()
+    }
+  end
+
   def job_states do
     default_states = %{
       "executing" => 0,
@@ -46,9 +55,10 @@ defmodule CrowData.Query do
     |> merge_list()
   end
 
-  def job_query(uistate) do
+  def job_query(uistate \\ %{field: nil, value: nil}) do
     case uistate do
       %{field: nil, value: nil} -> jq_all() 
+      %{field: "all",   value: nil} -> jq_all() 
       %{field: "state", value: state} -> jq_state(state) 
       %{field: "queue", value: queue} -> jq_queue(queue) 
       %{field: "type",  value: type}  -> jq_type(type) 
@@ -73,9 +83,9 @@ defmodule CrowData.Query do
       j in ObanJob, 
       join: r in Result,
       on: j.id == r.oban_job_id,
-      order_by: j.id, 
+      order_by: {:desc, j.id}, 
       select: %{"type" => fragment("args -> 'type'"), "jobid" => j.id, "stdout" => r.stdout},
-      limit: 5
+      limit: 20
     )
   end
 
@@ -88,6 +98,6 @@ defmodule CrowData.Query do
   end
 
   defp jq_type(type) do
-    from(j in jq_all(), where: fragment("args => 'type' = ?", ^type))
+    from(j in jq_all(), where: fragment("args ->> 'type' = ?", ^type))
   end
 end
