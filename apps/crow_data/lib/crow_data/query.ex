@@ -1,6 +1,7 @@
 defmodule CrowData.Query do
   alias CrowData.Repo
-  alias CrowData.Ctx.ObanJob
+  alias CrowData.Ctx.{ObanJob, Result}
+  alias Modex.AltMap
   import Ecto.Query
   import Modex.AltMap
 
@@ -51,15 +52,31 @@ defmodule CrowData.Query do
       %{field: "state", value: state} -> jq_state(state) 
       %{field: "queue", value: queue} -> jq_queue(queue) 
       %{field: "type",  value: type}  -> jq_type(type) 
-    end |> Repo.all()
+    end 
+    |> Repo.all()
   end
 
   def job_all do
-    jq_all() |> Repo.all()
+    jq_all() |> Repo.all() 
+  end
+
+  def all_count do
+    from(
+      j in ObanJob,
+      select: count(j.id)
+    )
+    |> Repo.one()
   end
 
   defp jq_all do
-    from(j in ObanJob, preload: [:results], order_by: j.id, limit: 50)
+    from(
+      j in ObanJob, 
+      join: r in Result,
+      on: j.id == r.oban_job_id,
+      order_by: j.id, 
+      select: %{"type" => fragment("args -> 'type'"), "jobid" => j.id, "stdout" => r.stdout},
+      limit: 5
+    )
   end
 
   defp jq_state(state) do

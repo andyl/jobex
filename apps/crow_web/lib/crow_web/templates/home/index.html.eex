@@ -1,5 +1,7 @@
 <div class="row">
   <div class="col-md-3" style='border-right: 1px solid lightgray;'>
+    <b>All (<%= @allcount %>)</b>
+    <hr/>
     <b>States</b>
     <small>
     <ul class="nav flex-column">
@@ -41,8 +43,14 @@
   </div>
 
   <div class="col-md-9">
-    <b>Executing Jobs (25)</b>
-    <hr/>
-    asdf
+    <table class='table table-sm'>
+      <%= for job <- @job_list do %>
+        <tr>
+          <td> <%= job["type"] %> </td>
+          <td> <%= job["jobid"] %> </td>
+          <td> <%= job["stdout"] %> </td>
+        </tr>
+      <% end %>
+    </table>
   </div>
 </div>
