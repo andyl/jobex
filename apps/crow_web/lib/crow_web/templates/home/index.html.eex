@@ -1,17 +1,39 @@
-<div class="jumbotron text-center" style='padding: 1em;'>
-  <h1><%= gettext "Welcome to %{name}!", name: "CrowWeb" %></h1>
-  <p>Your Generated Phoenix App</p>
-</div>
-
 <div class="row">
-  <div class="col-md-6">
-    <h2>About</h2>
-    Text goes here<br/>
-    List of links
+  <div class="col-md-3">
+    <b>States</b>
+    <ul>
+      <li>
+        asdf
+      </li>
+      <li>
+        qwer
+      </li>
+    </ul>
+    <hr/>
+    <b>Queues</b>
+    <ul>
+      <li>
+        asdf
+      </li>
+      <li>
+        qwer
+      </li>
+    </ul>
+    <hr/>
+    <b>Types</b>
+    <ul>
+      <li>
+        asdf
+      </li>
+      <li>
+        qwer
+      </li>
+    </ul>
   </div>
 
-  <div class="col-md-6">
-    <h2>Alt Header</h2>
-    enter your text
+  <div class="col-md-9">
+    <b>Executing Jobs (25)</b>
+    <hr/>
+    asdf
   </div>
 </div>

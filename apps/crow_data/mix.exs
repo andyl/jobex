@@ -37,6 +37,8 @@ defmodule CrowData.MixProject do
       {:porcelain, "~> 2.0"},
       # ----- job runner
       {:oban,      "~> 0.5"},
+      # ----- utility functions 
+      {:modex,     path: "~/src/modex"},
       # ----- job scheduling
       {:quantum,   "~> 2.3"},
       {:timex,     "~> 3.0"}

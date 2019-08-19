@@ -17,15 +17,8 @@ defmodule CrowData.Worker.Shell do
       oban_job_id: job.id
     }
 
-    key = %Result{}
+    %Result{}
     |> Result.changeset(args)
     |> Repo.insert()
-
-    # IO.inspect "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-    # IO.inspect args
-    # IO.inspect job
-    # IO.inspect result
-    # IO.inspect key
-    # IO.inspect "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
   end
 end

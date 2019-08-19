@@ -1,4 +1,4 @@
-defmodule CrowWeb.TimeLcl do
+defmodule CrowWeb.TimeSec do
   use Phoenix.LiveView
   use Timex
 
@@ -9,7 +9,7 @@ defmodule CrowWeb.TimeLcl do
   end
 
   def mount(_session, socket) do
-    :timer.send_interval(10000, self(), :tick)
+    :timer.send_interval(1000, self(), :tick)
     {:ok, assign(socket, date: ldate())}
   end
 
@@ -19,6 +19,6 @@ defmodule CrowWeb.TimeLcl do
 
   defp ldate do
     Timex.now("US/Pacific")
-    |> Timex.format!("%d %b %H:%M", :strftime)
+    |> Timex.format!("%Y %b %d | %H:%M:%S", :strftime)
   end
 end
