@@ -8,6 +8,7 @@ defmodule CrowData.Worker.Shell do
 
   def perform(args, job) do
     result = Porcelain.shell(args["cmd"])
+
     args = %{
       stdout: result.out,
       stderr: result.err,
@@ -20,11 +21,11 @@ defmodule CrowData.Worker.Shell do
     |> Result.changeset(args)
     |> Repo.insert()
 
-    IO.inspect "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-    IO.inspect args
-    IO.inspect job
-    IO.inspect result
-    IO.inspect key
-    IO.inspect "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    # IO.inspect "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    # IO.inspect args
+    # IO.inspect job
+    # IO.inspect result
+    # IO.inspect key
+    # IO.inspect "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
   end
 end
