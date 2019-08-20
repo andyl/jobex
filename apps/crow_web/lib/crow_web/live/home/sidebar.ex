@@ -44,7 +44,7 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   defp all_for(uistate, side_data) do
     text = "<b>ALL (#{side_data.all_count})</b>"
-    if uistate == %{field: nil, value: nil} do
+    if uistate.value == nil do
         "<span style='color: gray;'>> #{text}</span>"
     else
       """
