@@ -7,9 +7,12 @@
 ## 2019 Aug 26 Mon
 
 - [x] Refresh UI on command exit
+- [x] Show state, type, queue, id, time, duration, last stdout
+- [x] Fix states for sleep queues
 
-- [ ] Show state, type, queue, id, time, duration, last stdout
+## 2019 Aug 27 Tue
 
-- [ ] Move full stdout to modal
+- [ ] Release
+- [ ] Docker Container
+- [ ] Convert from Airflow
 
-- [ ] Fix states for sleep queues
