@@ -28,6 +28,8 @@ config :crow_data, Oban,
 config :crow_data, CrowData.Scheduler,
   jobs: [
     {"* * * * *",    {CrowData.Job, :shell, ["backup", "date"]}},
+    {"* * * * *",    {CrowData.Job, :shell, ["sleep1", "tst_sleep 10"]}},
+    {"* * * * *",    {CrowData.Job, :shell, ["sleep2", "tst_sleep 20"]}},
     {"*/2 * * * *",  {CrowData.Job, :shell, ["test"  , "whoami"]}}
   ]
 

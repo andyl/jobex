@@ -4,7 +4,10 @@ defmodule CrowWeb.Live.Home.Sidebar do
   import Phoenix.HTML
 
   def mount(session, socket) do
-    {:ok, assign(socket, %{uistate: session.uistate, side_data: session.side_data})}
+    :timer.send_interval(5000, self(), :sidebar_tick)
+    CrowWeb.Endpoint.subscribe("job-event")
+    opts = %{refresh: false, uistate: session.uistate, side_data: session.side_data}
+    {:ok, assign(socket, opts)}
   end
 
   def render(assigns) do
@@ -16,15 +19,6 @@ defmodule CrowWeb.Live.Home.Sidebar do
     <ul class="nav flex-column">
       <%= for {key, val} <- @side_data.job_states do %>
         <%= raw link_for(@uistate, "state", key, "#{key} (#{val})") %>
-      <% end %>
-    </ul>
-    </small>
-    <hr/>
-    <b>Queues</b>
-    <small>
-    <ul class="nav flex-column">
-      <%= for {key, val} <- @side_data.job_queues do %>
-        <%= raw link_for(@uistate, "queue", key, "#{key} (#{val})") %>
       <% end %>
     </ul>
     </small>
@@ -44,8 +38,9 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   defp all_for(uistate, side_data) do
     text = "<b>ALL (#{side_data.all_count})</b>"
+
     if uistate.value == nil do
-        "<span style='color: gray;'>> #{text}</span>"
+      "<span style='color: gray;'>> #{text}</span>"
     else
       """
       <a href="#" phx-click="all">
@@ -56,19 +51,20 @@ defmodule CrowWeb.Live.Home.Sidebar do
   end
 
   defp link_for(uistate, field, value, text) do
-    link = if uistate == %{field: field, value: value} do
-      """
-      <a href="#" class="nav-link disabled">
-        > #{text}
-      </a>
-      """
-    else
-      """
-      <a href="#" phx-click="#{field}" phx-value="#{value}" class="nav-link">
-        #{text}
-      </a>
-      """
-    end
+    link =
+      if uistate == %{field: field, value: value} do
+        """
+        <a href="#" class="nav-link disabled">
+          > #{text}
+        </a>
+        """
+      else
+        """
+        <a href="#" phx-click="#{field}" phx-value="#{value}" class="nav-link">
+          #{text}
+        </a>
+        """
+      end
 
     """
     <li class="nav-item">
@@ -80,7 +76,8 @@ defmodule CrowWeb.Live.Home.Sidebar do
   # ----- event handlers -----
 
   def handle_event(label, payload, socket) do
-    pload = if label == "all", do: nil, else: payload 
+    pload = if label == "all", do: nil, else: payload
+
     %{field: label, value: pload}
     |> gen_handle(socket)
   end
@@ -90,7 +87,30 @@ defmodule CrowWeb.Live.Home.Sidebar do
       uistate: uistate,
       side_data: CrowData.Query.side_data()
     }
+
     CrowWeb.Endpoint.broadcast_from(self(), "uistate", "side-click", %{uistate: uistate})
     {:noreply, assign(socket, opts)}
+  end
+
+  # ----- pub-sub handlers -----
+
+  def handle_info(:sidebar_tick, socket) do
+    # Oban.drain_queue(:command)
+    opts =
+      if socket.assigns.refresh do
+        CrowWeb.Endpoint.broadcast_from(self(), "job-refresh", "sidebar-tick", %{})
+        %{
+          refresh: false,
+          side_data: CrowData.Query.side_data()
+        }
+      else
+        %{}
+      end
+
+    {:noreply, assign(socket, opts)}
+  end
+
+  def handle_info(%{topic: "job-event"}, socket) do
+    {:noreply, assign(socket, %{refresh: true})}
   end
 end

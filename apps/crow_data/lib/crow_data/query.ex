@@ -5,6 +5,18 @@ defmodule CrowData.Query do
   import Ecto.Query
   import Modex.AltMap
 
+  # ----- SIDEBAR ALL -----
+
+  def all_count do
+    from(
+      j in ObanJob,
+      select: count(j.id)
+    )
+    |> Repo.one()
+  end
+
+  # ----- SIDEBAR DATA -----
+
   def side_data do
     %{
       all_count: all_count(),
@@ -14,7 +26,7 @@ defmodule CrowData.Query do
     }
   end
 
-  def job_states do
+  defp job_states do
     default_states = %{
       "executing" => 0,
       "available" => 0,
@@ -35,7 +47,7 @@ defmodule CrowData.Query do
     merge_list(default_states, query_data)
   end
 
-  def job_queues do
+  defp job_queues do
     from(
       j in ObanJob,
       group_by: j.queue,
@@ -45,7 +57,7 @@ defmodule CrowData.Query do
     |> merge_list()
   end
 
-  def job_types do
+  defp job_types do
     from(
       j in ObanJob,
       group_by: fragment("args -> 'type'"),
@@ -55,37 +67,38 @@ defmodule CrowData.Query do
     |> merge_list()
   end
 
+  # ----- BODY DATA -----
+
   def job_query(uistate \\ %{field: nil, value: nil}) do
+    fields = [:id, :args, :state, :attempted_at, :completed_at, :results]
     case uistate do
-      %{field: nil, value: nil} -> jq_all() 
-      %{field: "all",   value: nil} -> jq_all() 
+      %{field: nil, value: nil}       -> jq_all() 
+      %{field: "all",   value: nil}   -> jq_all() 
       %{field: "state", value: state} -> jq_state(state) 
       %{field: "queue", value: queue} -> jq_queue(queue) 
       %{field: "type",  value: type}  -> jq_type(type) 
     end 
     |> Repo.all()
+    |> AltMap.retake(fields)
   end
 
-  def job_all do
-    jq_all() |> Repo.all() 
-  end
-
-  def all_count do
-    from(
-      j in ObanJob,
-      select: count(j.id)
+  def jq_all do
+    rq = from(
+      r in Result,
+      order_by: r.attempt,
+      select: %{
+        attempt: r.attempt,
+        status:  r.status,
+        stdout:  r.stdout,
+        stderr:  r.stderr
+      }
     )
-    |> Repo.one()
-  end
 
-  defp jq_all do
     from(
       j in ObanJob, 
-      join: r in Result,
-      on: j.id == r.oban_job_id,
       order_by: {:desc, j.id}, 
-      select: %{"type" => fragment("args -> 'type'"), "jobid" => j.id, "stdout" => r.stdout},
-      limit: 20
+      limit: 20,
+      preload: [results: ^rq]
     )
   end
 

@@ -4,6 +4,12 @@
 
 - [x] Initial Setup
 
-## TBD
+## 2019 Aug 26 Mon
 
-- [ ] TBD
+- [x] Refresh UI on command exit
+
+- [ ] Show state, type, queue, id, time, duration, last stdout
+
+- [ ] Move full stdout to modal
+
+- [ ] Fix states for sleep queues

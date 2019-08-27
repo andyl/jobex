@@ -14,7 +14,7 @@ defmodule CrowData.Ctx.ObanJob do
     field :attempt, :integer
     field :max_attempts, :integer
 
-    field :inserted_at, :utc_datetime
+    field :inserted_at,  :utc_datetime
     field :scheduled_at, :utc_datetime
     field :attempted_at, :utc_datetime
     field :completed_at, :utc_datetime
