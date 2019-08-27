@@ -1,7 +1,7 @@
 use Mix.Config
 
 config :crow_web, CrowWeb.Endpoint,
-  http: [port: 4030],
+  http: [port: 4070],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,

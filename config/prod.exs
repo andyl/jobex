@@ -10,7 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :crow_web, CrowWeb.Endpoint,
-  url: [host: "example.com", port: 5030],
+  url: [host: "example.com", port: 5070],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # ## SSL Support
