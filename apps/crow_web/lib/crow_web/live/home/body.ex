@@ -83,8 +83,8 @@ defmodule CrowWeb.Live.Home.Body do
 
   defp hdr_for(uistate) do
     case uistate do
-      %{field: nil, value: nil} -> "LATEST JOBS"
-      %{field: "all", value: ___} -> "LATEST JOBS"
+      %{field: nil, value: nil} -> "ALL JOBS"
+      %{field: "all", value: ___} -> "ALL JOBS"
       %{field: fld, value: val} -> "#{fld} / #{val}"
     end
   end

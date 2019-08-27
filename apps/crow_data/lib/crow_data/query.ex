@@ -67,6 +67,21 @@ defmodule CrowData.Query do
     |> merge_list()
   end
 
+  # ----- ALT ------
+  
+  def zall do
+    fields = [:id, :args, :state, :attempted_at, :completed_at, results: [:attempt, :status, :stdout, :stderr]]
+    from(
+      j in ObanJob,
+      order_by: {:desc, j.id},
+      join: r in Result,
+      on: j.id == r.oban_job_id,
+      preload: :results,
+      select: map(j, ^fields),
+      limit: 5
+    )
+  end
+  
   # ----- BODY DATA -----
 
   def job_query(uistate \\ %{field: nil, value: nil}) do
@@ -82,7 +97,7 @@ defmodule CrowData.Query do
     |> AltMap.retake(fields)
   end
 
-  def jq_all do
+  defp jq_all do
     rq = from(
       r in Result,
       order_by: r.attempt,
