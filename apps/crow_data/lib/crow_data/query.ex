@@ -67,25 +67,9 @@ defmodule CrowData.Query do
     |> merge_list()
   end
 
-  # ----- ALT ------
-  
-  def zall do
-    fields = [:id, :args, :state, :attempted_at, :completed_at, results: [:attempt, :status, :stdout, :stderr]]
-    from(
-      j in ObanJob,
-      order_by: {:desc, j.id},
-      join: r in Result,
-      on: j.id == r.oban_job_id,
-      preload: :results,
-      select: map(j, ^fields),
-      limit: 5
-    )
-  end
-  
   # ----- BODY DATA -----
 
   def job_query(uistate \\ %{field: nil, value: nil}) do
-    fields = [:id, :args, :state, :attempted_at, :completed_at, :results]
     case uistate do
       %{field: nil, value: nil}       -> jq_all() 
       %{field: "all",   value: nil}   -> jq_all() 
@@ -94,26 +78,18 @@ defmodule CrowData.Query do
       %{field: "type",  value: type}  -> jq_type(type) 
     end 
     |> Repo.all()
-    |> AltMap.retake(fields)
   end
 
   defp jq_all do
-    rq = from(
-      r in Result,
-      order_by: r.attempt,
-      select: %{
-        attempt: r.attempt,
-        status:  r.status,
-        stdout:  r.stdout,
-        stderr:  r.stderr
-      }
-    )
+    rquery = from(r in Result, order_by: r.attempt)
+    fields = [:id, :args, :state, :attempted_at, :completed_at, results: [:attempt, :stdout, :stderr, :status]]
 
     from(
       j in ObanJob, 
       order_by: {:desc, j.id}, 
       limit: 20,
-      preload: [results: ^rq]
+      select: map(j, ^fields),
+      preload: [results: ^rquery]
     )
   end
 
