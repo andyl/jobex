@@ -3,6 +3,9 @@
 ## 2019 Aug 17 Sat
 
 - [x] Initial Setup
+- [x] WebUI
+- [x] Running Jobs
+- [x] Saving Job Status to Postgres Database
 
 ## 2019 Aug 26 Mon
 
@@ -12,7 +15,21 @@
 
 ## 2019 Aug 27 Tue
 
-- [ ] Release
-- [ ] Docker Container
-- [ ] Convert from Airflow
+- [x] Create a release
 
+- [ ] Create production runtime configuration
+
+- [ ] Docker Container
+- [ ] Docker Compose File
+
+- [ ] Migrate from Airflow
+
+## TBD
+
+- [ ] Move full stdout to modal
+
+- [ ] Email Notification
+
+- [ ] Grafana / Influx Integration
+
+- [ ] Live streaming of stdout
