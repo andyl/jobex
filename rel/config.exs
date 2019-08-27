@@ -1,21 +1,20 @@
-# Import all plugins from `rel/plugins`
-# They can then be used by adding `plugin MyPlugin` to
-# either an environment, or release definition, where
-# `MyPlugin` is the name of the plugin module.
+# Import plugins from `rel/plugins`.  
+# Use by adding `plugin MyPlugin` to an
+# environment or release.
+#
 ~w(rel plugins *.exs)
 |> Path.join()
 |> Path.wildcard()
 |> Enum.map(&Code.eval_file(&1))
 
 use Distillery.Releases.Config,
-    # This sets the default release built by `mix distillery.release`
+    # default release built by `mix distillery.release`
     default_release: :default,
-    # This sets the default environment used by `mix distillery.release`
+    # default environment used by `mix distillery.release`
     default_environment: Mix.env()
 
 # For a full list of config options for both releases
 # and environments, visit https://hexdocs.pm/distillery/config/distillery.html
-
 
 # You may define one or more environments in this file,
 # an environment's settings will override those of a release
