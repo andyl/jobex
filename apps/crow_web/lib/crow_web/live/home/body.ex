@@ -14,7 +14,11 @@ defmodule CrowWeb.Live.Home.Body do
     <table class='table table-sm'>
       <%= for job <- @body_data do %>
         <tr>
-          <td> <%= job.id %> </td>
+          <td> 
+          <a href="/jobs/<%= job.id %>" target="_blank">
+          <%= job.id %> 
+          </a>
+          </td>
           <td> <%= job.state %> </td>
           <td> <%= job.queue %> </td>
           <td> <%= job.args["type"] %> </td>

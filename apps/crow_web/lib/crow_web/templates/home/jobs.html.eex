@@ -1,0 +1,22 @@
+<h3>JOB <%= @job.id %></h3>
+
+<div class="row">
+  <div class="col-md-4">
+  <table class="table table-bordered table-sm">
+    <tr>
+      <td>Queue</td><td><%= @job.queue %></td>
+    </tr>
+  </table>
+  </div>
+  <div class="col-md-8">
+  <table class="table table-bordered table-sm">
+    <%= for r <- @job.results do %>
+    <tr>
+      <td>
+        <%= r.stdout |> String.replace("\n", "<br>") |> raw %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+  </div>
+</div>

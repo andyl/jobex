@@ -27,8 +27,9 @@
 - [x] Only prod in releases
 - [x] Working distillery release
 - [x] Fix favicon bookmark
+- [x] Load schedule from yml files (dev_schedule.csv, prod_schedule.csv)
 
-- [ ] Load schedule from yml files (dev_schedule.csv, prod_schedule.csv)
+- [ ] Add /jobs/:id
 
 - [ ] Migrate from Airflow
 
@@ -38,7 +39,6 @@
 - [ ] Setup Script: DB migrate
 - [ ] Setup Script: Install Systemd Service file
 
-- [ ] Move full stdout to modal
 - [ ] Email Notification
 - [ ] Grafana / Influx Integration
 - [ ] Live streaming of stdout

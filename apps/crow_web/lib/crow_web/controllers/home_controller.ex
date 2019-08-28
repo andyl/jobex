@@ -15,8 +15,10 @@ defmodule CrowWeb.HomeController do
     |> render("admin.html")
   end
 
-  def logs(conn, _params) do
-    render(conn, "logs.html")
+  def jobs(conn, params) do
+    conn
+    |> assign(:job, IO.inspect(CrowData.Query.job(params["id"])))
+    |> render("jobs.html")
   end
 
   def stats(conn, _params) do

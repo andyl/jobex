@@ -65,6 +65,17 @@ defmodule CrowData.Query do
     |> merge_list()
   end
 
+  # ----- JOB -----
+
+  def job(id) do
+    from(
+      j in ObanJob,
+      where: j.id == ^id,
+      preload: [:results]
+    )
+    |> Repo.one()
+  end
+
   # ----- BODY DATA -----
 
   def job_query(uistate \\ %{field: nil, value: nil}) do
