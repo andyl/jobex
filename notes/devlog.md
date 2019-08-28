@@ -28,17 +28,18 @@
 - [x] Working distillery release
 - [x] Fix favicon bookmark
 - [x] Load schedule from yml files (dev_schedule.csv, prod_schedule.csv)
-
-- [ ] Add /jobs/:id
-
-- [ ] Migrate from Airflow
+- [x] Add /jobs/:id
+- [x] Grafana / Influx Integration
+- [x] Migrate from Airflow
 
 ## TBD
 
-- [ ] Setup Script: DB create
-- [ ] Setup Script: DB migrate
+- [ ] Cleanup Jobs Page
+
 - [ ] Setup Script: Install Systemd Service file
 
+- [ ] Setup Script: DB create
+- [ ] Setup Script: DB migrate
+
 - [ ] Email Notification
-- [ ] Grafana / Influx Integration
 - [ ] Live streaming of stdout
