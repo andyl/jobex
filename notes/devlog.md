@@ -25,10 +25,12 @@
 - [x] Setup serial and parallel queues
 - [x] Load jobs from CSV-like lists
 - [x] Only prod in releases
+- [x] Working distillery release
 
-- [ ] Setup Script: Install Systemd Service file
 - [ ] Setup Script: DB create
 - [ ] Setup Script: DB migrate
+
+- [ ] Setup Script: Install Systemd Service file
 
 - [ ] Load schedule from yml files (dev_schedule.csv, prod_schedule.csv)
 

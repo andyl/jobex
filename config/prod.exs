@@ -11,13 +11,16 @@ use Mix.Config
 # before starting your production server.
 
 config :crow_web, CrowWeb.Endpoint,
-  url: [host: "CROW", port: 5070],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  url: [host: "localhost", port: 5070],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  check_origin: false,
   server: true,
-  root: ".",
+  root: "."
+
+config :logger, level: :info
 
 config :crow_web, CrowWeb.Endpoint,
-  http: [:inet6, port: String.to_integer(System.get_env("PORT") || "5030")],
+  http: [:inet6, port: String.to_integer(System.get_env("PORT") || "5070")],
   secret_key_base: "secretkey"
 
 config :crow_data, CrowData.Repo,
