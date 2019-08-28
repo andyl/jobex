@@ -5,7 +5,7 @@ Cron-like Workflow
 ## About
 
 - Runs jobs in a cron-like fashion
-- Saves statistics - execution time, return codes, stdout, stderr
+- Job statistics: execution time, return codes, stdout, stderr
 - Simple
 
 ## Requirements
@@ -16,21 +16,24 @@ Cron-like Workflow
 
 ## Installing
 
-- Download and untar the release file
-- Run `sudo bin/crow/setup.sh` to 
-- Start the process `sudo systemd start crow`
+- Clone the repo
+- `MIX_ENV=prod mix do deps.get, ecto.create, ecto.migrate, distillery.release`
+- Start the release
 - Browse to `locahost:5070`
 
-## Job Definitions
+## Job Schedules
 
-Job definitions are stored in a csv file, in a table like so:
+Job schedules are stored in csv files:
 
-| Schedule  | Queue    | Type | Command            | Notes              |
-|-----------|----------|------|--------------------|--------------------|
-| * * * * * | serial   | test | whoami             | just run 'whoami'  |
-| * * * * * | parallel | test | echo "hello world" | echo "hello world" |
+- apps/crow_data/priv/dev_schedule.csv
+- apps/crow_data/priv/prod_schedule.csv
 
-Here's what the columns contain:
+CSV files can be edited to run your own commands:
+
+| Schedule  | Queue    | Type | Command            |
+|-----------|----------|------|--------------------|
+| * * * * * | serial   | test | whoami             |
+| * * * * * | parallel | test | echo "hello world" |
 
 _Schedule_
 
@@ -53,13 +56,4 @@ _Command_
 - any command you like
 - commands are run with 'user' permission
 - pipes and redirects not allowed
-
-_Notes_
-
-A short descriptive note
-
-
-
-
-
 
