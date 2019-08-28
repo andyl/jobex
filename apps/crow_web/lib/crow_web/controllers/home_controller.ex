@@ -17,7 +17,7 @@ defmodule CrowWeb.HomeController do
 
   def jobs(conn, params) do
     conn
-    |> assign(:job, IO.inspect(CrowData.Query.job(params["id"])))
+    |> assign(:job, CrowData.Query.job(params["id"]))
     |> render("jobs.html")
   end
 
