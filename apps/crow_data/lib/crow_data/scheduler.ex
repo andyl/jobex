@@ -2,10 +2,19 @@ defmodule CrowData.Scheduler do
   use Quantum.Scheduler, otp_app: :crow_data
 
   alias NimbleCSV.RFC4180, as: CSV
-# CSV.parse_string "name,age\njohn,27"
 
-  defp load_csv(path) do
-    path
+  def priv_dir do
+    if Mix.env() == :dev do
+      "priv"
+    else
+      :code.priv_dir(:crow_data)
+      |> String.replace("crow_data", "crow")
+    end
+  end
+
+  def load_csv(path) do
+    priv_dir()
+    |> Path.join(path)
     |> File.read!()
     |> String.replace(~r/ +/, " ")
     |> String.replace(", ", ",")
@@ -13,11 +22,11 @@ defmodule CrowData.Scheduler do
   end
   
   defp dev_jobs do
-    "priv/dev_schedule.csv" |> load_csv()
+    "dev_schedule.csv" |> load_csv()
   end
 
   defp prod_jobs do
-    "priv/prod_schedule.csv" |> load_csv()
+    "prod_schedule.csv" |> load_csv()
   end
 
   defp load_all(joblst) do

@@ -29,7 +29,6 @@ defmodule CrowData.Query do
     default_states = %{
       "executing" => 0,
       "available" => 0,
-      "scheduled" => 0,
       "retryable" => 0,
       "discarded" => 0,
       "completed" => 0
