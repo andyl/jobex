@@ -22,7 +22,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav mr-auto">
-            <%# hdr_link(@conn, "URLS", "/urls") %>
+            <%# hdr_link(@conn, "Schedule", "/schedule") %>
             <%# hdr_link(@conn, "LOGS", "/logs") %>
             <%# hdr_link(@conn, "STATS", "/stats") %>
           </ul>
@@ -40,12 +40,17 @@
         <% end %>
         <%= render @view_module, @view_template, assigns %>
         <div style='margin-top: 40px;'>
-          <hr>
-          <div class="nav justify-content-center">
-            <small>
-              Cron Workflow
-            </small>
+        <hr>
+        <small>
+        <div class="row">
+          <div class="col-md-6">
+            Cron Workflow
           </div>
+          <div class="col-md-6 text-right">
+            <a href="/admin">Admin</a>
+          </div>
+        </div>
+        </small>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

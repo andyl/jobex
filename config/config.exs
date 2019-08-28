@@ -23,14 +23,11 @@ config :crow_web, CrowWeb.Endpoint, live_view: [signing_salt: "asdf"]
 config :crow_data, Oban,
   repo: CrowData.Repo,
   prune: {:maxlen, 100_000},
-  queues: [default: 10, event: 10, command: 1]
+  queues: [default: 10, event: 10, parallel: 10, serial: 1, command: 1]
 
 config :crow_data, CrowData.Scheduler,
-  jobs: [
-    {"* * * * *",    {CrowData.Job, :shell, ["backup", "date"]}},
-    {"* * * * *",    {CrowData.Job, :shell, ["sleep1", "tst_sleep 10"]}},
-    {"* * * * *",    {CrowData.Job, :shell, ["sleep2", "tst_sleep 20"]}},
-    {"*/2 * * * *",  {CrowData.Job, :shell, ["test"  , "whoami"]}}
-  ]
+  timezone: "America/Los_Angeles",
+  global: true,
+  jobs: []
 
 import_config "#{Mix.env()}.exs"

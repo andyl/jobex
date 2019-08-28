@@ -1,7 +1,6 @@
 defmodule CrowData.Query do
   alias CrowData.Repo
   alias CrowData.Ctx.{ObanJob, Result}
-  alias Modex.AltMap
   import Ecto.Query
   import Modex.AltMap
 
@@ -82,12 +81,12 @@ defmodule CrowData.Query do
 
   defp jq_all do
     rquery = from(r in Result, order_by: r.attempt)
-    fields = [:id, :args, :state, :attempted_at, :completed_at, results: [:attempt, :stdout, :stderr, :status]]
+    fields = [:id, :queue, :args, :state, :attempted_at, :completed_at, results: [:attempt, :stdout, :stderr, :status]]
 
     from(
       j in ObanJob, 
       order_by: {:desc, j.id}, 
-      limit: 20,
+      limit: 24,
       select: map(j, ^fields),
       preload: [results: ^rquery]
     )

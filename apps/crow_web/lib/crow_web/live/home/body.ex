@@ -4,6 +4,7 @@ defmodule CrowWeb.Live.Home.Body do
   def mount(session, socket) do
     CrowWeb.Endpoint.subscribe("uistate")
     CrowWeb.Endpoint.subscribe("job-refresh")
+    IO.inspect session.body_data
     {:ok, assign(socket, %{uistate: session.uistate, body_data: session.body_data})}
   end
 
@@ -16,6 +17,7 @@ defmodule CrowWeb.Live.Home.Body do
         <tr>
           <td> <%= job.id %> </td>
           <td> <%= job.state %> </td>
+          <td> <%= job.queue %> </td>
           <td> <%= job.args["type"] %> </td>
           <td> <%= dstart(job) %> </td>
           <td> <%= dsecs(job) %>
@@ -30,6 +32,7 @@ defmodule CrowWeb.Live.Home.Body do
   defp dstart(job) do
     if job.attempted_at do
       job.attempted_at
+      |> Timex.Timezone.convert("PDT")
       |> Timex.Format.DateTime.Formatters.Strftime.format!("%m-%d %H:%M:%S")
     else
       nil

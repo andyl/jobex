@@ -9,8 +9,10 @@ defmodule CrowWeb.HomeController do
     |> render("index.html")
   end
 
-  def urls(conn, _params) do
-    render(conn, "urls.html")
+  def admin(conn, _params) do
+    conn
+    |> assign(:schedule, CrowData.Scheduler.jobs())
+    |> render("admin.html")
   end
 
   def logs(conn, _params) do

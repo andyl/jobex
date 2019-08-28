@@ -17,10 +17,10 @@ defmodule CrowWeb.Router do
   scope "/", CrowWeb do
     pipe_through :browser
 
-    get "/",      HomeController, :index
-    get "/urls",  HomeController, :urls
-    get "/logs",  HomeController, :logs
-    get "/stats", HomeController, :stats
+    get "/",         HomeController, :index
+    get "/admin",    HomeController, :admin
+    get "/logs",     HomeController, :logs
+    get "/stats",    HomeController, :stats
 
     live "/demo", Demo
   end

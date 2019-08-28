@@ -23,6 +23,15 @@ defmodule CrowWeb.Live.Home.Sidebar do
     </ul>
     </small>
     <hr/>
+    <b>Queues</b>
+    <small>
+    <ul class="nav flex-column">
+      <%= for {key, val} <- @side_data.job_queues do %>
+        <%= raw link_for(@uistate, "queue", key, "#{key} (#{val})") %>
+      <% end %>
+    </ul>
+    </small>
+    <hr/>
     <b>Types</b>
     <small>
     <ul class="nav flex-column">

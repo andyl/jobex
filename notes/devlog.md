@@ -16,20 +16,27 @@
 ## 2019 Aug 27 Tue
 
 - [x] Create a release
+- [x] Docker Container
+- [x] Docker Compose File
+- [x] Create production runtime configuration
 
-- [ ] Create production runtime configuration
+## 2019 Aug 28 Wed
 
-- [ ] Docker Container
-- [ ] Docker Compose File
+- [x] Setup serial and parallel queues
+- [x] Load jobs from CSV-like lists
+- [x] Only prod in releases
+
+- [ ] Setup Script: Install Systemd Service file
+- [ ] Setup Script: DB create
+- [ ] Setup Script: DB migrate
+
+- [ ] Load schedule from yml files (dev_schedule.csv, prod_schedule.csv)
 
 - [ ] Migrate from Airflow
 
 ## TBD
 
 - [ ] Move full stdout to modal
-
 - [ ] Email Notification
-
 - [ ] Grafana / Influx Integration
-
 - [ ] Live streaming of stdout

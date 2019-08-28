@@ -1,7 +1,4 @@
-defmodule CrowData.Worker.Shell do
-  use Oban.Worker, queue: "command", max_attempts: 3
-
-  @impl Oban.Worker
+defmodule CrowData.Worker.Base do
 
   alias CrowData.Ctx.Result
   alias CrowData.Repo
