@@ -4,11 +4,11 @@ defmodule CrowData.Scheduler do
   alias NimbleCSV.RFC4180, as: CSV
 
   def priv_dir do
-    if Mix.env() == :dev do
-      "priv"
+    if Application.get_env(:crow_data, :env) == :dev do
+      "apps/crow_data/priv"
     else
       :code.priv_dir(:crow_data)
-      |> String.replace("crow_data", "crow")
+      |> to_string()
     end
   end
 

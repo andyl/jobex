@@ -4,7 +4,6 @@ defmodule CrowWeb.Live.Home.Body do
   def mount(session, socket) do
     CrowWeb.Endpoint.subscribe("uistate")
     CrowWeb.Endpoint.subscribe("job-refresh")
-    IO.inspect session.body_data
     {:ok, assign(socket, %{uistate: session.uistate, body_data: session.body_data})}
   end
 

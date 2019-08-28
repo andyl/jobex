@@ -4,7 +4,7 @@ defmodule CrowWeb.MixProject do
   def project do
     [
       app: :crow_web,
-      version: "0.0.1",
+      version: "0.1.0",
       elixir: "~> 1.9",
       build_path: "../../_build",
       config_path: "../../config/config.exs",

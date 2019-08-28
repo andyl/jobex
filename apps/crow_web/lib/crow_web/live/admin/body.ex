@@ -5,7 +5,6 @@ defmodule CrowWeb.Live.Admin.Body do
   alias CrowData.Ctx.{ObanJob, Result}
 
   def mount(session, socket) do
-    IO.inspect session.schedule
     {:ok, assign(socket, %{numjobs: numjobs(), schedule: session.schedule})}
   end
 

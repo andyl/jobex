@@ -1,5 +1,8 @@
 import Config
 
+config :crow_web,  :env, Mix.env()
+config :crow_data, :env, Mix.env()
+
 config :crow_web,
   generators: [context_app: false]
 
