@@ -14,7 +14,7 @@ defmodule CrowData.Scheduler do
 
   def load_csv(path) do
     IO.inspect("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-    IO.inspect("LOAD CSV")
+    IO.inspect(Application.get_env(:crow_data, :env))
     IO.inspect(path)
     IO.inspect("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     priv_dir()
