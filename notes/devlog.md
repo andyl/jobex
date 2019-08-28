@@ -31,10 +31,13 @@
 - [x] Add /jobs/:id
 - [x] Grafana / Influx Integration
 - [x] Migrate from Airflow
+- [x] Cleanup Jobs Page
+- [x] Live streaming of stdout
 
 ## TBD
 
-- [ ] Cleanup Jobs Page
+- [ ] Test deletion of job records and associated results records
+- [ ] Limit length of job queue to 5000 items
 
 - [ ] Setup Script: Install Systemd Service file
 
@@ -42,4 +45,4 @@
 - [ ] Setup Script: DB migrate
 
 - [ ] Email Notification
-- [ ] Live streaming of stdout
+- [ ] LiveView Schedule Editing
