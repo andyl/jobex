@@ -11,20 +11,20 @@ defmodule CrowWeb.Live.Home.Body do
     ~L"""
     <b><%= hdr_for(@uistate) %></b>
     <small>
-    <table class='table table-sm'>
+    <table class='table table-sm table-bordered'>
       <%= for job <- @body_data do %>
         <tr>
           <td> 
-          <a href="/jobs/<%= job.id %>" target="_blank">
-          <%= job.id %> 
+          <a href="/jobs/<%= job.id %>">
+          <%= job.id %>
           </a>
           </td>
           <td> <%= job.state %> </td>
           <td> <%= job.queue %> </td>
           <td> <%= job.args["type"] %> </td>
           <td> <%= dstart(job) %> </td>
-          <td> <%= dsecs(job) %>
-          <td> <%= dstdout(job) %>
+          <td align='right'> <%= dsecs(job) %>
+          <td> <%= dcmd(job) %>
         </tr>
       <% end %>
     </table>
@@ -32,17 +32,17 @@ defmodule CrowWeb.Live.Home.Body do
     """
   end
 
-  defp dstart(job) do
+  def dstart(job) do
     if job.attempted_at do
       job.attempted_at
       |> Timex.Timezone.convert("PDT")
-      |> Timex.Format.DateTime.Formatters.Strftime.format!("%m-%d %H:%M:%S")
+      |> Timex.Format.DateTime.Formatters.Strftime.format!("%m-%d %H:%M")
     else
       nil
     end
   end
 
-  defp dsecs(job) do
+  def dsecs(job) do
     if job.completed_at do
       DateTime.diff(job.completed_at, job.attempted_at) 
     else
@@ -50,16 +50,21 @@ defmodule CrowWeb.Live.Home.Body do
     end
   end
 
-  defp dstdout(job) do
-    if job.results != [] do
-      job.results
-      |> List.first()
-      |> Map.get(:stdout)
-      |> Phoenix.HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
-    else
-      ""
-    end
+  defp dcmd(job) do
+    job.args["cmd"]
+    |> Phoenix.HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
   end
+
+  # defp dstdout(job) do
+  #   if job.results != [] do
+  #     job.results
+  #     |> List.first()
+  #     |> Map.get(:stdout)
+  #     |> Phoenix.HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
+  #   else
+  #     ""
+  #   end
+  # end
 
   def handle_info(%{topic: "job-refresh"}, socket) do
     uistate = socket.assigns.uistate

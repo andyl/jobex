@@ -1,24 +1,36 @@
 <h3>JOB <%= @job.id %></h3>
 
-<div class="row">
-  <div class="col-md-4">
-  <table class="table table-bordered table-sm">
-    <tr>
-      <td>Queue</td><td><%= @job.queue %></td>
-    </tr>
-  </table>
-  </div>
-  <div class="col-md-8">
-  <table class="table table-bordered table-sm">
-    <%= for r <- @job.results do %>
-    <tr>
-      <td>
-        <small>
-        <%= r.stdout |> String.replace("\n", "<br/>") |> raw %>
-        </small>
-      </td>
-    </tr>
-    <% end %>
-  </table>
-  </div>
-</div>
+<small>
+<table class="table table-bordered table-sm">
+  <tr>
+  <td><b>Queue</b>: <%= @job.queue %></td>
+  <td><b>Cmd</b>: <%= @job.args["cmd"] %></td>
+  <td><b>Start</b>: <%= CrowWeb.Live.Home.Body.dstart(@job) %></td>
+  </tr>
+  <tr>
+  <td><b>Type</b>: <%= @job.args["type"] %></td>
+  <td><b>State</b>: <%= @job.state %></td>
+  <td><b>Secs</b>: <%= CrowWeb.Live.Home.Body.dsecs(@job) %></td>
+  </tr>
+</table>
+
+<table class="table table-bordered table-sm">
+  <%= for r <- @job.results do %>
+  <tr>
+    <td>
+      <small>
+        <b>STATUS:</b> <%= r.status %>
+        <%= if r.stdout do %>
+          <br/><b>STDOUT:</b><br/>
+          <%= r.stdout |> String.replace("\n", "<br/>") |> raw %>
+        <% end %>
+        <%= if r.stderr do %>
+          <br/><b>STDERR:</b><br/>
+          <%= r.stderr |> String.replace("\n", "<br/>") |> raw %>
+        <% end %>
+      </small>
+    </td>
+  </tr>
+  <% end %>
+</table>
+</small>
