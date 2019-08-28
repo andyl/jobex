@@ -13,7 +13,7 @@ defmodule CrowWeb.Live.Home.Body do
     <small>
     <table class='table table-sm table-bordered'>
       <%= for job <- @body_data do %>
-        <tr>
+        <tr <%= dstyle(job) |> Phoenix.HTML.raw() %>>
           <td> 
           <a href="/jobs/<%= job.id %>">
           <%= job.id %>
@@ -30,6 +30,14 @@ defmodule CrowWeb.Live.Home.Body do
     </table>
     </small>
     """
+  end
+
+  defp dstyle(job) do
+    IO.inspect job.state
+    IO.inspect(%{
+      "executing" => "style='background-color: #dbfad2;'",
+      "available" => "style='background-color: lightyellow;'"
+    }[job.state])
   end
 
   def dstart(job) do
