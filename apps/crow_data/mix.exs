@@ -39,6 +39,8 @@ defmodule CrowData.MixProject do
       {:oban,      "~> 0.5"},
       # ----- utility functions 
       {:modex,     path: "~/src/modex"},
+      # ----- csv parsing -----
+      {:nimble_csv, "~> 0.6"},
       # ----- job scheduling
       {:quantum,   "~> 2.3"},
       {:timex,     "~> 3.0"}

@@ -26,17 +26,17 @@
 - [x] Load jobs from CSV-like lists
 - [x] Only prod in releases
 - [x] Working distillery release
-
-- [ ] Setup Script: DB create
-- [ ] Setup Script: DB migrate
-
-- [ ] Setup Script: Install Systemd Service file
+- [x] Fix favicon bookmark
 
 - [ ] Load schedule from yml files (dev_schedule.csv, prod_schedule.csv)
 
 - [ ] Migrate from Airflow
 
 ## TBD
+
+- [ ] Setup Script: DB create
+- [ ] Setup Script: DB migrate
+- [ ] Setup Script: Install Systemd Service file
 
 - [ ] Move full stdout to modal
 - [ ] Email Notification

@@ -1,26 +1,23 @@
 defmodule CrowData.Scheduler do
   use Quantum.Scheduler, otp_app: :crow_data
+
+  alias NimbleCSV.RFC4180, as: CSV
+# CSV.parse_string "name,age\njohn,27"
+
+  defp load_csv(path) do
+    path
+    |> File.read!()
+    |> String.replace(~r/ +/, " ")
+    |> String.replace(", ", ",")
+    |> CSV.parse_string
+  end
   
   defp dev_jobs do
-    [
-      ["* * * * *",   "serial",   "sleep10", "sleep 10; date"],
-      ["* * * * *",   "serial",   "sleep20", "sleep 20; date"],
-      ["* * * * *",   "parallel", "sleep30", "sleep 30; date"],
-      ["* * * * *",   "parallel", "sleep30", "sleep 30; date"],
-      ["* * * * *",   "parallel", "sleep30", "sleep 30; date"],
-      ["* * * * *",   "serial",   "date",    "date"],
-      ["*/2 * * * *", "serial",   "who",     "whoami"],
-      ["*/3 * * * *", "serial",   "host",    "hostname"],
-      ["*/4 * * * *", "serial",   "uptime",  "uptime"]
-    ]
+    "priv/dev_schedule.csv" |> load_csv()
   end
 
   defp prod_jobs do
-    [
-      ["* * * * *",   "serial",   "sleep10", "sleep 10; date"],
-      ["* * * * *",   "serial",   "sleep20", "sleep 20; date"],
-      ["* * * * *",   "parallel", "sleep30", "sleep 30; date"]
-    ]
+    "priv/prod_schedule.csv" |> load_csv()
   end
 
   defp load_all(joblst) do
