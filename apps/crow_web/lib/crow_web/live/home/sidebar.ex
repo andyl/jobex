@@ -6,6 +6,7 @@ defmodule CrowWeb.Live.Home.Sidebar do
   def mount(session, socket) do
     :timer.send_interval(5000, self(), :sidebar_tick)
     CrowWeb.Endpoint.subscribe("job-event")
+    CrowWeb.Endpoint.subscribe("uistate-table")
     opts = %{refresh: false, uistate: session.uistate, side_data: session.side_data}
     {:ok, assign(socket, opts)}
   end
@@ -121,5 +122,10 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   def handle_info(%{topic: "job-event"}, socket) do
     {:noreply, assign(socket, %{refresh: true})}
+  end
+
+  def handle_info(%{topic: "uistate-table", payload: uistate}, socket) do
+    opts = %{uistate: uistate, side_data: CrowData.Query.side_data()}
+    {:noreply, assign(socket, opts)}
   end
 end

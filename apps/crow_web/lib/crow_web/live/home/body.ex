@@ -1,6 +1,8 @@
 defmodule CrowWeb.Live.Home.Body do
   use Phoenix.LiveView
 
+  alias Phoenix.HTML
+
   def mount(session, socket) do
     CrowWeb.Endpoint.subscribe("uistate")
     CrowWeb.Endpoint.subscribe("job-refresh")
@@ -13,15 +15,21 @@ defmodule CrowWeb.Live.Home.Body do
     <small>
     <table class='table table-sm table-bordered'>
       <%= for job <- @body_data do %>
-        <tr <%= dstyle(job) |> Phoenix.HTML.raw() %>>
+        <tr <%= dstyle(job) |> HTML.raw() %>>
           <td> 
           <a href="/jobs/<%= job.id %>">
           <%= job.id %>
           </a>
           </td>
-          <td> <%= job.state %> </td>
-          <td> <%= job.queue %> </td>
-          <td> <%= job.args["type"] %> </td>
+          <td> 
+            <%= tlink(@uistate, "state", job.state) |> HTML.raw() %>
+          </td>
+          <td>
+            <%= tlink(@uistate, "queue", job.queue) |> HTML.raw() %>
+          </td>
+          <td> 
+            <%= tlink(@uistate, "type", job.args["type"]) |> HTML.raw() %>
+          </td>
           <td> <%= dstart(job) %> </td>
           <td align='right'> <%= dsecs(job) %>
           <td> <%= dcmd(job) %>
@@ -32,10 +40,24 @@ defmodule CrowWeb.Live.Home.Body do
     """
   end
 
+  # ----- view helpers -----
+  
+  defp tlink(uistate, field, value) do
+    if uistate == %{field: field, value: value} do
+      value
+    else
+      """
+      <a href="#" phx-click="#{field}" phx-value="#{value}">
+      #{value}
+      </a>
+      """
+    end
+  end
+
   defp dstyle(job) do
     %{
       "discarded" => "style='background-color: #ffb3a7;'",
-      "retryable" => "style='background-color: #ffa92c;'",
+      "retryable" => "style='background-color: #ffc673;'",
       "available" => "style='background-color: lightyellow;'",
       "executing" => "style='background-color: #dbfad2;'"
     }[job.state]
@@ -61,19 +83,22 @@ defmodule CrowWeb.Live.Home.Body do
 
   defp dcmd(job) do
     job.args["cmd"]
-    |> Phoenix.HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
+    |> HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
   end
 
-  # defp dstdout(job) do
-  #   if job.results != [] do
-  #     job.results
-  #     |> List.first()
-  #     |> Map.get(:stdout)
-  #     |> Phoenix.HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
-  #   else
-  #     ""
-  #   end
-  # end
+  # ----- event handlers -----
+
+  def handle_event(label, payload, socket) do
+    uistate = %{field: label, value: payload} 
+    body_data = CrowData.Query.job_query(uistate)
+    opt = %{uistate: uistate, body_data: body_data}
+
+    CrowWeb.Endpoint.broadcast_from(self(), "uistate-table", "table-click", uistate)
+
+    {:noreply, assign(socket, opt)}
+  end
+  
+  # ----- pub/sub handlers -----
 
   def handle_info(%{topic: "job-refresh"}, socket) do
     uistate = socket.assigns.uistate
