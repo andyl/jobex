@@ -4,4 +4,4 @@ echo LOADING PROD JOBS
 
 echo $RELEASE_ROOT_DIR
 
-$RELEASE_ROOT_DIR/bin/crow command CrowData.Scheduler.load_prod_jobs
+$RELEASE_ROOT_DIR/bin/crow rpc "CrowData.Scheduler.load_prod_jobs"

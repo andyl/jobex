@@ -42,6 +42,7 @@ environment :prod do
     echo: "rel/commands/echo.sh",
     load_prod_jobs: "rel/commands/load_prod_jobs.sh"
   ]
+  set post_start_hook: "rel/commands/load_prod_jobs.sh"
 end
 
 # You may define one or more releases in this file.
