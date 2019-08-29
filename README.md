@@ -1,13 +1,13 @@
 # Crow
 
-Crow is cron-like workflow
+Crow is cron-like workflow - Cron meets Airflow.
 
 - Runs jobs periodically using cron-like scheduling
 - Captures job statistics: run time, status codes, stdout, stderr
-- Simple
+- Super Simple
 
 Because we need to access local scripts, `Crow` is packaged as an Elixir
-release managed by SytstemD, rather than a Docker container.
+release managed by SystemD, rather than a Docker container.
 
 ## Requirements
 
