@@ -38,9 +38,16 @@
 - [x] Documentation: Install Systemd Service file
 - [x] Autoload CSV Service File on Startup using post-boot-hook
 
+## 2019 Aug 29 Thu
+
+- [x] Add colors for discarded and retryable states
+- [x] Add table-links for State/Queue/Type columns
+
 ## TBD
 
-- [ ] Add table-links for State/Queue/Type columns
+- [ ] Fix failing sync tasks
+- [ ] Capture error code as discarded
+
 - [ ] Enable back-button for live-links
 
 - [ ] Setup Script: SystemD Service Initiation
