@@ -34,13 +34,13 @@
 - [x] Cleanup Jobs Page
 - [x] Add row coloring
 - [x] Test deletion of job records and associated results records
-- [x] Limit length of job queue to 5000 items
+- [x] Limit size of job database to 5000 items
 - [x] Documentation: Install Systemd Service file
-
-- [ ] Setup Script: SystemD Service Initiation
-- [ ] Autoload CSV Service File on Startup
+- [x] Autoload CSV Service File on Startup using post-boot-hook
 
 ## TBD
+
+- [ ] Setup Script: SystemD Service Initiation
 
 - [ ] Setup Script: DB create
 - [ ] Setup Script: DB migrate
