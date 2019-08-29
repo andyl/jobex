@@ -40,6 +40,9 @@
 
 ## TBD
 
+- [ ] Add table-links for State/Queue/Type columns
+- [ ] Enable back-button for live-links
+
 - [ ] Setup Script: SystemD Service Initiation
 
 - [ ] Setup Script: DB create
