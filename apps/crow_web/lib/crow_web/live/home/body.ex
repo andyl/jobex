@@ -34,8 +34,10 @@ defmodule CrowWeb.Live.Home.Body do
 
   defp dstyle(job) do
     %{
-      "executing" => "style='background-color: #dbfad2;'",
-      "available" => "style='background-color: lightyellow;'"
+      "discarded" => "style='background-color: #ff5733;'",
+      "retryable" => "style='background-color: #ffa92c;'",
+      "available" => "style='background-color: lightyellow;'",
+      "executing" => "style='background-color: #dbfad2;'"
     }[job.state]
   end
 
