@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+$RELEASE_ROOT_DIR/bin/crow command CrowData.Scheduler.load_dev_jobs()

@@ -39,7 +39,8 @@ environment :prod do
   set cookie: :"!3q[7e7gtCU90{g6CKkc:SRHK!G><i<ET3*C7H2AI~SfpSw7ynHG&atw.??WdrS*"
   set vm_args: "rel/vm.args"
   set commands: [
-    echo: "rel/commands/echo"
+    echo: "rel/commands/echo",
+    load_prod_jobs: "rel/commands/load_prod_jobs"
   ]
 end
 

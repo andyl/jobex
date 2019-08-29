@@ -6,8 +6,8 @@ After=network.target
 Type=simple
 User=aleak
 Group=aleak
-WorkingDirectory=/home/aleak/src/crow/_build/prod/rel/crow
-ExecStart=/home/aleak/src/crow/_build/prod/rel/crow/bin/crow foreground
+WorkingDirectory=/home/aleak
+ExecStart=/bin/bash --login -c 'source /home/aleak/.bashrc; cd /home/aleak; /home/aleak/src/crow/_build/prod/rel/crow/bin/crow foreground'
 Restart=on-failure
 RestartSec=5
 Environment=PORT=5070
