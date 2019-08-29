@@ -42,11 +42,10 @@
 
 - [x] Add colors for discarded and retryable states
 - [x] Add table-links for State/Queue/Type columns
+- [x] Fix failing sync tasks
+- [x] Capture error code as discarded
 
 ## TBD
-
-- [ ] Fix failing sync tasks
-- [ ] Capture error code as discarded
 
 - [ ] Enable back-button for live-links
 
