@@ -13,20 +13,12 @@ defmodule CrowData.Scheduler do
   end
 
   def load_csv(path) do
-    IO.inspect("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-    IO.inspect(Application.get_env(:crow_data, :env))
-    IO.inspect(path)
-    IO.inspect("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     priv_dir()
     |> Path.join(path)
-    |> IO.inspect()
     |> File.read!()
-    |> IO.inspect()
     |> String.replace(~r/ +/, " ")
     |> String.replace(", ", ",")
-    |> IO.inspect()
     |> CSV.parse_string
-    |> IO.inspect()
   end
   
   defp dev_jobs do

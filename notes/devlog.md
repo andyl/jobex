@@ -33,11 +33,10 @@
 - [x] Migrate from Airflow
 - [x] Cleanup Jobs Page
 - [x] Add row coloring
+- [x] Test deletion of job records and associated results records
+- [x] Limit length of job queue to 5000 items
 
 ## TBD
-
-- [ ] Test deletion of job records and associated results records
-- [ ] Limit length of job queue to 5000 items
 
 - [ ] Setup Script: Install Systemd Service file
 

@@ -25,8 +25,8 @@ config :crow_web, CrowWeb.Endpoint, live_view: [signing_salt: "asdf"]
 
 config :crow_data, Oban,
   repo: CrowData.Repo,
-  prune: {:maxlen, 100_000},
-  queues: [default: 10, event: 10, parallel: 10, serial: 1, command: 1]
+  prune: {:maxlen, 5_000},
+  queues: [default: 10, parallel: 10, serial: 1]
 
 config :crow_data, CrowData.Scheduler,
   timezone: "America/Los_Angeles",

@@ -1,12 +1,13 @@
 # Crow
 
-Cron-like Workflow
+Crow is cron-like workflow
 
-## About
-
-- Runs jobs in a cron-like fashion
-- Job statistics: execution time, return codes, stdout, stderr
+- Runs jobs periodically using cron-like scheduling
+- Captures job statistics: run time, status codes, stdout, stderr
 - Simple
+
+Because we need to access local scripts, `Crow` is packaged as an Elixir
+release managed by SytstemD, rather than a Docker container.
 
 ## Requirements
 
@@ -57,3 +58,24 @@ _Command_
 - commands are run with 'user' permission
 - pipes and redirects not allowed
 
+## Using SystemD
+
+Create the database and run the migrations.  Then:
+
+- edit the SystemD service file in `rel/crow.service`
+- `sudo cp rel/crow.service /etc/systemd/system`
+- `sudo chmod 644 /etc/systemd/system/crow.service`
+
+Start the service with SystemD
+
+- `sudo systemctl start crow`
+- `sudo systemctl status crow`
+- `sudo systemctl restart crow`
+- `sudo systemctl stop crow`
+- `sudo journalctl -u crow -f`
+
+Make sure your service starts when the system reboots
+
+- `sudo systemctl enable crow`
+
+Reboot and test!

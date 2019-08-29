@@ -1,0 +1,20 @@
+[Unit]
+Description=Crow
+After=network.target
+
+[Service]
+Type=simple
+User=aleak
+Group=aleak
+WorkingDirectory=/home/aleak/src/crow/_build/prod/rel/crow
+ExecStart=/home/aleak/src/crow/_build/prod/rel/crow/bin/crow foreground
+Restart=on-failure
+RestartSec=5
+Environment=PORT=5070
+Environment=LANG=en_US.UTF-8
+SyslogIdentifier=crow
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
+
