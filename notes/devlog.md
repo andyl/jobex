@@ -32,7 +32,7 @@
 - [x] Grafana / Influx Integration
 - [x] Migrate from Airflow
 - [x] Cleanup Jobs Page
-- [x] Live streaming of stdout
+- [x] Add row coloring
 
 ## TBD
 
