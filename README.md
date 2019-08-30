@@ -3,13 +3,21 @@
 Crow is cron-like workflow - Cron meets Airflow.
 
 - Runs jobs periodically using cron-like scheduling
-- Captures job statistics: run time, status codes, stdout, stderr
+- Captures job statistics: execution time, status, stdout, stderr
 - Super Simple
 
 Because we need to access local scripts, `Crow` is packaged as an Elixir
 release managed by SystemD, rather than a Docker container.
 
-## Requirements
+## Crow simply runs jobs
+
+- you define a job schedule in a CSV file
+- you can setup two CSV files: DEV for testing and PROD for production
+- jobs can be any executable or BASH/PYTHON/RUBY script on your system
+- failing jobs will be retried three times before giving up
+- the job history is capped at 5000 items 
+
+## System requirements
 
 - Ubuntu Host running 18.04
 - SystemD
@@ -22,14 +30,14 @@ release managed by SystemD, rather than a Docker container.
 - Start the release
 - Browse to `locahost:5070`
 
-## Job Schedules
+## Job schedules
 
 Job schedules are stored in csv files:
 
 - apps/crow_data/priv/dev_schedule.csv
 - apps/crow_data/priv/prod_schedule.csv
 
-CSV files can be edited to run your own commands:
+CSV files can be edited to run your own commands.  The CSV columns include:
 
 | Schedule  | Queue    | Type | Command            |
 |-----------|----------|------|--------------------|
