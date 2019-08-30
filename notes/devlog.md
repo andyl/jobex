@@ -51,6 +51,8 @@
 
 ## TBD
 
+- [ ] Add threshold links: 100 seconds
+
 - [ ] Enable back-button for live-links
 
 - [ ] Add job navigation (next/prev, sparklines)
