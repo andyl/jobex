@@ -1,4 +1,4 @@
-defmodule CrowWeb.Live.Admin.Body do
+defmodule CrowWeb.Live.Schedule.Body do
   use Phoenix.LiveView
 
   alias CrowData.Repo
@@ -12,7 +12,7 @@ defmodule CrowWeb.Live.Admin.Body do
     ~L"""
     <div class="row">
     <div class="col-md-3">
-    <h3>ADMIN</h3>
+    <h3>SCHEDULE</h3>
     </div>
     <div class="col-md-9 text-right">
     <small>
@@ -25,7 +25,7 @@ defmodule CrowWeb.Live.Admin.Body do
     |
     <a href='#' phx-click="prodload">Load Prod Schedule</a>
     <% else %>
-    <a href='#' phx-click="jobstop">Clear Job Schedule</a>
+    <a href='#' phx-click="jobstop">Clear Schedule</a>
     <% end %>
     </small>
     </div>
@@ -34,18 +34,18 @@ defmodule CrowWeb.Live.Admin.Body do
     <table class="table table-sm">
       <thead>
         <tr>
-            <th>Job Type</th>
+            <th>Job Schedule</th>
             <th>Queue</th>
-            <th>Schedule</th>
+            <th>Type</th>
             <th>Command</th>
         </tr>
       </thead>
       <tbody>
       <%= for {_, job} <- @schedule do %>
         <tr>
-          <td><%= elem(job.task, 2) |> List.first() %></td>
-          <td><%= elem(job.task, 1) %></td>
           <td><%= inspect(job.schedule) %></td>
+          <td><%= elem(job.task, 1) %></td>
+          <td><%= elem(job.task, 2) |> List.first() %></td>
           <td><%= elem(job.task, 2) |> List.last() %></td>
         </tr>
       <% end %>

@@ -43,7 +43,11 @@
 - [x] Add colors for discarded and retryable states
 - [x] Add table-links for State/Queue/Type columns
 - [x] Fix failing sync tasks
-- [x] Capture error code as discarded
+- [x] Capture error code for failed tasks
+- [x] Change Admin to Schedule
+- [x] Change order of Schedule columns
+- [ ] Create command query
+- [ ] Create command link helper
 
 ## TBD
 

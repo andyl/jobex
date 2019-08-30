@@ -50,7 +50,7 @@
             <%= Application.get_env(:crow_web, :env) |> inspect |> String.replace(":", "") |> String.capitalize() %>
           </div>
           <div class="col-md-4 text-right">
-            <a href="/admin">Admin</a>
+            <a href="/schedule">Schedule</a>
           </div>
         </div>
         </small>

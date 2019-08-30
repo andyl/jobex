@@ -18,8 +18,8 @@ defmodule CrowWeb.Router do
     pipe_through :browser
 
     get "/",         HomeController, :index
-    get "/admin",    HomeController, :admin
     get "/jobs/:id", HomeController, :jobs
+    get "/schedule", HomeController, :schedule
     get "/stats",    HomeController, :stats
 
     live "/demo", Demo
