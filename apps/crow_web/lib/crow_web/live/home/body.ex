@@ -92,7 +92,6 @@ defmodule CrowWeb.Live.Home.Body do
   defp cmd_link(uistate, word) do
     cleanword =
       word
-      |> IO.inspect()
       |> String.replace("...", "")
     if uistate == %{field: "command", value: cleanword} do
       "<b>#{word}</b>"
