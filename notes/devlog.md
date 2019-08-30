@@ -46,8 +46,8 @@
 - [x] Capture error code for failed tasks
 - [x] Change Admin to Schedule
 - [x] Change order of Schedule columns
-- [ ] Create command query
-- [ ] Create command link helper
+- [x] Create command query
+- [x] Create command link helper
 
 ## TBD
 

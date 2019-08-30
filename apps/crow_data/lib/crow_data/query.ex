@@ -80,14 +80,13 @@ defmodule CrowData.Query do
 
   def job_query(uistate \\ %{field: nil, value: nil}) do
     case uistate do
-      %{field: nil, value: nil}       -> jq_all() 
+      %{field: nil, value: nil}         -> jq_all() 
       %{field: "all",     value: nil}   -> jq_all() 
       %{field: "state",   value: state} -> jq_state(state) 
       %{field: "queue",   value: queue} -> jq_queue(queue) 
       %{field: "type",    value: type}  -> jq_type(type) 
       %{field: "command", value: cmd}   -> jq_cmd(cmd) 
     end 
-    |> IO.inspect()
     |> Repo.all()
   end
 
@@ -98,8 +97,7 @@ defmodule CrowData.Query do
     from(
       j in ObanJob, 
       order_by: {:desc, j.id}, 
-      # limit: 24,
-      limit: 2,
+      limit: 24,
       select: map(j, ^fields),
       preload: [results: ^rquery]
     )

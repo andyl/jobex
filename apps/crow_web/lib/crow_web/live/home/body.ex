@@ -31,8 +31,8 @@ defmodule CrowWeb.Live.Home.Body do
             <%= tlink(@uistate, "type", job.args["type"]) |> HTML.raw() %>
           </td>
           <td> <%= dstart(job) %> </td>
-          <td align='right'> <%= dsecs(job) %>
-          <td> <%= dcmd(job) %>
+          <td align='right'> <%= dsecs(job) %> </td>
+          <td> <%= dcmd(@uistate, job) |> HTML.raw() %> </td>
         </tr>
       <% end %>
     </table>
@@ -44,7 +44,7 @@ defmodule CrowWeb.Live.Home.Body do
   
   defp tlink(uistate, field, value) do
     if uistate == %{field: field, value: value} do
-      value
+      "<b>#{value}</b>"
     else
       """
       <a href="#" phx-click="#{field}" phx-value="#{value}">
@@ -81,9 +81,25 @@ defmodule CrowWeb.Live.Home.Body do
     end
   end
 
-  defp dcmd(job) do
+  defp dcmd(uistate, job) do
     job.args["cmd"]
     |> HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
+    |> String.split(" ")
+    |> Enum.map(&(cmd_link(uistate, &1)))
+    |> Enum.join(" ")
+  end
+
+  defp cmd_link(uistate, word) do
+    cleanword =
+      word
+      |> String.replace("...", '')
+    if uistate == %{field: "command", value: cleanword} do
+      "<b>#{word}</b>"
+    else
+      """
+      <a href='#' phx-click="command" phx-value="#{cleanword}">#{word}</a>
+      """
+    end
   end
 
   # ----- event handlers -----
