@@ -30,9 +30,9 @@ defmodule CrowWeb.Live.Home.Body do
           <td> 
             <%= tlink(@uistate, "type", job.args["type"]) |> HTML.raw() %>
           </td>
-          <td> <%= dstart(job) %> </td>
-          <td align='right'> <%= dsecs(job) %> </td>
-          <td> <%= dcmd(@uistate, job) |> HTML.raw() %> </td>
+          <td><%= dstart(job) %></td>
+          <td align='right'><%= dsecs(@uistate, job) |> HTML.raw() %></td>
+          <td><%= dcmd(@uistate, job) |> HTML.raw() %></td>
         </tr>
       <% end %>
     </table>
@@ -73,9 +73,18 @@ defmodule CrowWeb.Live.Home.Body do
     end
   end
 
-  def dsecs(job) do
+  def dsecs(uistate, job) do
     if job.completed_at do
-      DateTime.diff(job.completed_at, job.attempted_at) 
+      secs = DateTime.diff(job.completed_at, job.attempted_at) 
+      if secs >= 100 do
+        if uistate == %{field: "secs", value: "99+"} do
+          "<b>#{secs}</b>"
+        else
+          "<a href='#' phx-click='secs' phx-value='99+'>#{secs}</a>"
+        end
+      else
+        "#{secs}"
+      end
     else
       "NA"
     end

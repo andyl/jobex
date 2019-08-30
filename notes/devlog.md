@@ -48,14 +48,14 @@
 - [x] Change order of Schedule columns
 - [x] Create command query
 - [x] Create command link helper
+- [x] Add time query (elapsed time > 100 seconds)
+- [x] Add threshold links: 100 seconds
 
 ## TBD
 
-- [ ] Add threshold links: 100 seconds
+- [ ] Add job navigation (next/prev, sparklines)
 
 - [ ] Enable back-button for live-links
-
-- [ ] Add job navigation (next/prev, sparklines)
 
 - [ ] Setup Script: SystemD Service Initiation
 - [ ] Setup Script: DB create / DB migrate

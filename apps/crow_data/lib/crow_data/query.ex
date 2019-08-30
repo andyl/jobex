@@ -85,6 +85,7 @@ defmodule CrowData.Query do
       %{field: "state",   value: state} -> jq_state(state) 
       %{field: "queue",   value: queue} -> jq_queue(queue) 
       %{field: "type",    value: type}  -> jq_type(type) 
+      %{field: "secs",    value: _}     -> jq_secs()
       %{field: "command", value: cmd}   -> jq_cmd(cmd) 
     end 
     |> Repo.all()
@@ -103,10 +104,6 @@ defmodule CrowData.Query do
     )
   end
 
-  defp jq_cmd(cmd) do
-    from(j in jq_all(), where: fragment("args->>'cmd' ilike ?", ^"%#{cmd}%"))
-  end
-
   defp jq_state(state) do
     from(j in jq_all(), where: j.state == ^state)
   end
@@ -117,5 +114,14 @@ defmodule CrowData.Query do
 
   defp jq_type(type) do
     from(j in jq_all(), where: fragment("args->>'type' = ?", ^type))
+  end
+
+  # return all records where execution time >= 100 seconds
+  defp jq_secs do
+    from(j in jq_all(), where: fragment("(completed_at - attempted_at) >= '99 seconds'"))
+  end
+
+  defp jq_cmd(cmd) do
+    from(j in jq_all(), where: fragment("args->>'cmd' ilike ?", ^"%#{cmd}%"))
   end
 end
