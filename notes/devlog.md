@@ -53,10 +53,10 @@
 
 - [ ] Enable back-button for live-links
 
-- [ ] Setup Script: SystemD Service Initiation
+- [ ] Add job navigation (next/prev, sparklines)
 
-- [ ] Setup Script: DB create
-- [ ] Setup Script: DB migrate
+- [ ] Setup Script: SystemD Service Initiation
+- [ ] Setup Script: DB create / DB migrate
 
 - [ ] Email Notification
-- [ ] LiveView Schedule Editing
+- [ ] Schedule Editing using LiveView
