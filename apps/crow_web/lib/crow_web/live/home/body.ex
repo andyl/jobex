@@ -73,6 +73,10 @@ defmodule CrowWeb.Live.Home.Body do
     end
   end
 
+  def esecs(job) do
+    DateTime.diff(job.completed_at, job.attempted_at) 
+  end
+
   def dsecs(uistate, job) do
     if job.completed_at do
       secs = DateTime.diff(job.completed_at, job.attempted_at) 

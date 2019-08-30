@@ -10,7 +10,7 @@
   <tr>
   <td><b>Type</b>: <%= @job.args["type"] %></td>
   <td><b>State</b>: <%= @job.state %></td>
-  <td><b>Secs</b>: <%= CrowWeb.Live.Home.Body.dsecs(@job) %></td>
+  <td><b>Secs</b>: <%= CrowWeb.Live.Home.Body.esecs(@job) %></td>
   </tr>
 </table>
 
