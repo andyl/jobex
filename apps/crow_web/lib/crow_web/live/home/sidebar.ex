@@ -41,6 +41,15 @@ defmodule CrowWeb.Live.Home.Sidebar do
       <% end %>
     </ul>
     </small>
+    <hr/>
+    <b>Alerts</b>
+    <small>
+    <ul class="nav flex-column">
+      <%= for {key, val} <- @side_data.job_alerts do %>
+        <%= raw link_for(@uistate, "alerts", key, "#{key} (#{val})") %>
+      <% end %>
+    </ul>
+    </small>
     """
   end
 
@@ -70,14 +79,14 @@ defmodule CrowWeb.Live.Home.Sidebar do
         """
       else
         """
-        <a href="#" phx-click="#{field}" phx-value="#{value}" class="nav-link">
+        <a href="#" phx-click="#{field}" phx-value="#{value}" class="nav-link" style="padding-top: .1rem; padding-bottom: .1rem;">
           #{text}
         </a>
         """
       end
 
     """
-    <li class="nav-item">
+    <li class="nav-item" >
       #{link}
     </li>
     """

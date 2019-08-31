@@ -20,7 +20,7 @@ defmodule CrowWeb.Router do
     get "/",         HomeController, :index
     get "/jobs/:id", HomeController, :jobs
     get "/schedule", HomeController, :schedule
-    get "/stats",    HomeController, :stats
+    get "/admin",    HomeController, :admin
 
     live "/demo", Demo
   end

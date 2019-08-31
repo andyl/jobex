@@ -51,14 +51,38 @@
 - [x] Add time query (elapsed time > 100 seconds)
 - [x] Add threshold links: 100 seconds
 
+## 2019 Aug 31 Sat
+
+- [x] Home: add alerts section
+- [x] Home: reduce sidebar-link padding
+
+- [ ] Admin: Add admin page
+- [ ] Admin: Clear all records
+- [ ] Layout: Add admin link
+- [ ] Layout: Add graph link
+
 ## TBD
 
-- [ ] Add job navigation (next/prev, sparklines)
+- [ ] Home: move to a live-link route
+- [ ] Home: Back-button for live-links
+- [ ] Home: Paging with left-right keys for job list
+- [ ] Home: run now button
 
-- [ ] Enable back-button for live-links
+- [ ] Job: job navigation (next/prev, sparklines)
+- [ ] Job: run now button
 
-- [ ] Setup Script: SystemD Service Initiation
-- [ ] Setup Script: DB create / DB migrate
+- [ ] Schedule: sytax checking of csv file
+- [ ] Schedule: run now button
+- [ ] Schedule: smaller table font
+- [ ] Schedule: live editing using LiveView
+- [ ] Schedule: add 'install' button
 
-- [ ] Email Notification
-- [ ] Schedule Editing using LiveView
+- [ ] Admin: documentation links
+- [ ] Admin: editable visualization link
+- [ ] Admin: editable notification email
+- [ ] Admin: editable time-threshold
+
+- [ ] Installation: Setup Script - SystemD Service Initiation
+- [ ] Installation: Setup Script - DB create / DB migrate
+
+- [ ] Misc: Email Notification

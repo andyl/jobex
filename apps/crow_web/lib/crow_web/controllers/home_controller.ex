@@ -9,19 +9,20 @@ defmodule CrowWeb.HomeController do
     |> render("index.html")
   end
 
-  def jobs(conn, params) do
-    conn
-    |> assign(:job, CrowData.Query.job(params["id"]))
-    |> render("jobs.html")
-  end
-
   def schedule(conn, _params) do
     conn
     |> assign(:schedule, CrowData.Scheduler.jobs())
     |> render("schedule.html")
   end
 
-  def stats(conn, _params) do
-    render(conn, "stats.html")
+  def jobs(conn, params) do
+    conn
+    |> assign(:job, CrowData.Query.job(params["id"]))
+    |> render("jobs.html")
+  end
+
+  def admin(conn, _params) do
+    conn
+    |> render("admin.html")
   end
 end

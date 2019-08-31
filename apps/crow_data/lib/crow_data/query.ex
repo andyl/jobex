@@ -21,7 +21,8 @@ defmodule CrowData.Query do
       all_count: all_count(),
       job_states: job_states(),
       job_queues: job_queues(),
-      job_types: job_types()
+      job_types: job_types(),
+      job_alerts: job_alerts()
     }
   end
 
@@ -63,6 +64,23 @@ defmodule CrowData.Query do
     )
     |> Repo.all()
     |> merge_list()
+  end
+
+  defp job_alerts do
+    default_alerts = %{
+      "speed" => 0,
+      "spike" => 0,
+    }
+
+    # from(
+    #   j in ObanJob,
+    #   group_by: fragment("args -> 'type'"),
+    #   select: %{fragment("args -> 'type' as type") => count(j.id)}
+    # )
+    # |> Repo.all()
+    # |> merge_list()
+
+    default_alerts 
   end
 
   # ----- JOB -----
