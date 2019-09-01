@@ -3,10 +3,7 @@ defmodule CrowWeb.HomeController do
 
   def index(conn, _params) do
     conn
-    |> assign(:body_data, CrowData.Query.job_query())
-    |> assign(:side_data, CrowData.Query.side_data())
-    |> assign(:uistate,   %{field: nil, value: nil})
-    |> render("index.html")
+    |> redirect(to: "/home")
   end
 
   def schedule(conn, _params) do
@@ -24,5 +21,10 @@ defmodule CrowWeb.HomeController do
   def admin(conn, _params) do
     conn
     |> render("admin.html")
+  end
+
+  def help(conn, _params) do
+    conn
+    |> render("help.html")
   end
 end

@@ -59,14 +59,26 @@
 - [x] Layout: Add admin link
 - [x] Layout: Add graph link
 - [x] Admin: Clear all records
+- [x] Home: move to a live-link route
+- [x] Home: Back-button for live-links
+- [x] Home: handle params(field, value)
 
-- [ ] Home: move to a live-link route
-- [ ] Home: Back-button for live-links
-- [ ] Home: Paging with left-right keys for job list
+## 2019 Sep 01 Sun
+
+- [x] Home: change to live_link
+- [x] Home: move from /home to /
+
+- [ ] Finish alert queries
+- [ ] Convert time-links to emit alert links
+
+- [ ] Home: Paging with left-right keys for job list (with page param)
+
+- [ ] Home: Run now button
 
 ## TBD
 
-- [ ] Home: run now button
+- [ ] Change from Porcelain to Rambo
+- [ ] Test live_link and back button
 
 - [ ] Job: job navigation (next/prev, sparklines)
 - [ ] Job: run now button

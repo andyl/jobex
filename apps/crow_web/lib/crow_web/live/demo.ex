@@ -1,4 +1,4 @@
-defmodule CrowWeb.Demo do
+defmodule CrowWeb.Live.Demo do
   use Phoenix.LiveView
   use Timex
   alias CrowWeb.DemoView

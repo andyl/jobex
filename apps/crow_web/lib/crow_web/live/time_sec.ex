@@ -2,6 +2,9 @@ defmodule CrowWeb.TimeSec do
   use Phoenix.LiveView
   use Timex
 
+  # to mount in a view:
+  # <%= live_render(@conn, CrowWeb.TimeSec) %>
+
   def render(assigns) do
     ~L"""
     <%= @date %>

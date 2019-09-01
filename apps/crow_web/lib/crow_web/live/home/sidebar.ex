@@ -3,10 +3,11 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   import Phoenix.HTML
 
+  alias CrowWeb.Router.Helpers, as: Routes
+
   def mount(session, socket) do
     :timer.send_interval(5000, self(), :sidebar_tick)
     CrowWeb.Endpoint.subscribe("job-event")
-    CrowWeb.Endpoint.subscribe("uistate-table")
     opts = %{refresh: false, uistate: session.uistate, side_data: session.side_data}
     {:ok, assign(socket, opts)}
   end
@@ -55,66 +56,36 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   # ----- view helpers -----
 
+  defp link_for(uistate, field, value, text) do
+    path = "/home?field=#{field}&value=#{value}"
+    {ldr, klas} = if uistate == %{field: field, value: value}, do: {">", "disabled"}, else: {"", ""}
+
+    """
+    <li class="nav-item">
+      <a href="#{path}" to="#{path}" data-phx-live-link="push" class="nav-link #{klas}" style="padding-top: .1rem; padding-bottom: .1rem;">
+        #{ldr} #{text}
+      </a>
+    </li>
+    """
+  end
+
   defp all_for(uistate, side_data) do
     text = "<b>ALL (#{side_data.all_count})</b>"
 
-    if uistate.value == nil do
+    if uistate.field == "all" || uistate.value == nil do
       "<span style='color: gray;'>> #{text}</span>"
     else
       """
-      <a href="#" phx-click="all">
+      <a href="/home">
         #{text}
       </a>
       """
     end
   end
 
-  defp link_for(uistate, field, value, text) do
-    link =
-      if uistate == %{field: field, value: value} do
-        """
-        <a href="#" class="nav-link disabled">
-          > #{text}
-        </a>
-        """
-      else
-        """
-        <a href="#" phx-click="#{field}" phx-value="#{value}" class="nav-link" style="padding-top: .1rem; padding-bottom: .1rem;">
-          #{text}
-        </a>
-        """
-      end
-
-    """
-    <li class="nav-item" >
-      #{link}
-    </li>
-    """
-  end
-
-  # ----- event handlers -----
-
-  def handle_event(label, payload, socket) do
-    pload = if label == "all", do: nil, else: payload
-
-    %{field: label, value: pload}
-    |> gen_handle(socket)
-  end
-
-  defp gen_handle(uistate, socket) do
-    opts = %{
-      uistate: uistate,
-      side_data: CrowData.Query.side_data()
-    }
-
-    CrowWeb.Endpoint.broadcast_from(self(), "uistate", "side-click", %{uistate: uistate})
-    {:noreply, assign(socket, opts)}
-  end
-
   # ----- pub-sub handlers -----
 
   def handle_info(:sidebar_tick, socket) do
-    # Oban.drain_queue(:command)
     opts =
       if socket.assigns.refresh do
         CrowWeb.Endpoint.broadcast_from(self(), "job-refresh", "sidebar-tick", %{})
@@ -131,10 +102,5 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   def handle_info(%{topic: "job-event"}, socket) do
     {:noreply, assign(socket, %{refresh: true})}
-  end
-
-  def handle_info(%{topic: "uistate-table", payload: uistate}, socket) do
-    opts = %{uistate: uistate, side_data: CrowData.Query.side_data()}
-    {:noreply, assign(socket, opts)}
   end
 end

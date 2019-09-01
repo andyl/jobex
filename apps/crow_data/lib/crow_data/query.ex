@@ -67,20 +67,10 @@ defmodule CrowData.Query do
   end
 
   defp job_alerts do
-    default_alerts = %{
-      "speed" => 0,
+    %{
+      "speed" => 10,
       "spike" => 0,
     }
-
-    # from(
-    #   j in ObanJob,
-    #   group_by: fragment("args -> 'type'"),
-    #   select: %{fragment("args -> 'type' as type") => count(j.id)}
-    # )
-    # |> Repo.all()
-    # |> merge_list()
-
-    default_alerts 
   end
 
   # ----- JOB -----
@@ -100,11 +90,13 @@ defmodule CrowData.Query do
     case uistate do
       %{field: nil, value: nil}         -> jq_all() 
       %{field: "all",     value: nil}   -> jq_all() 
+      %{field: "all",     value: ""}    -> jq_all() 
       %{field: "state",   value: state} -> jq_state(state) 
       %{field: "queue",   value: queue} -> jq_queue(queue) 
       %{field: "type",    value: type}  -> jq_type(type) 
       %{field: "secs",    value: _}     -> jq_secs()
       %{field: "command", value: cmd}   -> jq_cmd(cmd) 
+      %{field: "alert",   value: type}  -> jq_alert(type) 
     end 
     |> Repo.all()
   end
@@ -142,4 +134,13 @@ defmodule CrowData.Query do
   defp jq_cmd(cmd) do
     from(j in jq_all(), where: fragment("args->>'cmd' ilike ?", ^"%#{cmd}%"))
   end
+
+  defp jq_alert(_type) do
+  #   case type do
+  #     "speed" -> from(j in jq_all(), where: fragment("args->>'cmd' ilike ?", ^"%#{cmd}%"))
+  #     "spike" -> 
+  #   end
+    %{}
+  end
+
 end

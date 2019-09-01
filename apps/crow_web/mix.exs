@@ -37,7 +37,7 @@ defmodule CrowWeb.MixProject do
       {:phoenix_html_simplified_helpers, "~> 2.1.0"},
       # ----- phoenix view helpers
       {:phoenix_active_link, "~> 0.2.1"},
-      {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
+      {:phoenix_live_view, "~> 0.1.1"},
       # ----- util
       {:jason, "~> 1.0"},
       {:gettext, "~> 0.11"},

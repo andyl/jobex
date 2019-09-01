@@ -13,7 +13,7 @@
     <body style='padding-top: 70px;'>
 
       <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="/home">
           <img src="/images/icon.svg"></img>
           Crow
         </a>
@@ -27,7 +27,10 @@
             <%# hdr_link(@conn, "STATS", "/stats") %>
           </ul>
           <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
-            <li class="text-white"><%= live_render(@conn, CrowWeb.TimeSec) %></li>
+            <li class="text-white" style='padding-right: 10px;'><%= raw hdr_icon(@conn, "home") %></li>
+            <li class="text-white" style='padding-right: 10px;'><%= raw hdr_icon(@conn, "cal") %></li>
+            <li class="text-white" style='padding-right: 10px;'><%= raw hdr_icon(@conn, "admin") %></li>
+            <li class="text-white" style='padding-right: 10px;'><%= raw hdr_icon(@conn, "help") %></li>
           </ul>
         </div>
       </nav>
@@ -47,11 +50,9 @@
             Cron Workflow
           </div>
           <div class="col-md-4 text-center">
-            <%= link_to_unless_current(@conn, "Schedule", "/schedule") %> |
-            <%= link_to_unless_current(@conn, "Admin",    "/admin") %> 
           </div>
           <div class="col-md-4 text-right">
-            <%= Application.get_env(:crow_web, :env) |> inspect |> String.replace(":", "") |> String.capitalize() %>
+            Environment: <%= Application.get_env(:crow_web, :env) |> inspect |> String.replace(":", "") |> String.capitalize() %>
           </div>
         </div>
         </small>

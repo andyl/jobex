@@ -2,16 +2,19 @@ defmodule CrowWeb.Live.Home.Body do
   use Phoenix.LiveView
 
   alias Phoenix.HTML
+  alias CrowWeb.Router.Helpers, as: Routes
 
   def mount(session, socket) do
-    CrowWeb.Endpoint.subscribe("uistate")
     CrowWeb.Endpoint.subscribe("job-refresh")
     {:ok, assign(socket, %{uistate: session.uistate, body_data: session.body_data})}
   end
 
   def render(assigns) do
     ~L"""
-    <b><%= hdr_for(@uistate) %></b>
+    <div class='row'>
+    <div class='col-md-6'><b><%= hdr_for(@uistate) %></b></div> 
+    <div class='col-md-6 text-right'><%= live_render(@socket, CrowWeb.TimeSec) %></div>
+    </div>
     <small>
     <table class='table table-sm table-bordered'>
       <%= for job <- @body_data do %>
@@ -40,19 +43,17 @@ defmodule CrowWeb.Live.Home.Body do
     """
   end
 
-  # ----- view helpers -----
-  
-  defp tlink(uistate, field, value) do
-    if uistate == %{field: field, value: value} do
-      "<b>#{value}</b>"
-    else
-      """
-      <a href="#" phx-click="#{field}" phx-value="#{value}">
-      #{value}
-      </a>
-      """
+  # ----- table header
+
+  defp hdr_for(uistate) do
+    case uistate do
+      %{field: nil, value: nil} -> "ALL JOBS"
+      %{field: "all", value: _} -> "ALL JOBS"
+      %{field: fld, value: val} -> "#{fld} / #{val}"
     end
   end
+  
+  # ----- row style 
 
   defp dstyle(job) do
     %{
@@ -62,6 +63,23 @@ defmodule CrowWeb.Live.Home.Body do
       "executing" => "style='background-color: #dbfad2;'"
     }[job.state]
   end
+
+  # ----- table link
+
+  
+  defp tlink(uistate, field, value) do
+    if uistate == %{field: field, value: value} do
+      "<b>#{value}</b>"
+    else
+      """
+      <a href="/home?field=#{field}&value=#{value}">
+      #{value}
+      </a>
+      """
+    end
+  end
+
+  # ----- start time
 
   def dstart(job) do
     if job.attempted_at do
@@ -73,18 +91,20 @@ defmodule CrowWeb.Live.Home.Body do
     end
   end
 
+  # ----- elapsed seconds
+
   def esecs(job) do
     DateTime.diff(job.completed_at, job.attempted_at) 
   end
 
   def dsecs(uistate, job) do
     if job.completed_at do
-      secs = DateTime.diff(job.completed_at, job.attempted_at) 
+      secs = esecs(job)
       if secs >= 100 do
         if uistate == %{field: "secs", value: "99+"} do
           "<b>#{secs}</b>"
         else
-          "<a href='#' phx-click='secs' phx-value='99+'>#{secs}</a>"
+          "<a href='/home?field=alert&value=speed'>#{secs}</a>"
         end
       else
         "#{secs}"
@@ -93,6 +113,8 @@ defmodule CrowWeb.Live.Home.Body do
       "NA"
     end
   end
+
+  # ----- commands
 
   defp dcmd(uistate, job) do
     job.args["cmd"]
@@ -110,21 +132,9 @@ defmodule CrowWeb.Live.Home.Body do
       "<b>#{word}</b>"
     else
       """
-      <a href='#' phx-click="command" phx-value="#{cleanword}">#{word}</a>
+      <a href='/home?field=command&value=#{cleanword}'>#{word}</a>
       """
     end
-  end
-
-  # ----- event handlers -----
-
-  def handle_event(label, payload, socket) do
-    uistate = %{field: label, value: payload} 
-    body_data = CrowData.Query.job_query(uistate)
-    opt = %{uistate: uistate, body_data: body_data}
-
-    CrowWeb.Endpoint.broadcast_from(self(), "uistate-table", "table-click", uistate)
-
-    {:noreply, assign(socket, opt)}
   end
   
   # ----- pub/sub handlers -----
@@ -132,34 +142,8 @@ defmodule CrowWeb.Live.Home.Body do
   def handle_info(%{topic: "job-refresh"}, socket) do
     uistate = socket.assigns.uistate
 
-    opts = %{
-      body_data: CrowData.Query.job_query(uistate)
-    }
+    opts = %{body_data: CrowData.Query.job_query(uistate)}
 
     {:noreply, assign(socket, opts)}
-  end
-
-  def handle_info(broadcast, socket) do
-    uistate = broadcast.payload.uistate
-
-    opts =
-      if broadcast.payload.uistate do
-        %{
-          uistate: uistate,
-          body_data: CrowData.Query.job_query(uistate)
-        }
-      else
-        %{}
-      end
-
-    {:noreply, assign(socket, opts)}
-  end
-
-  defp hdr_for(uistate) do
-    case uistate do
-      %{field: nil, value: nil} -> "ALL JOBS"
-      %{field: "all", value: ___} -> "ALL JOBS"
-      %{field: fld, value: val} -> "#{fld} / #{val}"
-    end
   end
 end

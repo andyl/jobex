@@ -21,9 +21,10 @@ defmodule CrowWeb.Router do
     get "/jobs/:id", HomeController, :jobs
     get "/schedule", HomeController, :schedule
     get "/admin",    HomeController, :admin
+    get "/help",     HomeController, :help
 
-    # live "/home", Home
-    live "/demo", Demo
+    live "/home", Live.Home
+    live "/demo", Live.Demo
   end
 
   scope "/api", CrowWeb do
