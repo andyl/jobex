@@ -84,5 +84,6 @@
 
 - [ ] Installation: Setup Script - SystemD Service Initiation
 - [ ] Installation: Setup Script - DB create / DB migrate
+- [ ] Installation: Add deb package
 
 - [ ] Misc: Email Notification
