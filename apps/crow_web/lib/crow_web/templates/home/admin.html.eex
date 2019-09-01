@@ -1,2 +1,2 @@
 <h3>ADMIN</h3>
-ADMIN text here.  <i class="fa fa-thumbs-up"></i>
+<%= live_render(@conn, CrowWeb.Live.Admin.Base) %>

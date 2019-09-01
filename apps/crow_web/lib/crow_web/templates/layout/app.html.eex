@@ -47,10 +47,11 @@
             Cron Workflow
           </div>
           <div class="col-md-4 text-center">
-            <%= Application.get_env(:crow_web, :env) |> inspect |> String.replace(":", "") |> String.capitalize() %>
+            <%= link_to_unless_current(@conn, "Schedule", "/schedule") %> |
+            <%= link_to_unless_current(@conn, "Admin",    "/admin") %> 
           </div>
           <div class="col-md-4 text-right">
-            <a href="/schedule">Schedule</a>
+            <%= Application.get_env(:crow_web, :env) |> inspect |> String.replace(":", "") |> String.capitalize() %>
           </div>
         </div>
         </small>

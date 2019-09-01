@@ -16,4 +16,14 @@ defmodule CrowWeb.LayoutView do
     </li>
     """
   end
+
+  def link_to_unless_current(conn, lbl, path) do
+    if Phoenix.Controller.current_path(conn, %{}) == path do
+      lbl
+    else
+      ~e"""
+        <a href="<%= path %>"><%= lbl %></a>
+      """
+    end
+  end
 end

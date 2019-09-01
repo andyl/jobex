@@ -55,17 +55,17 @@
 
 - [x] Home: add alerts section
 - [x] Home: reduce sidebar-link padding
-
-- [ ] Admin: Add admin page
-- [ ] Admin: Clear all records
-- [ ] Layout: Add admin link
-- [ ] Layout: Add graph link
-
-## TBD
+- [x] Admin: Add admin page
+- [x] Layout: Add admin link
+- [x] Layout: Add graph link
+- [x] Admin: Clear all records
 
 - [ ] Home: move to a live-link route
 - [ ] Home: Back-button for live-links
 - [ ] Home: Paging with left-right keys for job list
+
+## TBD
+
 - [ ] Home: run now button
 
 - [ ] Job: job navigation (next/prev, sparklines)
