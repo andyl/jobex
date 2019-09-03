@@ -28,6 +28,7 @@
           </ul>
           <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
             <li class="text-white" style='padding-right: 10px;'><%= raw hdr_icon(@conn, "home") %></li>
+            <li class="text-white" style='padding-right: 10px;'><%= raw hdr_icon(@conn, "chart") %></li>
             <li class="text-white" style='padding-right: 10px;'><%= raw hdr_icon(@conn, "cal") %></li>
             <li class="text-white" style='padding-right: 10px;'><%= raw hdr_icon(@conn, "admin") %></li>
             <li class="text-white" style='padding-right: 10px;'><%= raw hdr_icon(@conn, "help") %></li>

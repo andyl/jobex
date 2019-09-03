@@ -30,19 +30,19 @@ defmodule CrowWeb.LayoutView do
   def hdr_icon(conn, lbl) do
     {path, icon_type} =
       case lbl do
-        "home"   -> {"/home", "home"}
-        "help"   -> {"/help", "question-circle"}
-        "admin"  -> {"/admin", "cog"}
+        "home"   -> {"/home",     "home"}
+        "help"   -> {"/help",     "question-circle"}
+        "admin"  -> {"/admin",    "cog"}
         "cal"    -> {"/schedule", "calendar"}
+        "chart"  -> {"http://hana:3030/d/Pc0ZYbKWk/cron", "chart-line"}
       end
     icon_html = "<i class='fa fa-#{icon_type}'></i>"
 
     if is_current(conn, path) do
       icon_html
     else
-      ~e"""
-      <a href='<%= path %>'><%= raw icon_html %></a>
-      """
+      tgt = if String.contains?(path, "hana"), do: "target='_blank'", else: ""
+      "<a href='#{path}' #{tgt}>#{icon_html}</a>"
     end
   end
 
