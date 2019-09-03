@@ -86,8 +86,12 @@
 - [x] Build path generators
 - [x] Build link generators
 - [x] Working UpArrow/DownArrow to navigate sidebar
+- [x] Add line chart icon
 
 ## TBD
+
+- [ ] Test: Unit Tests
+- [ ] Test: Hound Tests
 
 - [ ] Home: Run now button
 
