@@ -110,7 +110,7 @@ defmodule CrowWeb.Live.Home.Sidebar do
   def sidebar_up(assigns) do
     current = [assigns.uistate.field, assigns.uistate.value]
     pairs = sidebar_pairs(assigns)
-    cindx = Enum.find_index(pairs, &(&1 == current))
+    cindx = Enum.find_index(pairs, &(&1 == current)) || 0
     nindx = Enum.max([cindx - 1, 0])
     Enum.at(pairs, nindx)
   end
@@ -119,7 +119,7 @@ defmodule CrowWeb.Live.Home.Sidebar do
     current = current_pair(assigns)
     pairs = sidebar_pairs(assigns)
     maxln = Enum.count(pairs) - 1
-    cindx = Enum.find_index(pairs, &(&1 == current))
+    cindx = Enum.find_index(pairs, &(&1 == current)) || 0
     nindx = Enum.min([cindx + 1, maxln])
     Enum.at(pairs, nindx)
   end
