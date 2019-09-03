@@ -112,16 +112,17 @@ defmodule CrowData.Query do
 
   # ----- BODY DATA -----
 
-  def job_data(uistate \\ %{field: nil, value: nil, page: 1}) do
-    case uistate do
-      %{field: nil} -> uistate |> jdata_all()
-      %{field: ""} -> uistate |> jdata_all()
-      %{field: "all"} -> uistate |> jdata_all()
-      %{field: "state"} -> uistate |> jdata_state()
-      %{field: "queue"} -> uistate |> jdata_queue()
-      %{field: "type"} -> uistate |> jdata_type()
-      %{field: "command"} -> uistate |> jdata_command()
-      %{field: "alert"} -> uistate |> jdata_alert()
+  def job_data(uistate \\ %{field: "all", value: "na", page: 1}) do
+    x_uistate = Map.merge(%{field: "all", value: "na", page: 1}, uistate)
+    case x_uistate do
+      %{field: nil}       -> x_uistate |> jdata_all()
+      %{field: ""}        -> x_uistate |> jdata_all()
+      %{field: "all"}     -> x_uistate |> jdata_all()
+      %{field: "state"}   -> x_uistate |> jdata_state()
+      %{field: "queue"}   -> x_uistate |> jdata_queue()
+      %{field: "type"}    -> x_uistate |> jdata_type()
+      %{field: "command"} -> x_uistate |> jdata_command()
+      %{field: "alert"}   -> x_uistate |> jdata_alert()
     end
     |> Repo.all()
   end

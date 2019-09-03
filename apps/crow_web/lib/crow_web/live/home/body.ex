@@ -57,7 +57,7 @@ defmodule CrowWeb.Live.Home.Body do
     <ul class="pagination justify-content-center">
     <%= raw pg_prev_links(assigns) %>
     <li class="page-item disabled">
-    <a class="page-link" href='#'>page <%= pg_msg(@uistate.page, @num_pages) %></a>
+    <a class="page-link" href='#'>page <%= pg_msg(@uistate[:page] || 1, @num_pages) %></a>
     </li>
     <%= raw pg_next_links(assigns) %>
     </ul>
@@ -152,7 +152,7 @@ defmodule CrowWeb.Live.Home.Body do
   # ----- pagination helpers -----
   
   defp path_for(uistate) do
-    "/home?field=#{uistate.field}&value=#{uistate.value}&page=#{uistate.page}"
+    "/home?field=#{uistate.field}&value=#{uistate.value}&page=#{uistate[:page] || 1}"
   end
 
   def my_live_link(lbl, path) do
@@ -169,7 +169,7 @@ defmodule CrowWeb.Live.Home.Body do
   end
 
   def page_link_for("page_dec", assigns) do
-    oldpage = assigns.uistate.page
+    oldpage = assigns.uistate[:page] || 1
     newpage = Enum.max([oldpage - 1, 1])
     newstate = Map.merge(assigns.uistate, %{page: newpage})
     my_live_link("<", path_for(newstate))
@@ -177,7 +177,7 @@ defmodule CrowWeb.Live.Home.Body do
 
   def page_link_for("page_inc", assigns) do
     num_pages = assigns.num_pages
-    oldpage   = assigns.uistate.page 
+    oldpage   = assigns.uistate[:page] || 1
     newpage   = Enum.min([oldpage + 1, num_pages])
     newstate  = Map.merge(assigns.uistate, %{page: newpage})
     my_live_link(">", path_for(newstate))
@@ -218,7 +218,8 @@ defmodule CrowWeb.Live.Home.Body do
   end
 
   defp pg_prev_links(assigns) do
-    if assigns.uistate.page == 1 || assigns.num_pages == 0 do
+    page = assigns.uistate[:page] || 1
+    if page == 1 || assigns.num_pages == 0 do
     """
     <li class="page-item disabled"><a class="page-link" href='#'><<</a></li>
     <li class="page-item disabled"><a class="page-link" href='#'><</a></li>
@@ -232,7 +233,8 @@ defmodule CrowWeb.Live.Home.Body do
   end
 
   defp pg_next_links(assigns) do
-    if assigns.uistate.page == assigns.num_pages || assigns.num_pages == 0 do
+    page = assigns.uistate[:page] || 1
+    if page == assigns.num_pages || assigns.num_pages == 0 do
     """
     <li class="page-item disabled"><a class="page-link" href='#'>></a></li>
     <li class="page-item disabled"><a class="page-link" href='#'>>></a></li>
@@ -248,7 +250,7 @@ defmodule CrowWeb.Live.Home.Body do
   # ----- keyboard event handlers -----
 
   def handle_event("keydown", "ArrowLeft", socket) do
-    oldpage = socket.assigns.uistate.page
+    oldpage = socket.assigns.uistate[:page] || 1
     newpage = Enum.max([oldpage - 1, 1])
     newstate = Map.merge(socket.assigns.uistate, %{page: newpage})
     newpath   = %{newpath: path_for(newstate)}
@@ -260,7 +262,7 @@ defmodule CrowWeb.Live.Home.Body do
 
   def handle_event("keydown", "ArrowRight", socket) do
     num_pages = socket.assigns.num_pages
-    oldpage   = socket.assigns.uistate.page 
+    oldpage   = socket.assigns.uistate[:page] || 1
     newpage   = Enum.min([oldpage + 1, num_pages])
     newstate  = Map.merge(socket.assigns.uistate, %{page: newpage})
     newpath   = %{newpath: path_for(newstate)}

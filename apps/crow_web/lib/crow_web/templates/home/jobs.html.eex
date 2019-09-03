@@ -5,7 +5,7 @@
   <tr>
   <td><b>Queue</b>: <%= @job.queue %></td>
   <td><b>Cmd</b>: <%= @job.args["cmd"] %></td>
-  <td><b>Start</b>: <%= CrowWeb.Live.Home.Body.dstart(@job) %></td>
+  <td><b>Start</b>: <%= CrowWeb.Live.Home.Body.tbl_start(@job) %></td>
   </tr>
   <tr>
   <td><b>Type</b>: <%= @job.args["type"] %></td>
