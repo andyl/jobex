@@ -23,7 +23,7 @@ defmodule CrowWeb.Live.Home.Body do
 
   def render(assigns) do
     ~L"""
-    <div class='row'>
+    <div class='row' phx-keydown='keydown' phx-target='window'>
     <div class='col-md-6'>
     <b><%= page_hdr_for(@uistate) %></b>
     </div> 
@@ -32,7 +32,7 @@ defmodule CrowWeb.Live.Home.Body do
     </div>
     </div>
     <small>
-    <table class='table table-sm table-bordered' phx-keydown='keydown' phx-target='window' style='margin-bottom: 30px;'>
+    <table class='table table-sm table-bordered' style='margin-bottom: 20px;'>
       <%= for job <- @body_data do %>
         <tr <%= raw tbl_rowstyle(job) %>>
           <td> 
@@ -55,7 +55,7 @@ defmodule CrowWeb.Live.Home.Body do
         </tr>
       <% end %>
     </table>
-    <nav area-label="pagination">
+    <nav area-label="pagination" style='padding-bottom: 5px;'>
     <ul class="pagination justify-content-center">
     <%= raw pg_prev_links(assigns) %>
     <li class="page-item disabled">

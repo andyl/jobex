@@ -42,9 +42,8 @@
           <p class="alert alert-danger" role="alert"><%= error_msg %></p>
         <% end %>
         <%= render @view_module, @view_template, assigns %>
-        <hr/>
         <small>
-        <div class="row" style='margin-top: 0; padding-top: 0;'>
+        <div class="row" style='margin-top: 0; padding-top: 20px; border-top: 1px solid lightgray;'>
           <div class="col-md-4">
             Cron Workflow
           </div>

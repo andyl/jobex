@@ -13,6 +13,7 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   def render(assigns) do
     ~L"""
+    <div phx-keydown='keydown' phx-target='window'></div>
     <%= raw all_for(@uistate, @sidebar_count) %>
     <hr/>
     <b>States</b>
@@ -51,18 +52,10 @@ defmodule CrowWeb.Live.Home.Sidebar do
     </ul>
     <nav area-label="pagination" style='padding-top: 30px;'>
     <ul class="pagination justify-content-center">
-    <li class="page-item">
-    <a class="page-link" href='#'><i class='fa fa-angle-double-up'></i></a>
-    </li>
-    <li class="page-item">
-    <a class="page-link" href='#'><i class='fa fa-angle-up'></i></a>
-    </li>
-    <li class="page-item">
-    <a class="page-link" href='#'><i class='fa fa-angle-down'></i></a>
-    </li>
-    <li class="page-item">
-    <a class="page-link" href='#'><i class='fa fa-angle-double-down'></i></a>
-    </li>
+    <%= raw sidebar_top_lnk(assigns) %>
+    <%= raw sidebar_up_lnk(assigns) %>
+    <%= raw sidebar_dn_lnk(assigns) %>
+    <%= raw sidebar_btm_lnk(assigns) %>
     </ul>
     </nav>
     </small>
@@ -101,38 +94,107 @@ defmodule CrowWeb.Live.Home.Sidebar do
   # ----- navigation helpers -----
 
   def sidebar_pairs(assigns) do
-    counts = Map.drop(assigns.sidebar_count, [:all_count])
-  end
-
-  def sidebar_next(assigns, current) do
-  end
-
-  def sidebar_prev(assigns, current) do
+    base = [:state_count, :queue_count, :type_count, :alert_count]
+    |> Enum.map(&({&1, Map.keys(assigns.sidebar_count[&1])}))
+    |> Enum.reduce([], fn({k,v}, acc)-> acc |> Enum.concat(Enum.map(v, &([k, &1]))) end)
+    |> Enum.map(fn([k, v])-> [Atom.to_string(k) |> String.replace("_count", ""), v] end)
+    [["all", "na"]] ++ base
   end
 
   def sidebar_top(assigns) do
+    assigns
+    |> sidebar_pairs()
+    |> List.first()
   end
 
   def sidebar_up(assigns) do
+    current = [assigns.uistate.field, assigns.uistate.value]
+    pairs = sidebar_pairs(assigns)
+    cindx = Enum.find_index(pairs, &(&1 == current))
+    nindx = Enum.max([cindx - 1, 0])
+    Enum.at(pairs, nindx)
   end
 
   def sidebar_dn(assigns) do
+    current = current_pair(assigns)
+    pairs = sidebar_pairs(assigns)
+    maxln = Enum.count(pairs) - 1
+    cindx = Enum.find_index(pairs, &(&1 == current))
+    nindx = Enum.min([cindx + 1, maxln])
+    Enum.at(pairs, nindx)
   end
 
   def sidebar_btm(assigns) do
+    assigns
+    |> sidebar_pairs()
+    |> List.last()
   end
 
   def sidebar_top_lnk(assigns) do
+    new = sidebar_top(assigns)
+    old = current_pair(assigns)
+    link_for("<i class='fa fa-angle-double-up'></i>", new, new == old)
   end
 
   def sidebar_up_lnk(assigns) do
+    new = sidebar_up(assigns)
+    old = current_pair(assigns)
+    link_for("<i class='fa fa-angle-up'></i>", new, new == old)
   end
 
   def sidebar_dn_lnk(assigns) do
+    new = sidebar_dn(assigns)
+    old = current_pair(assigns)
+    link_for("<i class='fa fa-angle-down'></i>", new, new == old)
   end
 
   def sidebar_btm_lnk(assigns) do
+    new = sidebar_btm(assigns)
+    old = current_pair(assigns)
+    link_for("<i class='fa fa-angle-double-down'></i>", new, new == old)
   end
+
+  def current_pair(assigns) do
+    [assigns.uistate.field, assigns.uistate.value]
+  end
+
+  def path_for([field, value]), do: "/home?field=#{field}&value=#{value}&page=1"
+
+  def link_for(lbl, [field, value], disabled) do
+    distxt = if disabled, do: "disabled", else: ""
+    path = path_for([field, value])
+    """
+    <li class="page-item #{distxt}">
+    <a class="page-link" href="#{path}" to="#{path}" data-phx-live-link="push">
+    #{lbl}
+    </a>
+    </li>
+    """
+  end
+
+  # ----- keyboard event handlers -----
+
+  def handle_event("keydown", "ArrowUp", socket) do
+    new = sidebar_up(socket.assigns)
+    old = current_pair(socket.assigns)
+    if new != old do
+      newpath = %{newpath: path_for(new)}
+      CrowWeb.Endpoint.broadcast_from(self(), "arrow-key", "page-nav", newpath)
+    end
+    {:noreply, socket}
+  end
+
+  def handle_event("keydown", "ArrowDown", socket) do
+    new = sidebar_dn(socket.assigns)
+    old = current_pair(socket.assigns)
+    if new != old do
+      newpath = %{newpath: path_for(new)}
+      CrowWeb.Endpoint.broadcast_from(self(), "arrow-key", "page-nav", newpath)
+    end
+    {:noreply, socket}
+  end
+
+  def handle_event("keydown", _alt, socket), do: {:noreply, socket}
 
   # ----- pub-sub handlers -----
 

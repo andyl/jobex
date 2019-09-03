@@ -70,14 +70,26 @@
 - [x] Home: Add pagination HTML
 - [x] Home: Add pagination state (home, body)
 - [x] Home: Generate pagination html (body)
+
+## 2019 Sep 02 Mon
+
 - [x] Home: Add pagination left-right keys
 - [x] Home: Add pagination queries
 - [x] Get PushState working with Pagination
 - [x] Fix intermittent clock timeout 
+- [x] Build the up/down nav bar
+
+## 2019 Sep 02 Tue
+
+- [x] Build sidebar list generator
+- [x] Build sidebar up/dn/top/btm function
+- [x] Build path generators
+
+- [x] Build link generators
+
+- [ ] Working UpArrow/DownArrow to navigate sidebar
 
 ## TBD
-
-- [ ] UpArrow/DownArrow to navigate sidebar
 
 - [ ] Home: Run now button
 
