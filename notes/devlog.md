@@ -84,16 +84,15 @@
 - [x] Build sidebar list generator
 - [x] Build sidebar up/dn/top/btm function
 - [x] Build path generators
-
 - [x] Build link generators
-
-- [ ] Working UpArrow/DownArrow to navigate sidebar
+- [x] Working UpArrow/DownArrow to navigate sidebar
 
 ## TBD
 
 - [ ] Home: Run now button
 
-- [ ] Change from Porcelain to Rambo
+- [ ] Runner: Change from Porcelain to Rambo
+- [ ] Runner: Create remote runner
 
 - [ ] Job: job navigation (next/prev, sparklines)
 - [ ] Job: run now button
