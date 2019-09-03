@@ -3,6 +3,7 @@ defmodule CrowWeb.Live.Home do
 
   def mount(_session, socket) do
     CrowWeb.Endpoint.subscribe("arrow-key")
+    :timer.apply_interval(1000, CrowWeb.Endpoint, :broadcast_from, [self(), "time-tick", "home", %{}])
     {:ok, socket}
   end
 

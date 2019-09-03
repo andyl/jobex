@@ -12,7 +12,6 @@ defmodule CrowWeb.TimeSec do
   end
 
   def mount(_session, socket) do
-    :timer.sleep(500)
     :timer.send_interval(1000, self(), :tick)
     {:ok, assign(socket, date: ldate())}
   end

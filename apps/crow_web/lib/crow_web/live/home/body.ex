@@ -7,6 +7,7 @@ defmodule CrowWeb.Live.Home.Body do
 
   def mount(session, socket) do
     CrowWeb.Endpoint.subscribe("job-refresh")
+    CrowWeb.Endpoint.subscribe("time-tick")
     job_count = job_count(session.uistate)
     uistate = session.uistate
 
@@ -15,6 +16,7 @@ defmodule CrowWeb.Live.Home.Body do
       uistate:   uistate,
       job_count: job_count,
       num_pages: num_pages(job_count),
+      timestamp: hdr_timestamp()
     }
     {:ok, assign(socket, opts)}
   end
@@ -26,7 +28,7 @@ defmodule CrowWeb.Live.Home.Body do
     <b><%= page_hdr_for(@uistate) %></b>
     </div> 
     <div class='col-md-6 text-right'>
-    <%= live_render(@socket, CrowWeb.TimeSec) %>
+    <%= @timestamp %>
     </div>
     </div>
     <small>
@@ -74,6 +76,11 @@ defmodule CrowWeb.Live.Home.Body do
       %{field: "all", value: _} -> "ALL JOBS"
       %{field: fld, value: val} -> "#{fld} / #{val}"
     end
+  end
+
+  defp hdr_timestamp do
+    Timex.now("US/Pacific")
+    |> Timex.format!("%Y %b %d | %H:%M:%S", :strftime)
   end
   
   # ----- table helpers -----
@@ -287,5 +294,10 @@ defmodule CrowWeb.Live.Home.Body do
     }
 
     {:noreply, assign(socket, opts)}
+  end
+
+  def handle_info(%{topic: "time-tick"}, socket) do
+    new_timestamp = hdr_timestamp()
+    {:noreply, assign(socket, %{timestamp: new_timestamp})}
   end
 end

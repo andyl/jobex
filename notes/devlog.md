@@ -73,10 +73,10 @@
 - [x] Home: Add pagination left-right keys
 - [x] Home: Add pagination queries
 - [x] Get PushState working with Pagination
+- [x] Fix intermittent clock timeout 
 
 ## TBD
 
-- [ ] Fix intermittent clock timeout 
 - [ ] UpArrow/DownArrow to navigate sidebar
 
 - [ ] Home: Run now button

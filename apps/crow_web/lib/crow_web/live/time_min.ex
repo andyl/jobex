@@ -2,15 +2,15 @@ defmodule CrowWeb.TimeMin do
   use Phoenix.LiveView
   use Timex
 
+  def mount(_session, socket) do
+    :timer.send_interval(10000, self(), :tick)
+    {:ok, assign(socket, date: ldate())}
+  end
+
   def render(assigns) do
     ~L"""
     <%= @date %>
     """
-  end
-
-  def mount(_session, socket) do
-    :timer.send_interval(10000, self(), :tick)
-    {:ok, assign(socket, date: ldate())}
   end
 
   def handle_info(:tick, socket) do
