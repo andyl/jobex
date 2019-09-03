@@ -67,16 +67,17 @@
 - [x] Home: move from /home to /
 - [x] Finish alert queries
 - [x] Convert time-links to emit alert links
-
 - [x] Home: Add pagination HTML
 - [x] Home: Add pagination state (home, body)
 - [x] Home: Generate pagination html (body)
 - [x] Home: Add pagination left-right keys
-
-- [ ] Home: Add pagination queries
-- [ ] Get PushState working with Pagination
+- [x] Home: Add pagination queries
+- [x] Get PushState working with Pagination
 
 ## TBD
+
+- [ ] Fix intermittent clock timeout 
+- [ ] UpArrow/DownArrow to navigate sidebar
 
 - [ ] Home: Run now button
 

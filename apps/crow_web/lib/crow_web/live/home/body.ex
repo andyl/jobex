@@ -4,7 +4,6 @@ defmodule CrowWeb.Live.Home.Body do
   import Phoenix.HTML
 
   alias CrowWeb.Util
-  alias Phoenix.HTML.SimplifiedHelpers.Truncate
 
   def mount(session, socket) do
     CrowWeb.Endpoint.subscribe("job-refresh")
@@ -13,7 +12,7 @@ defmodule CrowWeb.Live.Home.Body do
 
     opts = %{
       body_data: CrowData.Query.job_data(uistate),
-      uistate: uistate,
+      uistate:   uistate,
       job_count: job_count,
       num_pages: num_pages(job_count),
     }
@@ -24,7 +23,7 @@ defmodule CrowWeb.Live.Home.Body do
     ~L"""
     <div class='row'>
     <div class='col-md-6'>
-    <b><%= hdr_for(@uistate) %></b>
+    <b><%= page_hdr_for(@uistate) %></b>
     </div> 
     <div class='col-md-6 text-right'>
     <%= live_render(@socket, CrowWeb.TimeSec) %>
@@ -33,41 +32,124 @@ defmodule CrowWeb.Live.Home.Body do
     <small>
     <table class='table table-sm table-bordered' phx-keydown='keydown' phx-target='window' style='margin-bottom: 30px;'>
       <%= for job <- @body_data do %>
-        <tr <%= raw dstyle(job) %>>
+        <tr <%= raw tbl_rowstyle(job) %>>
           <td> 
           <a href="/jobs/<%= job.id %>">
           <%= job.id %>
           </a>
           </td>
           <td> 
-            <%= raw tlink(@uistate, "state", job.state) %>
+            <%= raw tbl_cell(@uistate, "state", job.state) %>
           </td>
           <td>
-            <%= raw tlink(@uistate, "queue", job.queue) %>
+            <%= raw tbl_cell(@uistate, "queue", job.queue) %>
           </td>
           <td> 
-            <%= raw tlink(@uistate, "type", job.args["type"]) %>
+            <%= raw tbl_cell(@uistate, "type", job.args["type"]) %>
           </td>
-          <td><%= dstart(job) %></td>
-          <td align='right'><%= raw dsecs(@uistate, job) %></td>
-          <td><%= raw dcmd(@uistate, job) %></td>
+          <td><%= tbl_start(job) %></td>
+          <td align='right'><%= raw tbl_secs(@uistate, job) %></td>
+          <td><%= raw tbl_cmd(@uistate, job) %></td>
         </tr>
       <% end %>
     </table>
     <nav area-label="pagination">
     <ul class="pagination justify-content-center">
-    <%= raw prev_links(assigns) %>
+    <%= raw pg_prev_links(assigns) %>
     <li class="page-item disabled">
     <a class="page-link" href='#'>page <%= pg_msg(@uistate.page, @num_pages) %></a>
     </li>
-    <%= raw next_links(assigns) %>
+    <%= raw pg_next_links(assigns) %>
     </ul>
     </nav>
     </small>
     """
   end
 
-  # ----- event handlers -----
+  # ----- page_hdr helper -----
+
+  defp page_hdr_for(uistate) do
+    case uistate do
+      %{field: nil, value: nil} -> "ALL JOBS"
+      %{field: "all", value: _} -> "ALL JOBS"
+      %{field: fld, value: val} -> "#{fld} / #{val}"
+    end
+  end
+  
+  # ----- table helpers -----
+
+  defp tbl_rowstyle(job) do
+    %{
+      "discarded" => "style='background-color: #ffb3a7;'",
+      "retryable" => "style='background-color: #ffc673;'",
+      "available" => "style='background-color: lightyellow;'",
+      "executing" => "style='background-color: #dbfad2;'"
+    }[job.state]
+  end
+
+  defp tbl_cell(uistate, field, value) do
+    if uistate == %{field: field, value: value} do
+      "<b>#{value}</b>"
+    else
+      """
+      <a href="/home?field=#{field}&value=#{value}">
+      #{value}
+      </a>
+      """
+    end
+  end
+
+  def tbl_start(job) do
+    if job.attempted_at do
+      job.attempted_at
+      |> Timex.Timezone.convert("PDT")
+      |> Timex.Format.DateTime.Formatters.Strftime.format!("%m-%d %H:%M")
+    else
+      nil
+    end
+  end
+
+  def esecs(job), do: DateTime.diff(job.completed_at, job.attempted_at) 
+
+  def tbl_secs(uistate, job) do
+    if job.completed_at do
+      secs = esecs(job)
+      if secs >= 100 do
+        if uistate == %{field: "alert", value: "speed"} do
+          "<b>#{secs}</b>"
+        else
+          "<a href='/home?field=alert&value=speed'>#{secs}</a>"
+        end
+      else
+        "#{secs}"
+      end
+    else
+      "NA"
+    end
+  end
+
+  defp tbl_cmd(uistate, job) do
+    job.args["cmd"]
+    |> Phoenix.HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
+    |> String.split(" ")
+    |> Enum.map(&(cmd_link(uistate, &1)))
+    |> Enum.join(" ")
+  end
+
+  defp cmd_link(uistate, word) do
+    cleanword =
+      word
+      |> String.replace("...", "")
+    if uistate == %{field: "command", value: cleanword} do
+      "<b>#{word}</b>"
+    else
+      """
+      <a href='/home?field=command&value=#{cleanword}'>#{word}</a>
+      """
+    end
+  end
+
+  # ----- pagination helpers -----
   
   defp path_for(uistate) do
     "/home?field=#{uistate.field}&value=#{uistate.value}&page=#{uistate.page}"
@@ -106,99 +188,7 @@ defmodule CrowWeb.Live.Home.Body do
     newstate = Map.merge(assigns.uistate, %{page: num_pages})
     my_live_link(">>", path_for(newstate))
   end
-
-  def handle_event("keydown", "ArrowLeft", socket) do
-    oldpage = socket.assigns.uistate.page
-    newpage = Enum.max([oldpage - 1, 1])
-    newstate = Map.merge(socket.assigns.uistate, %{page: newpage})
-    {:noreply, live_redirect(socket, path_for(newstate))}
-  end
-
-  def handle_event("keydown", "ArrowRight", socket) do
-    handle_event("page_dec", "na", socket)
-  end
-
-  def handle_event("keydown", _alt, socket) do
-    {:noreply, socket}
-  end
-
-  # ----- table header
-
-  defp hdr_for(uistate) do
-    case uistate do
-      %{field: nil, value: nil} -> "ALL JOBS"
-      %{field: "all", value: _} -> "ALL JOBS"
-      %{field: fld, value: val} -> "#{fld} / #{val}"
-    end
-  end
   
-  # ----- row style 
-
-  defp dstyle(job) do
-    %{
-      "discarded" => "style='background-color: #ffb3a7;'",
-      "retryable" => "style='background-color: #ffc673;'",
-      "available" => "style='background-color: lightyellow;'",
-      "executing" => "style='background-color: #dbfad2;'"
-    }[job.state]
-  end
-
-  # ----- table link
-  
-  defp tlink(uistate, field, value) do
-    if uistate == %{field: field, value: value} do
-      "<b>#{value}</b>"
-    else
-      """
-      <a href="/home?field=#{field}&value=#{value}">
-      #{value}
-      </a>
-      """
-    end
-  end
-
-  # ----- start time
-
-  def dstart(job) do
-    if job.attempted_at do
-      job.attempted_at
-      |> Timex.Timezone.convert("PDT")
-      |> Timex.Format.DateTime.Formatters.Strftime.format!("%m-%d %H:%M")
-    else
-      nil
-    end
-  end
-
-  # ----- elapsed seconds
-
-  def esecs(job) do
-    DateTime.diff(job.completed_at, job.attempted_at) 
-  end
-
-  def dsecs(uistate, job) do
-    if job.completed_at do
-      secs = esecs(job)
-      if secs >= 100 do
-        if uistate == %{field: "alert", value: "speed"} do
-          "<b>#{secs}</b>"
-        else
-          "<a href='/home?field=alert&value=speed'>#{secs}</a>"
-        end
-      else
-        "#{secs}"
-      end
-    else
-      "NA"
-    end
-  end
-
-  # ----- paging
-  
-  defp pg_msg(page, num_pages) do
-    numpg = if num_pages == 0, do: 0, else: page
-    "#{numpg} of #{num_pages}"
-  end
-
   defp job_count(uistate) do
     case uistate.field do
       nil       -> CrowData.Query.all_count()
@@ -222,7 +212,12 @@ defmodule CrowWeb.Live.Home.Body do
     end
   end
 
-  defp prev_links(assigns) do
+  defp pg_msg(page, num_pages) do
+    numpg = if num_pages == 0, do: 0, else: page
+    "#{numpg} of #{num_pages}"
+  end
+
+  defp pg_prev_links(assigns) do
     if assigns.uistate.page == 1 || assigns.num_pages == 0 do
     """
     <li class="page-item disabled"><a class="page-link" href='#'><<</a></li>
@@ -236,7 +231,7 @@ defmodule CrowWeb.Live.Home.Body do
     end
   end
 
-  defp next_links(assigns) do
+  defp pg_next_links(assigns) do
     if assigns.uistate.page == assigns.num_pages || assigns.num_pages == 0 do
     """
     <li class="page-item disabled"><a class="page-link" href='#'>></a></li>
@@ -250,28 +245,32 @@ defmodule CrowWeb.Live.Home.Body do
     end
   end
 
-  # ----- commands
+  # ----- keyboard event handlers -----
 
-  defp dcmd(uistate, job) do
-    job.args["cmd"]
-    |> HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
-    |> String.split(" ")
-    |> Enum.map(&(cmd_link(uistate, &1)))
-    |> Enum.join(" ")
-  end
-
-  defp cmd_link(uistate, word) do
-    cleanword =
-      word
-      |> String.replace("...", "")
-    if uistate == %{field: "command", value: cleanword} do
-      "<b>#{word}</b>"
-    else
-      """
-      <a href='/home?field=command&value=#{cleanword}'>#{word}</a>
-      """
+  def handle_event("keydown", "ArrowLeft", socket) do
+    oldpage = socket.assigns.uistate.page
+    newpage = Enum.max([oldpage - 1, 1])
+    newstate = Map.merge(socket.assigns.uistate, %{page: newpage})
+    newpath   = %{newpath: path_for(newstate)}
+    if newpage != oldpage do
+      CrowWeb.Endpoint.broadcast_from(self(), "arrow-key", "page-nav", newpath)
     end
+    {:noreply, socket}
   end
+
+  def handle_event("keydown", "ArrowRight", socket) do
+    num_pages = socket.assigns.num_pages
+    oldpage   = socket.assigns.uistate.page 
+    newpage   = Enum.min([oldpage + 1, num_pages])
+    newstate  = Map.merge(socket.assigns.uistate, %{page: newpage})
+    newpath   = %{newpath: path_for(newstate)}
+    if newpage != oldpage do
+      CrowWeb.Endpoint.broadcast_from(self(), "arrow-key", "page-nav", newpath)
+    end
+    {:noreply, socket}
+  end
+
+  def handle_event("keydown", _alt, socket), do: {:noreply, socket}
   
   # ----- pub/sub handlers -----
 
@@ -287,5 +286,4 @@ defmodule CrowWeb.Live.Home.Body do
 
     {:noreply, assign(socket, opts)}
   end
-
 end

@@ -2,6 +2,7 @@ defmodule CrowWeb.Live.Home do
   use Phoenix.LiveView
 
   def mount(_session, socket) do
+    CrowWeb.Endpoint.subscribe("arrow-key")
     {:ok, socket}
   end
 
@@ -30,6 +31,14 @@ defmodule CrowWeb.Live.Home do
 
     {:noreply, assign(socket, %{uistate: uistate})}
   end
+
+  # ----- pub/sub handlers -----
+
+  def handle_info(%{topic: "arrow-key", payload: payload}, socket) do
+    {:noreply, Phoenix.LiveView.live_redirect(socket, to: payload.newpath, replace: true)}
+  end
+
+  # ----- helpers -----
 
   defp to_int(nil), do: 1
   defp to_int(arg) when is_integer(arg), do: arg
