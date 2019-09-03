@@ -95,7 +95,7 @@ defmodule CrowWeb.Live.Home.Body do
   end
 
   defp tbl_cell(uistate, field, value) do
-    if uistate == %{field: field, value: value} do
+    if {uistate.field, uistate.value} == {field, value} do
       "<b>#{value}</b>"
     else
       """
@@ -122,7 +122,7 @@ defmodule CrowWeb.Live.Home.Body do
     if job.completed_at do
       secs = esecs(job)
       if secs >= 100 do
-        if uistate == %{field: "alert", value: "speed"} do
+        if {uistate.field, uistate.value} == {"alert", "speed"} do
           "<b>#{secs}</b>"
         else
           "<a href='/home?field=alert&value=speed'>#{secs}</a>"
@@ -147,7 +147,7 @@ defmodule CrowWeb.Live.Home.Body do
     cleanword =
       word
       |> String.replace("...", "")
-    if uistate == %{field: "command", value: cleanword} do
+    if {uistate.field, uistate.value} == {"command", cleanword} do
       "<b>#{word}</b>"
     else
       """
@@ -172,14 +172,14 @@ defmodule CrowWeb.Live.Home.Body do
 
   def page_link_for("page_min", assigns) do
     newstate = Map.merge(assigns.uistate, %{page: 1})
-    my_live_link("<<", path_for(newstate))
+    my_live_link("<i class='fa fa-angle-double-left'></i>", path_for(newstate))
   end
 
   def page_link_for("page_dec", assigns) do
     oldpage = assigns.uistate[:page] || 1
     newpage = Enum.max([oldpage - 1, 1])
     newstate = Map.merge(assigns.uistate, %{page: newpage})
-    my_live_link("<", path_for(newstate))
+    my_live_link("<i class='fa fa-angle-left'></i>", path_for(newstate))
   end
 
   def page_link_for("page_inc", assigns) do
@@ -187,13 +187,13 @@ defmodule CrowWeb.Live.Home.Body do
     oldpage   = assigns.uistate[:page] || 1
     newpage   = Enum.min([oldpage + 1, num_pages])
     newstate  = Map.merge(assigns.uistate, %{page: newpage})
-    my_live_link(">", path_for(newstate))
+    my_live_link("<i class='fa fa-angle-right'></i>", path_for(newstate))
   end
 
   def page_link_for("page_max", assigns) do
     num_pages = assigns.num_pages
     newstate = Map.merge(assigns.uistate, %{page: num_pages})
-    my_live_link(">>", path_for(newstate))
+    my_live_link("<i class='fa fa-angle-double-right'></i>", path_for(newstate))
   end
   
   defp job_count(uistate) do
@@ -228,8 +228,8 @@ defmodule CrowWeb.Live.Home.Body do
     page = assigns.uistate[:page] || 1
     if page == 1 || assigns.num_pages == 0 do
     """
-    <li class="page-item disabled"><a class="page-link" href='#'><<</a></li>
-    <li class="page-item disabled"><a class="page-link" href='#'><</a></li>
+    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-double-left'></i></a></li>
+    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-left'></i></a></li>
     """
     else
     """
@@ -243,8 +243,8 @@ defmodule CrowWeb.Live.Home.Body do
     page = assigns.uistate[:page] || 1
     if page == assigns.num_pages || assigns.num_pages == 0 do
     """
-    <li class="page-item disabled"><a class="page-link" href='#'>></a></li>
-    <li class="page-item disabled"><a class="page-link" href='#'>>></a></li>
+    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-right'></i></a></li>
+    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-double-right'></i></a></li>
     """
     else
     """

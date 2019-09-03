@@ -49,6 +49,22 @@ defmodule CrowWeb.Live.Home.Sidebar do
         <%= raw link_for(@uistate, "alert", key, "#{key} (#{val})") %>
       <% end %>
     </ul>
+    <nav area-label="pagination" style='padding-top: 30px;'>
+    <ul class="pagination justify-content-center">
+    <li class="page-item">
+    <a class="page-link" href='#'><i class='fa fa-angle-double-up'></i></a>
+    </li>
+    <li class="page-item">
+    <a class="page-link" href='#'><i class='fa fa-angle-up'></i></a>
+    </li>
+    <li class="page-item">
+    <a class="page-link" href='#'><i class='fa fa-angle-down'></i></a>
+    </li>
+    <li class="page-item">
+    <a class="page-link" href='#'><i class='fa fa-angle-double-down'></i></a>
+    </li>
+    </ul>
+    </nav>
     </small>
     """
   end
@@ -80,6 +96,42 @@ defmodule CrowWeb.Live.Home.Sidebar do
       </a>
       """
     end
+  end
+
+  # ----- navigation helpers -----
+
+  def sidebar_pairs(assigns) do
+    counts = Map.drop(assigns.sidebar_count, [:all_count])
+  end
+
+  def sidebar_next(assigns, current) do
+  end
+
+  def sidebar_prev(assigns, current) do
+  end
+
+  def sidebar_top(assigns) do
+  end
+
+  def sidebar_up(assigns) do
+  end
+
+  def sidebar_dn(assigns) do
+  end
+
+  def sidebar_btm(assigns) do
+  end
+
+  def sidebar_top_lnk(assigns) do
+  end
+
+  def sidebar_up_lnk(assigns) do
+  end
+
+  def sidebar_dn_lnk(assigns) do
+  end
+
+  def sidebar_btm_lnk(assigns) do
   end
 
   # ----- pub-sub handlers -----
