@@ -1,9 +1,6 @@
 defmodule CrowWeb.Live.Schedule.Body do
   use Phoenix.LiveView
 
-  alias CrowData.Repo
-  alias CrowData.Ctx.{ObanJob, Result}
-
   def mount(session, socket) do
     {:ok, assign(socket, %{schedule: session.schedule})}
   end

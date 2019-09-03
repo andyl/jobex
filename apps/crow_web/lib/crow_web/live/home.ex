@@ -1,10 +1,7 @@
 defmodule CrowWeb.Live.Home do
   use Phoenix.LiveView
 
-  alias CrowWeb.Router.Helpers, as: Routes
-
   def mount(_session, socket) do
-    # CrowWeb.Endpoint.subscribe("uistate")
     {:ok, socket}
   end
 
@@ -12,10 +9,10 @@ defmodule CrowWeb.Live.Home do
     ~L"""
     <div class="row">
       <div class="col-md-3" style='border-right: 1px solid lightgray;'>
-        <%= live_render(@socket, CrowWeb.Live.Home.Sidebar, session: %{uistate: @uistate, side_data: @side_data}) %>
+        <%= live_render(@socket, CrowWeb.Live.Home.Sidebar, session: %{uistate: @uistate}) %>
       </div>
       <div class="col-md-9">
-        <%= live_render(@socket, CrowWeb.Live.Home.Body, session: %{uistate: @uistate, body_data: @body_data}) %>
+        <%= live_render(@socket, CrowWeb.Live.Home.Body, session: %{uistate: @uistate}) %>
       </div>
     </div>
     """
@@ -23,37 +20,19 @@ defmodule CrowWeb.Live.Home do
 
   # ----- params handlers -----
 
-  def handle_params(%{"field" => field, "value" => value}, _url, socket) do
-    uistate = %{field: field, value: value}
-    opts = %{
-      body_data: CrowData.Query.job_query(uistate),
-      side_data: CrowData.Query.side_data(),
-      uistate: uistate 
+  def handle_params(params, _url, socket) do
+
+    uistate = %{
+      field: params["field"] || "all",
+      value: params["value"] || "na",
+      page:  params["page"] |> to_int()
     }
 
-    {:noreply, assign(socket, opts)}
+    {:noreply, assign(socket, %{uistate: uistate})}
   end
 
-  def handle_params(_, _, socket) do
-    opts = %{
-      body_data: CrowData.Query.job_query(),
-      side_data: CrowData.Query.side_data(),
-      uistate: %{field: nil, value: nil}
-    }
+  defp to_int(nil), do: 1
+  defp to_int(arg) when is_integer(arg), do: arg
+  defp to_int(arg) when is_binary(arg), do: String.to_integer(arg)
 
-    {:noreply, assign(socket, opts)}
-  end
-  
-  # ----- pub-sub handlers -----
-
-  # def handle_info(broadcast, socket) do
-  #   uistate = broadcast.payload.uistate
-  #
-  #   IO.inspect "======================================="
-  #   IO.inspect uistate
-  #   IO.inspect "======================================="
-  #
-  #   path = Routes.live_path(socket, CrowWeb.Live.Home, uistate)
-  #   {:noreply, live_redirect(socket, to: path)}
-  # end
 end

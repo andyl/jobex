@@ -4,7 +4,17 @@ defmodule CrowData.Query do
   import Ecto.Query
   import Modex.AltMap
 
-  # ----- SIDEBAR ALL -----
+  # ----- PAGING -----
+
+  def page_size do
+    24
+  end
+
+  def offset(page) do
+    page_size() * (page - 1)
+  end
+
+  # ----- SIDEBAR COUNTS -----
 
   def all_count do
     from(
@@ -14,19 +24,17 @@ defmodule CrowData.Query do
     |> Repo.one()
   end
 
-  # ----- SIDEBAR DATA -----
-
-  def side_data do
+  def sidebar_count do
     %{
       all_count: all_count(),
-      job_states: job_states(),
-      job_queues: job_queues(),
-      job_types: job_types(),
-      job_alerts: job_alerts()
+      state_count: state_count(),
+      queue_count: queue_count(),
+      type_count: type_count(),
+      alert_count: alert_count()
     }
   end
 
-  defp job_states do
+  def state_count do
     default_states = %{
       "executing" => 0,
       "available" => 0,
@@ -46,7 +54,7 @@ defmodule CrowData.Query do
     merge_list(default_states, query_data)
   end
 
-  defp job_queues do
+  def queue_count do
     from(
       j in ObanJob,
       group_by: j.queue,
@@ -56,7 +64,7 @@ defmodule CrowData.Query do
     |> merge_list()
   end
 
-  defp job_types do
+  def type_count do
     from(
       j in ObanJob,
       group_by: fragment("args -> 'type'"),
@@ -66,10 +74,28 @@ defmodule CrowData.Query do
     |> merge_list()
   end
 
-  defp job_alerts do
+  def command_count(cmd) do
+    cmd_qry =
+      from(
+        j in ObanJob,
+        select: count(j.id),
+        where: fragment("args->>'cmd' ilike ?", ^"%#{cmd}%")
+      )
+
+    %{cmd => cmd_qry |> Repo.one()}
+  end
+
+  def alert_count do
+    speed_qry =
+      from(
+        j in ObanJob,
+        select: count(j.id),
+        where: fragment("(completed_at - attempted_at) >= '99 seconds'")
+      )
+
     %{
-      "speed" => 10,
-      "spike" => 0,
+      "speed" => speed_qry |> Repo.one(),
+      "spike" => 0
     }
   end
 
@@ -86,61 +112,71 @@ defmodule CrowData.Query do
 
   # ----- BODY DATA -----
 
-  def job_query(uistate \\ %{field: nil, value: nil}) do
+  def job_data(uistate \\ %{field: nil, value: nil, page: 1}) do
     case uistate do
-      %{field: nil, value: nil}         -> jq_all() 
-      %{field: "all",     value: nil}   -> jq_all() 
-      %{field: "all",     value: ""}    -> jq_all() 
-      %{field: "state",   value: state} -> jq_state(state) 
-      %{field: "queue",   value: queue} -> jq_queue(queue) 
-      %{field: "type",    value: type}  -> jq_type(type) 
-      %{field: "secs",    value: _}     -> jq_secs()
-      %{field: "command", value: cmd}   -> jq_cmd(cmd) 
-      %{field: "alert",   value: type}  -> jq_alert(type) 
-    end 
+      %{field: nil} -> uistate |> jdata_all()
+      %{field: ""} -> uistate |> jdata_all()
+      %{field: "all"} -> uistate |> jdata_all()
+      %{field: "state"} -> uistate |> jdata_state()
+      %{field: "queue"} -> uistate |> jdata_queue()
+      %{field: "type"} -> uistate |> jdata_type()
+      %{field: "command"} -> uistate |> jdata_command()
+      %{field: "alert"} -> uistate |> jdata_alert()
+    end
     |> Repo.all()
   end
 
-  defp jq_all do
+  defp jdata_all(uistate) do
     rquery = from(r in Result, order_by: r.attempt)
-    fields = [:id, :queue, :args, :state, :attempted_at, :completed_at, results: [:attempt, :stdout, :stderr, :status]]
+
+    fields = [
+      :id,
+      :queue,
+      :args,
+      :state,
+      :attempted_at,
+      :completed_at,
+      results: [:attempt, :stdout, :stderr, :status]
+    ]
+
+    pgsize = page_size()
+    offset = offset(uistate.page)
 
     from(
-      j in ObanJob, 
-      order_by: {:desc, j.id}, 
-      limit: 24,
+      j in ObanJob,
+      order_by: {:desc, j.id},
+      limit: ^pgsize,
+      offset: ^offset,
       select: map(j, ^fields),
       preload: [results: ^rquery]
     )
   end
 
-  defp jq_state(state) do
-    from(j in jq_all(), where: j.state == ^state)
+  defp jdata_state(uistate) do
+    from(j in jdata_all(uistate), where: j.state == ^uistate.value)
   end
 
-  defp jq_queue(queue) do
-    from(j in jq_all(), where: j.queue == ^queue)
+  defp jdata_queue(uistate) do
+    from(j in jdata_all(uistate), where: j.queue == ^uistate.value)
   end
 
-  defp jq_type(type) do
-    from(j in jq_all(), where: fragment("args->>'type' = ?", ^type))
+  defp jdata_type(uistate) do
+    from(j in jdata_all(uistate), where: fragment("args->>'type' = ?", ^uistate.value))
   end
 
-  # return all records where execution time >= 100 seconds
-  defp jq_secs do
-    from(j in jq_all(), where: fragment("(completed_at - attempted_at) >= '99 seconds'"))
+  defp jdata_command(uistate) do
+    from(j in jdata_all(uistate), where: fragment("args->>'cmd' ilike ?", ^"%#{uistate.value}%"))
   end
 
-  defp jq_cmd(cmd) do
-    from(j in jq_all(), where: fragment("args->>'cmd' ilike ?", ^"%#{cmd}%"))
-  end
+  defp jdata_alert(uistate) do
+    case uistate.value do
+      "speed" ->
+        from(j in jdata_all(uistate),
+          where: fragment("(completed_at - attempted_at) >= '99 seconds'")
+        )
 
-  defp jq_alert(_type) do
-  #   case type do
-  #     "speed" -> from(j in jq_all(), where: fragment("args->>'cmd' ilike ?", ^"%#{cmd}%"))
-  #     "spike" -> 
-  #   end
-    %{}
+      "spike" ->
+        from(j in jdata_all(uistate), where: j.id < 0)
+    end
   end
-
 end

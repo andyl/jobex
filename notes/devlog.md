@@ -54,9 +54,7 @@
 ## 2019 Aug 31 Sat
 
 - [x] Home: add alerts section
-- [x] Home: reduce sidebar-link padding
-- [x] Admin: Add admin page
-- [x] Layout: Add admin link
+- [x] Home: reduce sidebar-link paddingr
 - [x] Layout: Add graph link
 - [x] Admin: Clear all records
 - [x] Home: move to a live-link route
@@ -67,18 +65,22 @@
 
 - [x] Home: change to live_link
 - [x] Home: move from /home to /
+- [x] Finish alert queries
+- [x] Convert time-links to emit alert links
 
-- [ ] Finish alert queries
-- [ ] Convert time-links to emit alert links
+- [x] Home: Add pagination HTML
+- [x] Home: Add pagination state (home, body)
+- [x] Home: Generate pagination html (body)
+- [x] Home: Add pagination left-right keys
 
-- [ ] Home: Paging with left-right keys for job list (with page param)
-
-- [ ] Home: Run now button
+- [ ] Home: Add pagination queries
+- [ ] Get PushState working with Pagination
 
 ## TBD
 
+- [ ] Home: Run now button
+
 - [ ] Change from Porcelain to Rambo
-- [ ] Test live_link and back button
 
 - [ ] Job: job navigation (next/prev, sparklines)
 - [ ] Job: run now button

@@ -3,23 +3,22 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   import Phoenix.HTML
 
-  alias CrowWeb.Router.Helpers, as: Routes
-
   def mount(session, socket) do
     :timer.send_interval(5000, self(), :sidebar_tick)
     CrowWeb.Endpoint.subscribe("job-event")
-    opts = %{refresh: false, uistate: session.uistate, side_data: session.side_data}
+    sidebar_count = CrowData.Query.sidebar_count()
+    opts = %{refresh: false, uistate: session.uistate, sidebar_count: sidebar_count}
     {:ok, assign(socket, opts)}
   end
 
   def render(assigns) do
     ~L"""
-    <%= raw all_for(@uistate, @side_data) %>
+    <%= raw all_for(@uistate, @sidebar_count) %>
     <hr/>
     <b>States</b>
     <small>
     <ul class="nav flex-column">
-      <%= for {key, val} <- @side_data.job_states do %>
+      <%= for {key, val} <- @sidebar_count.state_count do %>
         <%= raw link_for(@uistate, "state", key, "#{key} (#{val})") %>
       <% end %>
     </ul>
@@ -28,7 +27,7 @@ defmodule CrowWeb.Live.Home.Sidebar do
     <b>Queues</b>
     <small>
     <ul class="nav flex-column">
-      <%= for {key, val} <- @side_data.job_queues do %>
+      <%= for {key, val} <- @sidebar_count.queue_count do %>
         <%= raw link_for(@uistate, "queue", key, "#{key} (#{val})") %>
       <% end %>
     </ul>
@@ -37,7 +36,7 @@ defmodule CrowWeb.Live.Home.Sidebar do
     <b>Types</b>
     <small>
     <ul class="nav flex-column">
-      <%= for {key, val} <- @side_data.job_types do %>
+      <%= for {key, val} <- @sidebar_count.type_count do %>
         <%= raw link_for(@uistate, "type", key, "#{key} (#{val})") %>
       <% end %>
     </ul>
@@ -46,8 +45,8 @@ defmodule CrowWeb.Live.Home.Sidebar do
     <b>Alerts</b>
     <small>
     <ul class="nav flex-column">
-      <%= for {key, val} <- @side_data.job_alerts do %>
-        <%= raw link_for(@uistate, "alerts", key, "#{key} (#{val})") %>
+      <%= for {key, val} <- @sidebar_count.alert_count do %>
+        <%= raw link_for(@uistate, "alert", key, "#{key} (#{val})") %>
       <% end %>
     </ul>
     </small>
@@ -57,8 +56,8 @@ defmodule CrowWeb.Live.Home.Sidebar do
   # ----- view helpers -----
 
   defp link_for(uistate, field, value, text) do
-    path = "/home?field=#{field}&value=#{value}"
-    {ldr, klas} = if uistate == %{field: field, value: value}, do: {">", "disabled"}, else: {"", ""}
+    path = "/home?field=#{field}&value=#{value}&page=1"
+    {ldr, klas} = if [uistate.field, uistate.value] == [field, value], do: {">", "disabled"}, else: {"", ""}
 
     """
     <li class="nav-item">
@@ -69,8 +68,8 @@ defmodule CrowWeb.Live.Home.Sidebar do
     """
   end
 
-  defp all_for(uistate, side_data) do
-    text = "<b>ALL (#{side_data.all_count})</b>"
+  defp all_for(uistate, sidebar_count) do
+    text = "<b>ALL (#{sidebar_count.all_count})</b>"
 
     if uistate.field == "all" || uistate.value == nil do
       "<span style='color: gray;'>> #{text}</span>"
@@ -85,22 +84,27 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   # ----- pub-sub handlers -----
 
+  # set refresh to true whenever a job starts or stops
+  # this could be triggered many times within a five-second window
+  def handle_info(%{topic: "job-event"}, socket) do
+    {:noreply, assign(socket, %{refresh: true})}
+  end
+  
+  # this callback is triggered every five seconds.
+  # when refresh is set to true, update the sidebar count
+  # in this way, we batch updates in order to minimize UI flickering and rapid DB hits
   def handle_info(:sidebar_tick, socket) do
     opts =
       if socket.assigns.refresh do
         CrowWeb.Endpoint.broadcast_from(self(), "job-refresh", "sidebar-tick", %{})
         %{
           refresh: false,
-          side_data: CrowData.Query.side_data()
+          sidebar_count: CrowData.Query.sidebar_count()
         }
       else
         %{}
       end
 
     {:noreply, assign(socket, opts)}
-  end
-
-  def handle_info(%{topic: "job-event"}, socket) do
-    {:noreply, assign(socket, %{refresh: true})}
   end
 end

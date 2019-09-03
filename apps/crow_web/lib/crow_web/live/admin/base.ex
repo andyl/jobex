@@ -4,7 +4,7 @@ defmodule CrowWeb.Live.Admin.Base do
   alias CrowData.Repo
   alias CrowData.Ctx.{ObanJob, Result}
 
-  def mount(session, socket) do
+  def mount(_session, socket) do
     {:ok, assign(socket, %{numjobs: numjobs()})}
   end
 

@@ -45,10 +45,6 @@ defmodule CrowWeb.Live.Demo do
     {:noreply, update(socket, :valid_url, vfun)}
   end
 
-  # def handle_event("save_url", arg, socket) do
-  #   {:noreply, socket}
-  # end
-
   # ----- misc
 
   defp ldate do
