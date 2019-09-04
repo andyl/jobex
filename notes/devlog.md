@@ -90,6 +90,9 @@
 
 ## TBD
 
+- [ ] BUG: add check for disk usage
+- [ ] BUG: add check for memory usage
+
 - [ ] Test: Unit Tests
 - [ ] Test: Hound Tests
 
