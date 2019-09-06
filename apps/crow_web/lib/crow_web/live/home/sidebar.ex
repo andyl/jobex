@@ -174,8 +174,8 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   # ----- keyboard event handlers -----
 
-  def handle_event("keydown", "ArrowUp", socket) do
-    new = sidebar_up(socket.assigns)
+  def handle_event("keydown", key = %{"key" => "ArrowUp"}, socket) do
+    new = if key["ctrlKey"], do: sidebar_top(socket.assigns), else: sidebar_up(socket.assigns)
     old = current_pair(socket.assigns)
     if new != old do
       newpath = %{newpath: path_for(new)}
@@ -184,8 +184,8 @@ defmodule CrowWeb.Live.Home.Sidebar do
     {:noreply, socket}
   end
 
-  def handle_event("keydown", "ArrowDown", socket) do
-    new = sidebar_dn(socket.assigns)
+  def handle_event("keydown", key = %{"key" => "ArrowDown"}, socket) do
+    new = if key["ctrlKey"], do: sidebar_btm(socket.assigns), else: sidebar_dn(socket.assigns)
     old = current_pair(socket.assigns)
     if new != old do
       newpath = %{newpath: path_for(new)}

@@ -256,9 +256,9 @@ defmodule CrowWeb.Live.Home.Body do
 
   # ----- keyboard event handlers -----
 
-  def handle_event("keydown", "ArrowLeft", socket) do
+  def handle_event("keydown", keypress = %{"key" => "ArrowLeft"}, socket) do
     oldpage = socket.assigns.uistate[:page] || 1
-    newpage = Enum.max([oldpage - 1, 1])
+    newpage = if keypress["ctrlKey"], do: 1, else: Enum.max([oldpage - 1, 1])
     newstate = Map.merge(socket.assigns.uistate, %{page: newpage})
     newpath   = %{newpath: path_for(newstate)}
     if newpage != oldpage do
@@ -267,10 +267,10 @@ defmodule CrowWeb.Live.Home.Body do
     {:noreply, socket}
   end
 
-  def handle_event("keydown", "ArrowRight", socket) do
+  def handle_event("keydown", keypress = %{"key" => "ArrowRight"}, socket) do
     num_pages = socket.assigns.num_pages
     oldpage   = socket.assigns.uistate[:page] || 1
-    newpage   = Enum.min([oldpage + 1, num_pages])
+    newpage   = if keypress["ctrlKey"], do: num_pages, else: Enum.min([oldpage + 1, num_pages])
     newstate  = Map.merge(socket.assigns.uistate, %{page: newpage})
     newpath   = %{newpath: path_for(newstate)}
     if newpage != oldpage do

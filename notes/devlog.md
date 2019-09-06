@@ -88,6 +88,11 @@
 - [x] Working UpArrow/DownArrow to navigate sidebar
 - [x] Add line chart icon
 
+## 2019 Sep 06 Fri
+
+- [x] Upgraded phoenix and phoenix_live_view
+- [x] Added Ctrl-up/dn and Ctrl-left/right 
+
 ## TBD
 
 - [ ] Test: Unit Tests
