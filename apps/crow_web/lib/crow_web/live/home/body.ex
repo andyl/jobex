@@ -261,7 +261,7 @@ defmodule CrowWeb.Live.Home.Body do
     newpage = if keypress["ctrlKey"], do: 1, else: Enum.max([oldpage - 1, 1])
     newstate = Map.merge(socket.assigns.uistate, %{page: newpage})
     newpath   = %{newpath: path_for(newstate)}
-    if newpage != oldpage do
+    if newpage != oldpage && socket.assigns.num_pages != 0 do
       CrowWeb.Endpoint.broadcast_from(self(), "arrow-key", "page-nav", newpath)
     end
     {:noreply, socket}
@@ -273,7 +273,7 @@ defmodule CrowWeb.Live.Home.Body do
     newpage   = if keypress["ctrlKey"], do: num_pages, else: Enum.min([oldpage + 1, num_pages])
     newstate  = Map.merge(socket.assigns.uistate, %{page: newpage})
     newpath   = %{newpath: path_for(newstate)}
-    if newpage != oldpage do
+    if newpage != oldpage && num_pages != 0 do
       CrowWeb.Endpoint.broadcast_from(self(), "arrow-key", "page-nav", newpath)
     end
     {:noreply, socket}
