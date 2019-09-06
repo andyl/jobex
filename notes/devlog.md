@@ -90,21 +90,26 @@
 
 ## TBD
 
-- [ ] BUG: add check for disk usage
-- [ ] BUG: add check for memory usage
-
 - [ ] Test: Unit Tests
 - [ ] Test: Hound Tests
-
-- [ ] Home: Run now button
 
 - [ ] Runner: Change from Porcelain to Rambo
 - [ ] Runner: Create remote runner
 
+- [ ] SUPERVISOR: Edit the Schedule
+- [ ] SUPERVISOR: Multiple Schedules (on/off) (exportable/sharable)
+- [ ] SUPERVISOR: Email Notification
+- [ ] SUPERVISOR: Host Limits (disk/memory)
+- [ ] SUPERVISOR: Statistics/Graphing (jobs that update CROW_METRICS)
+- [ ] SUPERVISOR: Edit the Title and Logo
+- [ ] SUPERVISOR: DEB Distribution (18Months/distillery_packager)
+
+- [ ] Home: Run now button
+
 - [ ] Job: job navigation (next/prev, sparklines)
 - [ ] Job: run now button
 
-- [ ] Schedule: sytax checking of csv file
+- [ ] Schedule: syntax checking of csv file
 - [ ] Schedule: run now button
 - [ ] Schedule: smaller table font
 - [ ] Schedule: live editing using LiveView
