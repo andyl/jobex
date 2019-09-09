@@ -30,13 +30,13 @@ defmodule CrowData.MixProject do
   defp deps do
     [
       # ----- database
-      {:ecto_sql, "~> 3.0"},
+      {:ecto_sql, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.0"},
       # ----- process execution
       {:porcelain, "~> 2.0"},
       # ----- job runner
-      {:oban,      "~> 0.5"},
+      {:oban,      "~> 0.8"},
       # ----- utility functions 
       {:modex,     path: "~/src/modex"},
       # ----- csv parsing -----
