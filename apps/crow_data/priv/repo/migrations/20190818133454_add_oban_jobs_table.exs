@@ -1,9 +1,11 @@
 defmodule CrowData.Repo.Migrations.AddObanJobsTable do
   use Ecto.Migration
 
-  defdelegate up,   to: Oban.Migrations(version: 4)
-  defdelegate down, to: Oban.Migrations(version: 4)
+  def up do
+    Oban.Migrations.up(version: 4)
+  end
 
-  def change do
+  def down do
+    Oban.Migrations.up(version: 4)
   end
 end

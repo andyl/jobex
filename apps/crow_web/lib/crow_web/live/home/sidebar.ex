@@ -66,7 +66,9 @@ defmodule CrowWeb.Live.Home.Sidebar do
 
   defp link_for(uistate, field, value, text) do
     path = "/home?field=#{field}&value=#{value}&page=1"
-    {ldr, klas} = if [uistate.field, uistate.value] == [field, value], do: {">", "disabled"}, else: {"", ""}
+
+    {ldr, klas} =
+      if [uistate.field, uistate.value] == [field, value], do: {">", "disabled"}, else: {"", ""}
 
     """
     <li class="nav-item">
@@ -94,10 +96,16 @@ defmodule CrowWeb.Live.Home.Sidebar do
   # ----- navigation helpers -----
 
   def sidebar_pairs(assigns) do
-    base = [:state_count, :queue_count, :type_count, :alert_count]
-    |> Enum.map(&({&1, Map.keys(assigns.sidebar_count[&1])}))
-    |> Enum.reduce([], fn({k,v}, acc)-> acc |> Enum.concat(Enum.map(v, &([k, &1]))) end)
-    |> Enum.map(fn([k, v])-> [Atom.to_string(k) |> String.replace("_count", ""), v] end)
+    base =
+      if assigns.sidebar_count.all_count != 0 do
+        [:state_count, :queue_count, :type_count, :alert_count]
+        |> Enum.map(&{&1, Map.keys(assigns.sidebar_count[&1])})
+        |> Enum.reduce([], fn {k, v}, acc -> acc |> Enum.concat(Enum.map(v, &[k, &1])) end)
+        |> Enum.map(fn [k, v] -> [Atom.to_string(k) |> String.replace("_count", ""), v] end)
+      else
+        []
+      end
+
     [["all", "na"]] ++ base
   end
 
@@ -163,6 +171,7 @@ defmodule CrowWeb.Live.Home.Sidebar do
   def link_for(lbl, [field, value], disabled) do
     distxt = if disabled, do: "disabled", else: ""
     path = path_for([field, value])
+
     """
     <li class="page-item #{distxt}">
     <a class="page-link" href="#{path}" to="#{path}" data-phx-live-link="push">
@@ -177,20 +186,24 @@ defmodule CrowWeb.Live.Home.Sidebar do
   def handle_event("keydown", key = %{"key" => "ArrowUp"}, socket) do
     new = if key["ctrlKey"], do: sidebar_top(socket.assigns), else: sidebar_up(socket.assigns)
     old = current_pair(socket.assigns)
+
     if new != old do
       newpath = %{newpath: path_for(new)}
       CrowWeb.Endpoint.broadcast_from(self(), "arrow-key", "page-nav", newpath)
     end
+
     {:noreply, socket}
   end
 
   def handle_event("keydown", key = %{"key" => "ArrowDown"}, socket) do
     new = if key["ctrlKey"], do: sidebar_btm(socket.assigns), else: sidebar_dn(socket.assigns)
     old = current_pair(socket.assigns)
+
     if new != old do
       newpath = %{newpath: path_for(new)}
       CrowWeb.Endpoint.broadcast_from(self(), "arrow-key", "page-nav", newpath)
     end
+
     {:noreply, socket}
   end
 
@@ -203,7 +216,7 @@ defmodule CrowWeb.Live.Home.Sidebar do
   def handle_info(%{topic: "job-event"}, socket) do
     {:noreply, assign(socket, %{refresh: true})}
   end
-  
+
   # this callback is triggered every five seconds.
   # when refresh is set to true, update the sidebar count
   # in this way, we batch updates in order to minimize UI flickering and rapid DB hits
@@ -211,6 +224,7 @@ defmodule CrowWeb.Live.Home.Sidebar do
     opts =
       if socket.assigns.refresh do
         CrowWeb.Endpoint.broadcast_from(self(), "job-refresh", "sidebar-tick", %{})
+
         %{
           refresh: false,
           sidebar_count: CrowData.Query.sidebar_count()
