@@ -93,7 +93,7 @@
 - [x] Upgraded phoenix and phoenix_live_view
 - [x] Added Ctrl-up/dn and Ctrl-left/right 
 
-## 2019 Sep 09 Sat
+## 2019 Sep 09 Mon
 
 - [x] Upgrade to Oban 0.8.0 (fixes Postgres log issue)
 - [x] Fix bug with empty database
@@ -102,6 +102,7 @@
 
 - [ ] Test: Unit Tests
 - [ ] Test: Hound Tests
+- [ ] Test: LiveView Tests
 
 - [ ] Runner: Change from Porcelain to Rambo
 - [ ] Runner: Create remote runner
@@ -132,6 +133,4 @@
 
 - [ ] Installation: Setup Script - SystemD Service Initiation
 - [ ] Installation: Setup Script - DB create / DB migrate
-- [ ] Installation: Add deb package
 
-- [ ] Misc: Email Notification
