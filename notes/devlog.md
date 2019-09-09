@@ -93,6 +93,11 @@
 - [x] Upgraded phoenix and phoenix_live_view
 - [x] Added Ctrl-up/dn and Ctrl-left/right 
 
+## 2019 Sep 09 Sat
+
+- [x] Upgrade to Oban 0.8.0 (fixes Postgres log issue)
+- [x] Fix bug with empty database
+
 ## TBD
 
 - [ ] Test: Unit Tests
