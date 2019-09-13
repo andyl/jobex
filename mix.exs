@@ -17,7 +17,8 @@ defmodule Crow.MixProject do
       # ----- deployment
       {:distillery, "~> 2.1", warn_missing: false},
       # ----- development and test
-      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false}
+      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false},
+      {:ex_projections, github: "andyl/ex_projections", only: :dev, runtime: false}
     ]
   end
 

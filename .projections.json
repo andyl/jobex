@@ -1,0 +1,18 @@
+{
+  "apps/crow_data/lib/*.ex": {
+    "alternate": "apps/crow_data/test/{}_test.exs",
+    "type": "src"
+  },
+  "apps/crow_data/test/*_test.exs": {
+    "alternate": "apps/crow_data/lib/{}.ex",
+    "type": "src"
+  },
+  "apps/crow_web/lib/*.ex": {
+    "alternate": "apps/crow_web/test/{}_test.exs",
+    "type": "src"
+  },
+  "apps/crow_web/test/*_test.exs": {
+    "alternate": "apps/crow_web/lib/{}.ex",
+    "type": "src"
+  }
+}
