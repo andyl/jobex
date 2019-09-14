@@ -7,7 +7,7 @@ defmodule CrowData do
   if it comes from the database, an external API or others.
   """
 
-  def greetings do
-    "HELLO"
+  def greeting do
+    "HELLO2"
   end
 end

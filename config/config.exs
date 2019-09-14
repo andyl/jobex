@@ -30,7 +30,7 @@ config :crow_data, Oban,
 
 config :crow_data, CrowData.Scheduler,
   timezone: "America/Los_Angeles",
-  global: true,
+  global: false,
   jobs: []
 
 import_config "#{Mix.env()}.exs"
