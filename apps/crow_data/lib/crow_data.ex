@@ -8,6 +8,6 @@ defmodule CrowData do
   """
 
   def greeting do
-    "HELLO2"
+    "HELLO"
   end
 end

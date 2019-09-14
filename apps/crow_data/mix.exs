@@ -41,7 +41,7 @@ defmodule CrowData.MixProject do
       {:nimble_csv, "~> 0.6"},
       # ----- jobs
       {:oban,      "~> 0.8"},
-      {:quantum,   github: "quantum-elixir/quantum-core"},
+      {:quantum,   "~> 2.3"},
       {:timex,     "~> 3.0"}
     ]
   end
