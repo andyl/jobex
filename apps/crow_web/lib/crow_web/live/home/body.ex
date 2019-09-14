@@ -279,7 +279,12 @@ defmodule CrowWeb.Live.Home.Body do
     {:noreply, socket}
   end
 
-  def handle_event("keydown", _alt, socket), do: {:noreply, socket}
+  def handle_event("keydown", keypress, socket) do
+    IO.inspect "++++++++++++++++++++++++++++++++++++++"
+    IO.inspect inspect(keypress)
+    IO.inspect "++++++++++++++++++++++++++++++++++++++"
+    {:noreply, socket}
+  end
   
   # ----- pub/sub handlers -----
 
