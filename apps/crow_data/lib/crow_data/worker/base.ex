@@ -1,13 +1,15 @@
 defmodule CrowData.Worker.Base do
 
   alias CrowData.Ctx.Result
+  alias CrowData.Runner
   alias CrowData.Repo
 
   def perform(args, job) do
 
     CrowWeb.Endpoint.broadcast_from(self(), "job-event", "shell-worker-start", %{})
 
-    cmd_result = Porcelain.shell(args["cmd"])
+    cmd_result = Runner.Porcelain.exec(args["cmd"])
+    # cmd_result = Runner.Rambo.exec(args["cmd"])
 
     args = %{
       stdout: cmd_result.out,

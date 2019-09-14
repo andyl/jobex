@@ -35,6 +35,7 @@ defmodule CrowData.MixProject do
       {:jason, "~> 1.0"},
       # ----- process execution
       {:porcelain, "~> 2.0"},
+      {:rambo, "~> 0.2"},
       # ----- utility functions 
       {:modex,     path: "~/src/modex"},
       # ----- csv parsing -----

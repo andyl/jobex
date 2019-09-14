@@ -106,11 +106,11 @@
 
 ## TBD
 
-- [ ] Upgrade LiveView
 - [ ] Runner: Change from Porcelain to Rambo
-- [ ] Runner: Create remote runner
+
 - [ ] SUPERVISOR: DEB Distribution (18Months/distillery_packager)
 
+- [ ] Upgrade LiveView to 0.2.0
 - [ ] SUPERVISOR: Edit the Schedule
 - [ ] SUPERVISOR: Multiple Schedules (on/off) (exportable/sharable)
 - [ ] SUPERVISOR: Email Notification
@@ -122,6 +122,8 @@
 
 - [ ] Job: job navigation (next/prev, sparklines)
 - [ ] Job: run now button
+
+- [ ] Runner: Create remote runner
 
 - [ ] Schedule: syntax checking of csv file
 - [ ] Schedule: run now button
