@@ -98,27 +98,32 @@
 - [x] Upgrade to Oban 0.8.0 (fixes Postgres log issue)
 - [x] Fix bug with empty database
 
+## 2019 Sep 13 Fri
+
+- [x] Test: Unit Tests
+- [x] Test: Hound Tests
+- [x] Test: LiveView Tests
+
 ## TBD
 
-- [ ] Test: Unit Tests
-- [ ] Test: Hound Tests
-- [ ] Test: LiveView Tests
-
 - [ ] Runner: Change from Porcelain to Rambo
-- [ ] Runner: Create remote runner
 
+- [ ] SUPERVISOR: DEB Distribution (18Months/distillery_packager)
+
+- [ ] Upgrade LiveView to 0.2.0
 - [ ] SUPERVISOR: Edit the Schedule
 - [ ] SUPERVISOR: Multiple Schedules (on/off) (exportable/sharable)
 - [ ] SUPERVISOR: Email Notification
 - [ ] SUPERVISOR: Host Limits (disk/memory)
 - [ ] SUPERVISOR: Statistics/Graphing (jobs that update CROW_METRICS)
 - [ ] SUPERVISOR: Edit the Title and Logo
-- [ ] SUPERVISOR: DEB Distribution (18Months/distillery_packager)
 
 - [ ] Home: Run now button
 
 - [ ] Job: job navigation (next/prev, sparklines)
 - [ ] Job: run now button
+
+- [ ] Runner: Create remote runner
 
 - [ ] Schedule: syntax checking of csv file
 - [ ] Schedule: run now button

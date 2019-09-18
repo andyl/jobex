@@ -35,13 +35,13 @@ defmodule CrowData.MixProject do
       {:jason, "~> 1.0"},
       # ----- process execution
       {:porcelain, "~> 2.0"},
-      # ----- job runner
-      {:oban,      "~> 0.8"},
+      {:rambo, "~> 0.2"},
       # ----- utility functions 
       {:modex,     path: "~/src/modex"},
       # ----- csv parsing -----
       {:nimble_csv, "~> 0.6"},
-      # ----- job scheduling
+      # ----- jobs
+      {:oban,      "~> 0.8"},
       {:quantum,   "~> 2.3"},
       {:timex,     "~> 3.0"}
     ]

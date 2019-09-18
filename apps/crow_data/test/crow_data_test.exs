@@ -3,7 +3,7 @@ defmodule CrowDataTest do
 
   describe "#hello" do
     test "works as expected" do
-      assert CrowData.hello = "world"
+      assert CrowData.greeting() == "HELLO"
     end
   end
 end
