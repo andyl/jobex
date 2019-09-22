@@ -106,17 +106,17 @@
 
 ## TBD
 
-- [ ] Runner: Change from Porcelain to Rambo
-
-- [ ] SUPERVISOR: DEB Distribution (18Months/distillery_packager)
-
-- [ ] Upgrade LiveView to 0.2.0
+- [ ] Upgrade LiveView to 0.3.0
 - [ ] SUPERVISOR: Edit the Schedule
 - [ ] SUPERVISOR: Multiple Schedules (on/off) (exportable/sharable)
 - [ ] SUPERVISOR: Email Notification
 - [ ] SUPERVISOR: Host Limits (disk/memory)
 - [ ] SUPERVISOR: Statistics/Graphing (jobs that update CROW_METRICS)
 - [ ] SUPERVISOR: Edit the Title and Logo
+
+- [ ] Runner: Change from Porcelain to Rambo
+
+- [ ] SUPERVISOR: DEB Distribution (18Months/distillery_packager)
 
 - [ ] Home: Run now button
 
