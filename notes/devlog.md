@@ -104,9 +104,14 @@
 - [x] Test: Hound Tests
 - [x] Test: LiveView Tests
 
-## TBD
+## 2019 Sep 22 Sun
 
 - [ ] Upgrade LiveView to 0.3.0
+
+## TBD
+
+- [ ] SUPERVISOR: Drag and Drop Schedule Editing
+
 - [ ] SUPERVISOR: Edit the Schedule
 - [ ] SUPERVISOR: Multiple Schedules (on/off) (exportable/sharable)
 - [ ] SUPERVISOR: Email Notification
