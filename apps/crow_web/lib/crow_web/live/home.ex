@@ -8,13 +8,14 @@ defmodule CrowWeb.Live.Home do
   end
 
   def render(assigns) do
+    altid = Enum.random(10000..99999)
     ~L"""
     <div class="row">
       <div class="col-md-3" style='border-right: 1px solid lightgray;'>
-        <%= live_render(@socket, CrowWeb.Live.Home.Sidebar, session: %{uistate: @uistate}) %>
+        <%= live_render(@socket, CrowWeb.Live.Home.Sidebar, id: "side-#{altid}", session: %{uistate: @uistate}) %>
       </div>
       <div class="col-md-9">
-        <%= live_render(@socket, CrowWeb.Live.Home.Body, session: %{uistate: @uistate}) %>
+        <%= live_render(@socket, CrowWeb.Live.Home.Body, id: "body-#{altid}", session: %{uistate: @uistate}) %>
       </div>
     </div>
     """
