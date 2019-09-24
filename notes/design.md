@@ -20,7 +20,7 @@ Cron-Like Workflow
 
 | APP       | DESCRIPTION                                |
 |-----------|--------------------------------------------|
-| crow_data | business logic, job execution, persistence |
-| crow_term | terminal-ui                                |
-| crow_web  | web-ui                                     |
+| jobex_data | business logic, job execution, persistence |
+| jobex_term | terminal-ui                                |
+| jobex_web  | web-ui                                     |
 

@@ -1,2 +1,0 @@
-<h3>ADMIN</h3>
-<%= live_render(@conn, CrowWeb.Live.Admin.Base) %>

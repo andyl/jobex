@@ -1,4 +1,4 @@
-defmodule Crow.MixProject do
+defmodule Jobex.MixProject do
   use Mix.Project
 
   def project do

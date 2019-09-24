@@ -1,4 +1,4 @@
-# Crow
+# Jobex
 
 ## 2019 Aug 17 Sat
 
@@ -104,14 +104,9 @@
 - [x] Test: Hound Tests
 - [x] Test: LiveView Tests
 
-## 2019 Sep 22 Sun
-
-- [ ] Upgrade LiveView to 0.3.0
-
 ## TBD
 
-- [ ] SUPERVISOR: Drag and Drop Schedule Editing
-
+- [ ] Upgrade LiveView to 0.3.0
 - [ ] SUPERVISOR: Edit the Schedule
 - [ ] SUPERVISOR: Multiple Schedules (on/off) (exportable/sharable)
 - [ ] SUPERVISOR: Email Notification

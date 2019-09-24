@@ -1,0 +1,20 @@
+[Unit]
+Description=Jobex
+After=network.target
+
+[Service]
+Type=simple
+User=aleak
+Group=aleak
+WorkingDirectory=/home/aleak
+ExecStart=/bin/bash --login -c 'source /home/aleak/.bashrc; cd /home/aleak; /home/aleak/src/jobex/_build/prod/rel/jobex/bin/jobex foreground'
+Restart=on-failure
+RestartSec=5
+Environment=PORT=5070
+Environment=LANG=en_US.UTF-8
+SyslogIdentifier=jobex
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
+

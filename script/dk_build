@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo '>>> docker build'
-docker build -t phx-crow .
+docker build -t phx-jobex .
 
 echo '>>> done'
 echo "Run the docker image with 'script/dk_run'"

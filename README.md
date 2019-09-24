@@ -1,15 +1,15 @@
-# Crow
+# Jobex
 
-Crow is cron-like workflow - Cron meets Airflow.
+Jobex is cron-like workflow - Cron meets Airflow.
 
 - Runs jobs periodically using cron-like scheduling
 - Captures job statistics: execution time, status, stdout, stderr
 - Super Simple
 
-Because we need to access local scripts, `Crow` is packaged as an Elixir
+Because we need to access local scripts, `Jobex` is packaged as an Elixir
 release managed by SystemD, rather than a Docker container.
 
-## Crow simply runs jobs
+## Jobex simply runs jobs
 
 - you define a job schedule in a CSV file
 - you can setup two CSV files: DEV for testing and PROD for production
@@ -34,8 +34,8 @@ release managed by SystemD, rather than a Docker container.
 
 Job schedules are stored in csv files:
 
-- apps/crow_data/priv/dev_schedule.csv
-- apps/crow_data/priv/prod_schedule.csv
+- apps/jobex_data/priv/dev_schedule.csv
+- apps/jobex_data/priv/prod_schedule.csv
 
 CSV files can be edited to run your own commands.  The CSV columns include:
 
@@ -70,20 +70,20 @@ _Command_
 
 Create the database and run the migrations.  Then:
 
-- edit the SystemD service file in `rel/crow.service`
-- `sudo cp rel/crow.service /etc/systemd/system`
-- `sudo chmod 644 /etc/systemd/system/crow.service`
+- edit the SystemD service file in `rel/jobex.service`
+- `sudo cp rel/jobex.service /etc/systemd/system`
+- `sudo chmod 644 /etc/systemd/system/jobex.service`
 
 Start the service with SystemD
 
-- `sudo systemctl start crow`
-- `sudo systemctl status crow`
-- `sudo systemctl restart crow`
-- `sudo systemctl stop crow`
-- `sudo journalctl -u crow -f`
+- `sudo systemctl start jobex`
+- `sudo systemctl status jobex`
+- `sudo systemctl restart jobex`
+- `sudo systemctl stop jobex`
+- `sudo journalctl -u jobex -f`
 
 Make sure your service starts when the system reboots
 
-- `sudo systemctl enable crow`
+- `sudo systemctl enable jobex`
 
 Reboot and test!
