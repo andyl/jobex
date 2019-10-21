@@ -26,6 +26,7 @@ release managed by SystemD, rather than a Docker container.
 ## Installing
 
 - Clone the repo
+- `cd apps/jobex_web/assets && npm install && cd ../..`
 - `MIX_ENV=prod mix do deps.get, ecto.create, ecto.migrate, distillery.release`
 - Start the release
 - Browse to `locahost:5070`
