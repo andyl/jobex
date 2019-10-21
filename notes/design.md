@@ -18,8 +18,8 @@ Cron-Like Workflow
 
 ## Umbrella Apps
 
-| APP       | DESCRIPTION                                |
-|-----------|--------------------------------------------|
+| APP        | DESCRIPTION                                |
+|------------|--------------------------------------------|
 | jobex_data | business logic, job execution, persistence |
 | jobex_term | terminal-ui                                |
 | jobex_web  | web-ui                                     |
