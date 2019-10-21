@@ -46,6 +46,14 @@ defmodule JobexWeb.LayoutView do
     end
   end
 
+  def footer_img(conn) do
+    hostid = 2
+    r_path = conn.request_path
+    """
+    <img src="https://badger.casmacc.net/png0/#{hostid}?path=#{r_path}"></img>
+    """ |> Phoenix.HTML.raw()
+  end
+
   defp is_current(conn, path) do
     [current | _] = Phoenix.Controller.current_path(conn) |> String.split("?")
     current == path
