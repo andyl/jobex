@@ -12,7 +12,7 @@ use Mix.Config
 #     You can generate one by calling: mix phx.gen.secret
 #     """
 
-secret_key_base = "asdf"
+secret_key_base = "_123456789_123456789_123456789_123456789_123456789_123456789_123456789"
 
 config :jobex_web, JobexWeb.Endpoint,
   http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4000")],

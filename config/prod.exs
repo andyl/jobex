@@ -21,7 +21,7 @@ config :logger, level: :info
 
 config :jobex_web, JobexWeb.Endpoint,
   http: [:inet6, port: String.to_integer(System.get_env("PORT") || "5070")],
-  secret_key_base: "secretkey"
+  secret_key_base: "_123456789_123456789_123456789_123456789_123456789_123456789_123456789"
 
 config :jobex_data, JobexData.Repo,
   username: "postgres",
