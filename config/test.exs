@@ -4,7 +4,7 @@ config :jobex_web, JobexWeb.Endpoint,
   http: [port: 4002],
   server: false
 
-config :logger, level: :info
+config :logger, level: :error
 
 config :jobex_data, JobexData.Repo,
   username: "postgres",

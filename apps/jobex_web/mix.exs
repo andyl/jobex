@@ -36,7 +36,7 @@ defmodule JobexWeb.MixProject do
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_html_simplified_helpers, "~> 2.1.0"},
       # ----- phoenix view helpers
-      {:phoenix_active_link, "~> 0.2.1"},
+      {:phoenix_active_link, "~> 0.3.0"},
       {:phoenix_live_view, "~> 0.1.1"},
       # ----- util
       {:jason, "~> 1.0"},
