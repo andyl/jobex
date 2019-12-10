@@ -8,13 +8,14 @@ defmodule JobexWeb.Live.Home do
   end
 
   def render(assigns) do
+    rand = :rand.uniform(10000)
     ~L"""
     <div class="row">
       <div class="col-md-3" style='border-right: 1px solid lightgray;'>
-        <%= live_render(@socket, JobexWeb.Live.Home.Sidebar, session: %{uistate: @uistate}, id: "yy") %>
+        <%= live_render(@socket, JobexWeb.Live.Home.Sidebar, session: %{uistate: @uistate}, id: "yy#{rand}") %>
       </div>
       <div class="col-md-9">
-        <%= live_render(@socket, JobexWeb.Live.Home.Body, session: %{uistate: @uistate}, id: "xx") %>
+        <%= live_render(@socket, JobexWeb.Live.Home.Body, session: %{uistate: @uistate}, id: "xx#{rand}") %>
       </div>
     </div>
     """
