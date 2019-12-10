@@ -9,6 +9,9 @@ MIX_ENV=prod mix phx.digest
 echo '>>> create release'
 MIX_ENV=prod mix distillery.release 
 
-echo '>>> done'
+echo '>>> docker'
 echo "Build the docker image with 'script/dk_build'"
 
+echo '>>> systemd'
+echo "Check ~/util/code_util/bin/jobex to create production symlink"
+echo "Check jobex systemd (/etc/systemd/system/jobex.service) and restart"
