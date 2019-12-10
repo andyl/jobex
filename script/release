@@ -1,7 +1,7 @@
 #/usr/bin/env bash
 
 echo '>>> package assets'
-npm run deploy --prefix assets
+npm run deploy --prefix apps/jobex_web/assets
 
 echo '>>> digest assets'
 MIX_ENV=prod mix phx.digest

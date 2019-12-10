@@ -279,10 +279,7 @@ defmodule JobexWeb.Live.Home.Body do
     {:noreply, socket}
   end
 
-  def handle_event("keydown", keypress, socket) do
-    IO.inspect "++++++++++++++++++++++++++++++++++++++"
-    IO.inspect inspect(keypress)
-    IO.inspect "++++++++++++++++++++++++++++++++++++++"
+  def handle_event("keydown", _keypress, socket) do
     {:noreply, socket}
   end
   
