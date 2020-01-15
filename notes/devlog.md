@@ -104,12 +104,18 @@
 - [x] Test: Hound Tests
 - [x] Test: LiveView Tests
 
+## 2020 Jan 09 Thu
+
+- [x] Updated all deps to latest
+
 ## TBD
 
-- [ ] Runner: Change from Porcelain to Rambo
+- [ ] Replace Quantum with Oban Scheduler
 
 - [ ] Upgrade Elixir to 1.9.2
-- [ ] Upgrade LiveView to 0.3.0
+- [ ] Upgrade LiveView to 0.4.1
+
+- [ ] Runner: Change from Porcelain to Rambo
 
 - [ ] SUPERVISOR: Edit the Schedule
 - [ ] SUPERVISOR: Multiple Schedules (on/off) (exportable/sharable)

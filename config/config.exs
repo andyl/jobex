@@ -26,7 +26,10 @@ config :jobex_web, JobexWeb.Endpoint, live_view: [signing_salt: "asdf"]
 config :jobex_data, Oban,
   repo: JobexData.Repo,
   prune: {:maxlen, 5_000},
-  queues: [default: 10, parallel: 10, serial: 1]
+  queues: [default: 10, parallel: 10, serial: 1],
+  crontab: [
+    {"* * * * *", JobexData.Worker.Test}
+  ]
 
 config :jobex_data, JobexData.Scheduler,
   timezone: "America/Los_Angeles",
