@@ -43,7 +43,7 @@ defmodule JobexData.MixProject do
       # ----- jobs
       # {:oban,      "~> 0.12"},
       # {:oban,      path: "/home/aleak/src/oban"},
-      {:oban,      github: "aleak/oban", branch: "feature_update_cron"},
+      {:oban,      github: "andyl/oban", branch: "feature_update_cron"},
       {:quantum,   "~> 2.3"},
       {:timex,     "~> 3.0"}
     ]
