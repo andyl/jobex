@@ -138,9 +138,16 @@ defmodule JobexWeb.Live.Home.Body do
   defp tbl_cmd(uistate, job) do
     job.args["cmd"]
     |> Phoenix.HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
-    |> String.split(" ")
+    |> split_if_present()
     |> Enum.map(&(cmd_link(uistate, &1)))
     |> Enum.join(" ")
+  end
+
+  defp split_if_present(input) do
+    case input do
+      nil -> [""]
+      _ -> String.split(input, " ")
+    end
   end
 
   defp cmd_link(uistate, word) do

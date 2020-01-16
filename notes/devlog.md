@@ -108,14 +108,15 @@
 
 - [x] Updated all deps to latest
 
+## 2020 Jan 15 Wed
+
+- [x] Upgrade Elixir to 1.9.2
+- [x] Upgrade LiveView to 0.4.1
+- [x] Runner: Change from Porcelain to Rambo
+
 ## TBD
 
-- [ ] Replace Quantum with Oban Scheduler
-
-- [ ] Upgrade Elixir to 1.9.2
-- [ ] Upgrade LiveView to 0.4.1
-
-- [ ] Runner: Change from Porcelain to Rambo
+- [ ] Upgrade LiveView to 0.5.1
 
 - [ ] SUPERVISOR: Edit the Schedule
 - [ ] SUPERVISOR: Multiple Schedules (on/off) (exportable/sharable)
@@ -125,10 +126,15 @@
 - [ ] SUPERVISOR: Edit the Title and Logo
 - [ ] Home: Run now button
 
+- [ ] ObanScheduler - get current list of jobs
+- [ ] ObanScheduler - run jobs at top of hour
+- [ ] ObanScheduler - display job list on schedule page
+- [ ] ObanScheduler - retrieve job list with original scheduler expressions
+- [ ] ObanScheduler - update schedule on a single node
+- [ ] ObanScheduler - update schedule across all Oban nodes
+
 - [ ] Job: job navigation (next/prev, sparklines)
 - [ ] Job: run now button
-
-- [ ] Runner: Create remote runner
 
 - [ ] Schedule: syntax checking of csv file
 - [ ] Schedule: run now button

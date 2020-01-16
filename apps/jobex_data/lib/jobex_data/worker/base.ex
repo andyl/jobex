@@ -8,8 +8,8 @@ defmodule JobexData.Worker.Base do
 
     JobexWeb.Endpoint.broadcast_from(self(), "job-event", "shell-worker-start", %{})
 
-    cmd_result = Runner.Porcelain.exec(args["cmd"])
-    # cmd_result = Runner.Rambo.exec(args["cmd"])
+    # cmd_result = Runner.Porcelain.exec(args["cmd"])
+    cmd_result = Runner.Rambo.exec(args["cmd"]) |> IO.inspect()
 
     args = %{
       stdout: cmd_result.out,
@@ -25,7 +25,7 @@ defmodule JobexData.Worker.Base do
 
     JobexWeb.Endpoint.broadcast_from(self(), "job-event", "shell-worker-finish", %{})
 
-    return_code(cmd_result)
+    return_code(cmd_result) 
   end
 
   defp err_msg(cmd_result) do

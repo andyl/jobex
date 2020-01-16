@@ -41,9 +41,9 @@ defmodule JobexData.MixProject do
       # ----- csv parsing -----
       {:nimble_csv, "~> 0.6"},
       # ----- jobs
-      # {:oban,      "~> 0.12"},
+      {:oban,      "~> 0.12"},
       # {:oban,      path: "/home/aleak/src/oban"},
-      {:oban,      github: "andyl/oban", branch: "feature_update_cron"},
+      # {:oban,      github: "andyl/oban", branch: "feature_update_cron"},
       {:quantum,   "~> 2.3"},
       {:timex,     "~> 3.0"}
     ]
