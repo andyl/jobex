@@ -120,17 +120,17 @@
 
 ## TBD
 
-- [ ] V0 - Schedule: Edit the Schedule
-- [ ] V0 - Schedule: Multiple Schedules (on/off) (exportable/sharable)
-- [ ] V0 - Schedule: Run now button
-- [ ] V0 - Schedule: syntax checking of csv file
-- [ ] V0 - Schedule: live editing using LiveView
-- [ ] V0 - Schedule: add 'install' button
-- [ ] V0 - Oban: Add telemetry
+- [ ] V0 - WS: read RealTime Phoenix book
+- [ ] V0 - WS: build CoinBase sockets demo
+- [ ] V0 - Runner: design runner
 
-- [ ] V1 - WS: read RealTime Phoenix book
-- [ ] V1 - WS: build CoinBase sockets demo
-- [ ] V1 - Runner: design runner
+- [ ] V1 - Schedule: Edit the Schedule
+- [ ] V1 - Schedule: Multiple Schedules (on/off) (exportable/sharable)
+- [ ] V1 - Schedule: Run now button
+- [ ] V1 - Schedule: syntax checking of csv file
+- [ ] V1 - Schedule: live editing using LiveView
+- [ ] V1 - Schedule: add 'install' button
+- [ ] V1 - Oban: Add telemetry
 
 - [ ] Package: package as docker container
 

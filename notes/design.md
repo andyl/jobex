@@ -26,17 +26,17 @@ Cron-Like Work Execution
 
 ## Versions
 
-V0: Internal
-- internal use
-- schedule editing
-- telemetry
-- systemd deployment
-
-V1: Internal / Websocket
+V0: Internal / Websocket Runner
 - separate runner and scheduler services
 - scheduler has a websocket server
 - runner as an elixir module using Rambo
 - runner connect via websockets
+
+V1: Internal / Features
+- internal use
+- schedule editing
+- telemetry
+- systemd deployment
 
 V2: External / Community
 - use for CHAOSS community
