@@ -41,7 +41,7 @@ V1: Internal / Features
 V2: External / Community
 - use for CHAOSS community
 - docker deployment for scheduler (application and database)
-- Runner as NPM, Python or Rust Client
+- Runner as NPM, Ruby, Python or Rust Client (publish libs?)
 
 V3: SAAS
 - User Accounts
