@@ -1,5 +1,19 @@
 <h3>LiveView Counter</h3>
 
+<hr/>
+
+<%= live_component(@socket, JobexWeb.Live.Component.TitleComp) %>
+
+<p></p>
+
+<%= live_component(@socket, JobexWeb.Live.Component.CounterComp, id: "1", count: 0) %>
+
+<p></p>
+
+<%= live_component(@socket, JobexWeb.Live.Component.CounterComp, id: "2", count: 0) %>
+
+<hr/>
+
 <div>
   <h4>The count is: <%= @count %></h4>
   <button phx-click="dec">-</button>

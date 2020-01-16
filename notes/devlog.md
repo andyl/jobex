@@ -114,35 +114,43 @@
 - [x] Upgrade LiveView to 0.4.1
 - [x] Runner: Change from Porcelain to Rambo
 
+## 2020 Jan 16 Thu
+
+- [x] Test LiveView Components
+
 ## TBD
 
-- [ ] Upgrade LiveView to 0.5.1
+- [ ] V0 - Schedule: Edit the Schedule
+- [ ] V0 - Schedule: Multiple Schedules (on/off) (exportable/sharable)
+- [ ] V0 - Schedule: Run now button
+- [ ] V0 - Schedule: syntax checking of csv file
+- [ ] V0 - Schedule: live editing using LiveView
+- [ ] V0 - Schedule: add 'install' button
+- [ ] V0 - Oban: Add telemetry
 
-- [ ] SUPERVISOR: Edit the Schedule
-- [ ] SUPERVISOR: Multiple Schedules (on/off) (exportable/sharable)
-- [ ] SUPERVISOR: Email Notification
-- [ ] SUPERVISOR: Host Limits (disk/memory)
-- [ ] SUPERVISOR: Statistics/Graphing (jobs that update CROW_METRICS)
-- [ ] SUPERVISOR: Edit the Title and Logo
-- [ ] Home: Run now button
+- [ ] V1 - WS: read RealTime Phoenix book
+- [ ] V1 - WS: build CoinBase sockets demo
+- [ ] V1 - Runner: design runner
+
+- [ ] Package: package as docker container
+
+- [ ] LiveView: Upgrade to 0.5.1
+- [ ] LiveView: Add tests
+
+- [ ] Job: job navigation (next/prev, sparklines)
+
+- [ ] Admin: Edit the Title and Logo
+- [ ] Admin: Host Limits (disk/memory)
+- [ ] Admin: Email Notification
+- [ ] Admin: documentation links
+- [ ] Admin: editable visualization link
+- [ ] Admin: editable notification email
+- [ ] Admin: editable time-threshold
 
 - [ ] ObanScheduler - get current list of jobs
-- [ ] ObanScheduler - run jobs at top of hour
+- [ ] ObanScheduler - run jobs at top of minute
 - [ ] ObanScheduler - display job list on schedule page
 - [ ] ObanScheduler - retrieve job list with original scheduler expressions
 - [ ] ObanScheduler - update schedule on a single node
 - [ ] ObanScheduler - update schedule across all Oban nodes
 
-- [ ] Job: job navigation (next/prev, sparklines)
-- [ ] Job: run now button
-
-- [ ] Schedule: syntax checking of csv file
-- [ ] Schedule: run now button
-- [ ] Schedule: smaller table font
-- [ ] Schedule: live editing using LiveView
-- [ ] Schedule: add 'install' button
-
-- [ ] Admin: documentation links
-- [ ] Admin: editable visualization link
-- [ ] Admin: editable notification email
-- [ ] Admin: editable time-threshold
