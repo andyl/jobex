@@ -9,7 +9,7 @@ defmodule JobexData.Worker.Base do
     JobexWeb.Endpoint.broadcast_from(self(), "job-event", "shell-worker-start", %{})
 
     # cmd_result = Runner.Porcelain.exec(args["cmd"])
-    cmd_result = Runner.Rambo.exec(args["cmd"]) |> IO.inspect()
+    cmd_result = Runner.Rambo.exec(args["cmd"]) 
 
     args = %{
       stdout: cmd_result.out,

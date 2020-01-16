@@ -15,15 +15,15 @@ defmodule JobexData.Runner.Rambo do
 
   def cmd_run({cmd, args}, acc) do
     case elem(acc, 0) do
-      :ok -> Rambo.run(cmd, args)
+      :ok -> Rambo.run(cmd, args, log: false)
       _ -> acc
     end
   end
 
   defp package_result(tuple) do
     case tuple do
-      {:ok, result} -> result |> IO.inspect()
-      {:error, msg} -> errmsg(msg) |> IO.inspect()
+      {:ok, result} -> result 
+      {:error, msg} -> errmsg(msg) 
     end
   end
 
