@@ -1,12 +1,18 @@
 defmodule JobexWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :jobex_web
 
+  @session_options [
+    store: :cookie,
+    key: "_jobex_web_key",
+    signing_salt: "aYF2j5RA"
+  ]
+
   socket "/socket", JobexWeb.UserSocket,
     websocket: true,
     longpoll: false
 
-  socket "/live", Phoenix.LiveView.Socket
-    # websocket: [connect_info: [session: @session_options]]
+  socket "/live", Phoenix.LiveView.Socket,
+    websocket: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -40,10 +46,7 @@ defmodule JobexWeb.Endpoint do
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
-  plug Plug.Session,
-    store: :cookie,
-    key: "_jobex_web_key",
-    signing_salt: "aYF2j5RA"
+  plug Plug.Session, @session_options
 
   plug JobexWeb.Router
 end

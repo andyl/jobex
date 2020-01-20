@@ -126,7 +126,7 @@
 
 ## 2020 Jan 20 Mon
 
-- [ ] V1 - Upgrade to LV 0.5.2
+- [x] V1 - Upgrade to LV 0.5.2
 - [ ] V1 - Upgrade LeDemo to 0.5.2
 - [ ] V1 - Add modal to LiveEditable
 
