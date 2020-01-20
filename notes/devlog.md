@@ -118,11 +118,19 @@
 
 - [x] Test LiveView Components
 
-## TBD
+## 2020 Jan 19 Sun
 
-- [ ] V0 - WS: read RealTime Phoenix book
-- [ ] V0 - WS: build CoinBase sockets demo
-- [ ] V0 - Runner: design runner
+- [x] V0 - WS: read RealTime Phoenix book
+- [x] V0 - WS: build CoinBase sockets demo
+- [x] V0 - Runner: design runner
+
+## 2020 Jan 20 Mon
+
+- [ ] V1 - Upgrade to LV 0.5.2
+- [ ] V1 - Upgrade LeDemo to 0.5.2
+- [ ] V1 - Add modal to LiveEditable
+
+## TBD
 
 - [ ] V1 - Schedule: Edit the Schedule
 - [ ] V1 - Schedule: Multiple Schedules (on/off) (exportable/sharable)

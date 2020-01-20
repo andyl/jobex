@@ -24,6 +24,11 @@ Cron-Like Work Execution
 | jobex_term | terminal-ui                                |
 | jobex_web  | web-ui                                     |
 
+## Comparables
+
+- [ ] Cloudron
+- [ ] Flatpak
+
 ## Versions
 
 V0: Internal / Websocket Runner
