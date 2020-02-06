@@ -126,11 +126,12 @@
 
 ## 2020 Jan 20 Mon
 
-- [x] V1 - Upgrade to LV 0.5.2
-- [ ] V1 - Upgrade LeDemo to 0.5.2
+- [ ] V1 - Upgrade LiveEditable to LV 0.4.1
 - [ ] V1 - Add modal to LiveEditable
 
 ## TBD
+
+- [ ] Study HugInn (Ruby app on Github)
 
 - [ ] V1 - Schedule: Edit the Schedule
 - [ ] V1 - Schedule: Multiple Schedules (on/off) (exportable/sharable)
@@ -142,7 +143,7 @@
 
 - [ ] Package: package as docker container
 
-- [ ] LiveView: Upgrade to 0.5.1
+- [ ] LiveView: Upgrade to 0.5.2
 - [ ] LiveView: Add tests
 
 - [ ] Job: job navigation (next/prev, sparklines)
