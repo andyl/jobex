@@ -19,7 +19,7 @@ release managed by SystemD, rather than a Docker container.
 
 ## System requirements
 
-- Ubuntu Host running 18.04
+- Ubuntu Host running 18.04 OR Armbian Server
 - SystemD
 - Postgres (user/pass = postgres/postgres)
 
