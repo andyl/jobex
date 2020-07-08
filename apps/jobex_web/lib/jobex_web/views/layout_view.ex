@@ -50,7 +50,7 @@ defmodule JobexWeb.LayoutView do
     hostid = 2
     r_path = conn.request_path
     """
-    <img src="https://badger.casmacc.net/png0/#{hostid}?path=#{r_path}"></img>
+    <img src="https://badger.casmacc.net/png0/7edf99?path=#{r_path}"></img>
     """ |> Phoenix.HTML.raw()
   end
 
