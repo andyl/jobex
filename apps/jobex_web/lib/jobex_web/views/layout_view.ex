@@ -47,10 +47,10 @@ defmodule JobexWeb.LayoutView do
   end
 
   def footer_img(conn) do
-    hostid = 2
+    hostid = "7edf99"
     r_path = conn.request_path
     """
-    <img src="https://badger.casmacc.net/png0/7edf99?path=#{r_path}"></img>
+    <img src="https://badger.casmacc.net/png0/#{hostid}?path=#{r_path}"></img>
     """ |> Phoenix.HTML.raw()
   end
 
