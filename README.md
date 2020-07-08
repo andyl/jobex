@@ -88,3 +88,5 @@ Make sure your service starts when the system reboots
 - `sudo systemctl enable jobex`
 
 Reboot and test!
+
+![](https://badger.casmacc.net/png0/f687fc?path=NA)
