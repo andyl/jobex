@@ -1,4 +1,4 @@
-# Jobex
+18.04 OR Armbian Server Jobex
 
 Jobex is cron-like workflow - Cron meets Airflow.
 
@@ -19,7 +19,7 @@ release managed by SystemD, rather than a Docker container.
 
 ## System requirements
 
-- Ubuntu Host running 18.04 OR Armbian Server
+- Ubuntu Host running 20.04
 - SystemD
 - Postgres (user/pass = postgres/postgres)
 
