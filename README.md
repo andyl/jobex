@@ -1,4 +1,4 @@
-18.04 OR Armbian Server Jobex
+# Jobex README
 
 Jobex is cron-like workflow - Cron meets Airflow.
 
