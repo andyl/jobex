@@ -12,10 +12,11 @@ defmodule JobexWeb.Live.Home do
     ~L"""
     <div class="row">
       <div class="col-md-3" style='border-right: 1px solid lightgray;'>
-        <%= live_render(@socket, JobexWeb.Live.Home.Sidebar, session: %{uistate: @uistate}, id: "yy#{rand}") %>
+        HELLO WORLD THIS IS HOME <%= rand %>
+        <%# live_render(@socket, JobexWeb.Live.Home.Sidebar, session: %{uistate: @uistate}, id: "yy#{rand}") %>
       </div>
       <div class="col-md-9">
-        <%= live_render(@socket, JobexWeb.Live.Home.Body, session: %{uistate: @uistate}, id: "xx#{rand}") %>
+        <%# live_render(@socket, JobexWeb.Live.Home.Body, session: %{uistate: @uistate}, id: "xx#{rand}") %>
       </div>
     </div>
     """

@@ -5,6 +5,7 @@ defmodule JobexWeb.Application do
 
   def start(_type, _args) do
     children = [
+      {Phoenix.PubSub, [name: JobexWeb.PubSub, adapter: Phoenix.PubSub.PG2]}, 
       JobexWeb.Endpoint
     ]
 

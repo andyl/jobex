@@ -10,7 +10,8 @@ config :jobex_web, JobexWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "QS8kX5FCVfibbmDoqgt4hvDjBg8ibIX6GB4Nu8uwaCCrklexWWHBhZ9Z39TA4c4z",
   render_errors: [view: JobexWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: JobexWeb.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: JobexWeb.PubSub,
+  live_view: [signing_salt: "FnCl0cD24kFBQQZBsupersecretandlong"]
 
 config :jobex_core,
   ecto_repos: [JobexCore.Repo]
@@ -21,7 +22,7 @@ config :logger, :console,
 
 config :phoenix, :json_library, Jason
 
-config :jobex_web, JobexWeb.Endpoint, live_view: [signing_salt: "asdf"]
+# config :jobex_web, JobexWeb.Endpoint, live_view: [signing_salt: "asdf"]
 
 config :jobex_core, Oban,
   repo: JobexCore.Repo,

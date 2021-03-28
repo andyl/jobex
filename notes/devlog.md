@@ -124,13 +124,15 @@
 - [x] V0 - WS: build CoinBase sockets demo
 - [x] V0 - Runner: design runner
 
+## 2021 Mar 28 Sun
+
+- [x] Move JobexCore to JobexCore
+
 ## TBD
 
-- [ ] Upgrade to latest LiveEditable
+- [ ] Upgrade to latest LiveView
 - [ ] Upgrade to latest Phoenix
 - [ ] Upgrade to latest Oban
-
-- [ ] Move JobexCore to JobexCore
 
 - [ ] V1 - Upgrade LiveEditable to LV 0.4.1
 - [ ] V1 - Add modal to LiveEditable

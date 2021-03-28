@@ -1,1 +1,1 @@
-<%= live_render(@conn, JobexWeb.Live.Schedule.Body, session: %{schedule: @schedule}) %>
+<%# live_render(@conn, JobexWeb.Live.Schedule.Body, session: %{schedule: @schedule}) %>
