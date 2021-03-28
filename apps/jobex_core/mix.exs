@@ -39,7 +39,7 @@ defmodule JobexCore.MixProject do
       # ----- utility functions 
       {:modex,     path: "~/src/modex"},
       # ----- csv parsing -----
-      {:nimble_csv, "~> 0.6"},
+      {:nimble_csv, "~> 1.1"},
       # ----- jobs
       {:oban,      "~> 0.12"},
       {:quantum,   "~> 2.3"},
