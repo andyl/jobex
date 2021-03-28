@@ -6,7 +6,7 @@ defmodule JobexWeb.Live.Home.Sidebar do
   def mount(session, socket) do
     :timer.send_interval(5000, self(), :sidebar_tick)
     JobexWeb.Endpoint.subscribe("job-event")
-    sidebar_count = JobexData.Query.sidebar_count()
+    sidebar_count = JobexCore.Query.sidebar_count()
     opts = %{refresh: false, uistate: session.uistate, sidebar_count: sidebar_count}
     {:ok, assign(socket, opts)}
   end
@@ -227,7 +227,7 @@ defmodule JobexWeb.Live.Home.Sidebar do
 
         %{
           refresh: false,
-          sidebar_count: JobexData.Query.sidebar_count()
+          sidebar_count: JobexCore.Query.sidebar_count()
         }
       else
         %{}

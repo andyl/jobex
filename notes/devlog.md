@@ -130,7 +130,7 @@
 - [ ] Upgrade to latest Phoenix
 - [ ] Upgrade to latest Oban
 
-- [ ] Move JobexData to JobexCore
+- [ ] Move JobexCore to JobexCore
 
 - [ ] V1 - Upgrade LiveEditable to LV 0.4.1
 - [ ] V1 - Add modal to LiveEditable

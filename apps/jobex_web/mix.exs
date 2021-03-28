@@ -47,7 +47,7 @@ defmodule JobexWeb.MixProject do
       # ----- development and test
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       # ----- data
-      {:jobex_data, in_umbrella: true}
+      {:jobex_core, in_umbrella: true}
     ]
   end
 end

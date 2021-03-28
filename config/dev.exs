@@ -29,10 +29,10 @@ config :jobex_web, JobexWeb.Endpoint,
   ]
 
 # Configure your database
-config :jobex_data, JobexData.Repo,
+config :jobex_core, JobexCore.Repo,
   username: "postgres",
   password: "postgres",
-  database: "jobex_data_dev",
+  database: "jobex_core_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

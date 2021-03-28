@@ -1,7 +1,7 @@
 import Config
 
 config :jobex_web,  :env, Mix.env()
-config :jobex_data, :env, Mix.env()
+config :jobex_core, :env, Mix.env()
 
 config :jobex_web,
   generators: [context_app: false]
@@ -12,8 +12,8 @@ config :jobex_web, JobexWeb.Endpoint,
   render_errors: [view: JobexWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: JobexWeb.PubSub, adapter: Phoenix.PubSub.PG2]
 
-config :jobex_data,
-  ecto_repos: [JobexData.Repo]
+config :jobex_core,
+  ecto_repos: [JobexCore.Repo]
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
@@ -23,16 +23,16 @@ config :phoenix, :json_library, Jason
 
 config :jobex_web, JobexWeb.Endpoint, live_view: [signing_salt: "asdf"]
 
-config :jobex_data, Oban,
-  repo: JobexData.Repo,
+config :jobex_core, Oban,
+  repo: JobexCore.Repo,
   prune: {:maxlen, 5_000},
   crontab: [
-    # {"* * * * *", JobexData.Worker.Test}
-    # {"* * * * *", JobexData.Worker.Parallel, args: %{type: "sleep30", cmd: "sleep 30; date"}}
+    # {"* * * * *", JobexCore.Worker.Test}
+    # {"* * * * *", JobexCore.Worker.Parallel, args: %{type: "sleep30", cmd: "sleep 30; date"}}
   ],
   queues: [default: 10, parallel: 10, serial: 1]
 
-config :jobex_data, JobexData.Scheduler,
+config :jobex_core, JobexCore.Scheduler,
   timezone: "America/Los_Angeles",
   global: false,
   jobs: []

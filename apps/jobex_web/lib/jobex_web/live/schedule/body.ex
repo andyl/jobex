@@ -51,17 +51,17 @@ defmodule JobexWeb.Live.Schedule.Body do
   # ----- event handlers -----
 
   def handle_event("jobstop", _, socket) do
-    JobexData.Scheduler.delete_all_jobs()
+    JobexCore.Scheduler.delete_all_jobs()
     {:noreply, assign(socket, %{schedule: []})}
   end
 
   def handle_event("devload", _, socket) do
-    JobexData.Scheduler.load_dev_jobs()
-    {:noreply, assign(socket, %{schedule: JobexData.Scheduler.jobs()})}
+    JobexCore.Scheduler.load_dev_jobs()
+    {:noreply, assign(socket, %{schedule: JobexCore.Scheduler.jobs()})}
   end
 
   def handle_event("prodload", _, socket) do
-    JobexData.Scheduler.load_prod_jobs()
-    {:noreply, assign(socket, %{schedule: JobexData.Scheduler.jobs()})}
+    JobexCore.Scheduler.load_prod_jobs()
+    {:noreply, assign(socket, %{schedule: JobexCore.Scheduler.jobs()})}
   end
 end

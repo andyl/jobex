@@ -20,7 +20,7 @@ Cron-Like Work Execution
 
 | APP        | DESCRIPTION                                |
 |------------|--------------------------------------------|
-| jobex_data | business logic, job execution, persistence |
+| jobex_core | business logic, job execution, persistence |
 | jobex_term | terminal-ui                                |
 | jobex_web  | web-ui                                     |
 

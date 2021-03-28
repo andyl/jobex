@@ -23,10 +23,10 @@ config :jobex_web, JobexWeb.Endpoint,
   http: [:inet6, port: String.to_integer(System.get_env("PORT") || "5070")],
   secret_key_base: "_123456789_123456789_123456789_123456789_123456789_123456789_123456789"
 
-config :jobex_data, JobexData.Repo,
+config :jobex_core, JobexCore.Repo,
   username: "postgres",
   password: "postgres",
-  database: "jobex_data_prod",
+  database: "jobex_core_prod",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

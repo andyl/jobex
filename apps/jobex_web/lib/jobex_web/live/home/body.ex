@@ -12,7 +12,7 @@ defmodule JobexWeb.Live.Home.Body do
     uistate = session.uistate
 
     opts = %{
-      body_data: JobexData.Query.job_data(uistate),
+      body_data: JobexCore.Query.job_data(uistate),
       uistate:   uistate,
       job_count: job_count,
       num_pages: num_pages(job_count),
@@ -205,20 +205,20 @@ defmodule JobexWeb.Live.Home.Body do
   
   defp job_count(uistate) do
     case uistate.field do
-      nil       -> JobexData.Query.all_count()
-      "all"     -> JobexData.Query.all_count()
-      "state"   -> JobexData.Query.state_count()[uistate.value]
-      "type"    -> JobexData.Query.type_count()[uistate.value]
-      "queue"   -> JobexData.Query.queue_count()[uistate.value]
-      "command" -> JobexData.Query.command_count(uistate.value)[uistate.value]
-      "alert"   -> JobexData.Query.alert_count()[uistate.value]
-      _         -> JobexData.Query.all_count()
+      nil       -> JobexCore.Query.all_count()
+      "all"     -> JobexCore.Query.all_count()
+      "state"   -> JobexCore.Query.state_count()[uistate.value]
+      "type"    -> JobexCore.Query.type_count()[uistate.value]
+      "queue"   -> JobexCore.Query.queue_count()[uistate.value]
+      "command" -> JobexCore.Query.command_count(uistate.value)[uistate.value]
+      "alert"   -> JobexCore.Query.alert_count()[uistate.value]
+      _         -> JobexCore.Query.all_count()
     end
   end
 
   defp num_pages(job_count) do
     if job_count > 0 do
-      size = JobexData.Query.page_size()
+      size = JobexCore.Query.page_size()
       rema = if rem(job_count, size) > 0, do: 1, else: 0
       div(job_count, size) + rema
     else
@@ -297,7 +297,7 @@ defmodule JobexWeb.Live.Home.Body do
     job_count = job_count(uistate)
 
     opts = %{
-      body_data: JobexData.Query.job_data(uistate),
+      body_data: JobexCore.Query.job_data(uistate),
       job_count: job_count,
       num_pages: num_pages(job_count)
     }
