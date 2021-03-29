@@ -26,7 +26,8 @@ config :phoenix, :json_library, Jason
 
 config :jobex_core, Oban,
   repo: JobexCore.Repo,
-  prune: {:maxlen, 5_000},
+  # prune: {:maxlen, 5_000},
+  # this feature was moved to PRO - $39/month
   crontab: [
     # {"* * * * *", JobexCore.Worker.Test}
     # {"* * * * *", JobexCore.Worker.Parallel, args: %{type: "sleep30", cmd: "sleep 30; date"}}

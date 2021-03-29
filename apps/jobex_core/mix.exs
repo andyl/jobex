@@ -41,7 +41,7 @@ defmodule JobexCore.MixProject do
       # ----- csv parsing -----
       {:nimble_csv, "~> 1.1"},
       # ----- jobs
-      {:oban,      "~> 0.12"},
+      {:oban,      "~> 2.5"},
       {:quantum,   "~> 3.3"},
       {:timex,     "~> 3.0"}
     ]
