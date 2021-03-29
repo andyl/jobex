@@ -1,5 +1,5 @@
 defmodule JobexCore.Scheduler do
-  use Quantum.Scheduler, otp_app: :jobex_core
+  use Quantum, otp_app: :jobex_core
 
   alias NimbleCSV.RFC4180, as: CSV
 
