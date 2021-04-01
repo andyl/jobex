@@ -3,11 +3,13 @@ defmodule JobexWeb.Live.Home.Sidebar do
 
   import Phoenix.HTML
 
-  def mount(session, socket) do
+  # ----- lifecycle callbacks -----
+  def mount(_alt, session, socket) do
+    IO.puts "SIDEBAR MOUNT"
     :timer.send_interval(5000, self(), :sidebar_tick)
     JobexWeb.Endpoint.subscribe("job-event")
     sidebar_count = JobexCore.Query.sidebar_count()
-    opts = %{refresh: false, uistate: session.uistate, sidebar_count: sidebar_count}
+    opts = %{refresh: false, uistate: session["uistate"], sidebar_count: sidebar_count}
     {:ok, assign(socket, opts)}
   end
 

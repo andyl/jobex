@@ -1,5 +1,13 @@
 import Config
 
+# Configures the endpoint
+config :jobex_ui, JobexUi.Endpoint,
+  url: [host: "localhost"],
+  secret_key_base: "LXP6LvTFHlEsBwkEza0JtPvZXim/gPTkcKky5r/fevqg5hwvG9JRsqv63fryhW1/",
+  render_errors: [view: JobexUi.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: JobexUi.PubSub,
+  live_view: [signing_salt: "Rd7jfhOZ"]
+
 config :jobex_web,  :env, Mix.env()
 config :jobex_core, :env, Mix.env()
 

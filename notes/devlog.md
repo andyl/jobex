@@ -132,6 +132,10 @@
 - [x] Upgrade to latest Oban
 - [x] Upgrade LiveEditable to latest LiveView
 
+## 2021 Mar 31 Wed
+
+- [x] Add new WebUi
+
 ## TBD
 
 - [ ] Get UI working
