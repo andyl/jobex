@@ -54,7 +54,7 @@ release :jobex do
   set version: "0.1.0"
   set applications: [
     :runtime_tools,
-    jobex_data: :permanent,
+    jobex_core: :permanent,
     jobex_web: :permanent
   ]
 end

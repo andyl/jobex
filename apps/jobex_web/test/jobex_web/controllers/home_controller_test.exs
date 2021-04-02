@@ -1,7 +1,7 @@
 defmodule JobexWeb.HomeControllerTest do
   use JobexWeb.ConnCase
 
-  alias JobexData.Repo
+  alias JobexCore.Repo
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)

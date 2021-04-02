@@ -35,8 +35,8 @@ release managed by SystemD, rather than a Docker container.
 
 Job schedules are stored in csv files:
 
-- apps/jobex_data/priv/dev_schedule.csv
-- apps/jobex_data/priv/prod_schedule.csv
+- apps/jobex_core/priv/dev_schedule.csv
+- apps/jobex_core/priv/prod_schedule.csv
 
 CSV files can be edited to run your own commands.  The CSV columns include:
 

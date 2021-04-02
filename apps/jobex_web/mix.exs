@@ -30,14 +30,14 @@ defmodule JobexWeb.MixProject do
   defp deps do
     [
       # ----- phoenix backend
-      {:phoenix, "~> 1.4.6"},
+      {:phoenix, "~> 1.5"},
       {:plug_cowboy, "~> 2.0"},
       {:phoenix_html, "~> 2.11"},
-      {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_html_simplified_helpers, "~> 2.1.0"},
       # ----- phoenix view helpers
       {:phoenix_active_link, "~> 0.3.0"},
-      {:phoenix_live_view, "== 0.4.1"},
+      {:phoenix_live_view, "~> 0.15"},
       # ----- util
       {:jason, "~> 1.0"},
       {:gettext, "~> 0.11"},
@@ -47,7 +47,8 @@ defmodule JobexWeb.MixProject do
       # ----- development and test
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       # ----- data
-      {:jobex_data, in_umbrella: true}
+      {:jobex_core, in_umbrella: true}, 
+      {:jobex_io, in_umbrella: true}
     ]
   end
 end

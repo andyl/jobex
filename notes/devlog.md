@@ -124,16 +124,28 @@
 - [x] V0 - WS: build CoinBase sockets demo
 - [x] V0 - Runner: design runner
 
+## 2021 Mar 28 Sun
+
+- [x] Move JobexCore to JobexCore
+- [x] Upgrade to latest LiveView
+- [x] Upgrade to latest Phoenix
+- [x] Upgrade to latest Oban
+- [x] Upgrade LiveEditable to latest LiveView
+
+## 2021 Mar 31 Wed
+
+- [x] Add new WebUi
+
+## 2021 Apr 02 Fri
+
+- [x] Get UI working
+- [x] Get Oban working
+- [x] Create separate pubsub app (JobexIo)
+- [x] Fix icons
+- [x] Fix timex issue
+- [x] Merge to dev
+
 ## TBD
-
-- [ ] Upgrade to latest LiveEditable
-- [ ] Upgrade to latest Phoenix
-- [ ] Upgrade to latest Oban
-
-- [ ] Move JobexData to JobexCore
-
-- [ ] V1 - Upgrade LiveEditable to LV 0.4.1
-- [ ] V1 - Add modal to LiveEditable
 
 - [ ] V1 - Schedule: Edit the Schedule
 - [ ] V1 - Schedule: Multiple Schedules (on/off) (exportable/sharable)
@@ -141,11 +153,19 @@
 - [ ] V1 - Schedule: syntax checking of csv file
 - [ ] V1 - Schedule: live editing using LiveView
 - [ ] V1 - Schedule: add 'install' button
+- [ ] V1 - Add modal to LiveEditable
 - [ ] V1 - Oban: Add telemetry
+- [ ] V1 - Oban: Max Oban Jobs
+
+- [ ] V4 - Add UserLogin
+- [ ] V4 - Add MultiTenant
+
+- [ ] V2 - Add job runner using Phoenix Channels
+
+- [ ] V3 - Add workflow system
 
 - [ ] Package: package as docker container
 
-- [ ] LiveView: Upgrade to 0.5.2
 - [ ] LiveView: Add tests
 
 - [ ] Study HugInn (Ruby app on Github)

@@ -1,8 +1,8 @@
 defmodule JobexWeb.Live.Admin.Base do
   use Phoenix.LiveView
 
-  alias JobexData.Repo
-  alias JobexData.Ctx.{ObanJob, Result}
+  alias JobexCore.Repo
+  alias JobexCore.Ctx.{ObanJob, Result}
 
   def mount(_session, socket) do
     {:ok, assign(socket, %{numjobs: numjobs()})}
@@ -28,7 +28,7 @@ defmodule JobexWeb.Live.Admin.Base do
   # ----- helpers -----
 
   defp numjobs do
-    JobexData.Query.all_count()
+    JobexCore.Query.all_count()
   end
 
 end
