@@ -142,7 +142,8 @@
 - [x] Get Oban working
 - [x] Create separate pubsub app (JobexIo)
 - [x] Fix icons
-- [ ] Replace Timex.strftime with builtin elixir
+- [x] Fix timex issue
+- [x] Merge to dev
 
 ## TBD
 
