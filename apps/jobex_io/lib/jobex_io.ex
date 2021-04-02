@@ -3,16 +3,13 @@ defmodule JobexIo do
   Documentation for `JobexIo`.
   """
 
-  @doc """
-  Hello world.
+  def broadcast(topic, payload) do
+    JobexIo.PubSub
+    |> Phoenix.PubSub.broadcast(topic, payload)
+  end
 
-  ## Examples
-
-      iex> JobexIo.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def subscribe(topic) do
+    JobexIo.PubSub
+    |> Phoenix.PubSub.subscribe(topic)
   end
 end

@@ -185,21 +185,21 @@ defmodule JobexUi.BodyComponent do
   def my_live_link(lbl, path) do
     """
     <li class="page-item">
-    #{Util.live_link(lbl, to: path, class: 'page-link')}
+    #{Util.live_link(lbl, to: path, class: 'page-link') }
     </li>
     """
   end
 
   def page_link_for("page_min", assigns) do
     newstate = Map.merge(assigns.uistate, %{page: 1})
-    my_live_link("<i class='fa fa-angle-double-left'></i>", path_for(newstate))
+    my_live_link("<i class='bi-chevron-double-left'></i>", path_for(newstate))
   end
 
   def page_link_for("page_dec", assigns) do
     oldpage = assigns.uistate[:page] || 1
     newpage = Enum.max([oldpage - 1, 1])
     newstate = Map.merge(assigns.uistate, %{page: newpage})
-    my_live_link("<i class='fa fa-angle-left'></i>", path_for(newstate))
+    my_live_link("<i class='bi-chevron-left'></i>", path_for(newstate))
   end
 
   def page_link_for("page_inc", assigns) do
@@ -207,13 +207,13 @@ defmodule JobexUi.BodyComponent do
     oldpage   = assigns.uistate[:page] || 1
     newpage   = Enum.min([oldpage + 1, num_pages])
     newstate  = Map.merge(assigns.uistate, %{page: newpage})
-    my_live_link("<i class='fa fa-angle-right'></i>", path_for(newstate))
+    my_live_link("<i class='bi-chevron-right'></i>", path_for(newstate))
   end
 
   def page_link_for("page_max", assigns) do
     num_pages = assigns.num_pages
     newstate = Map.merge(assigns.uistate, %{page: num_pages})
-    my_live_link("<i class='fa fa-angle-double-right'></i>", path_for(newstate))
+    my_live_link("<i class='bi-chevron-double-right'></i>", path_for(newstate))
   end
   
   defp job_count(uistate) do
@@ -248,8 +248,8 @@ defmodule JobexUi.BodyComponent do
     page = assigns.uistate[:page] || 1
     if page == 1 || assigns.num_pages == 0 do
     """
-    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-double-left'></i></a></li>
-    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-left'></i></a></li>
+    <li class="page-item disabled"><a class="page-link" href='#'><i class='bi-chevron-double-left'></i></a></li>
+    <li class="page-item disabled"><a class="page-link" href='#'><i class='bi-chevron-left'></i></a></li>
     """
     else
     """
@@ -263,8 +263,8 @@ defmodule JobexUi.BodyComponent do
     page = assigns.uistate[:page] || 1
     if page == assigns.num_pages || assigns.num_pages == 0 do
     """
-    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-right'></i></a></li>
-    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-double-right'></i></a></li>
+    <li class="page-item disabled"><a class="page-link" href='#'><i class='bi-chevron-right'></i></a></li>
+    <li class="page-item disabled"><a class="page-link" href='#'><i class='bi-chevron-double-right'></i></a></li>
     """
     else
     """

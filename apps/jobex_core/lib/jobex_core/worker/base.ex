@@ -6,9 +6,8 @@ defmodule JobexCore.Worker.Base do
 
   def perform(job) do
 
-    # JobexUi.Endpoint.broadcast_from(self(), "job-event", "shell-worker-start", %{})
+    JobexIo.broadcast("shell-worker-start", %{})
 
-    # cmd_result = Runner.Porcelain.exec(args["cmd"])
     cmd_result = Runner.Rambo.exec(job.args["cmd"]) 
 
     result = %{
@@ -23,7 +22,7 @@ defmodule JobexCore.Worker.Base do
     |> Result.changeset(result)
     |> Repo.insert()
 
-    # JobexUi.Endpoint.broadcast_from(self(), "job-event", "shell-worker-finish", %{})
+    JobexIo.broadcast("shell-worker-finish", %{})
 
     return_code(cmd_result) 
   end

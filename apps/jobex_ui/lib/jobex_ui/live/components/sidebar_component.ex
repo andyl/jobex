@@ -159,25 +159,25 @@ defmodule JobexUi.SidebarComponent do
   def sidebar_top_lnk(assigns) do
     new = sidebar_top(assigns)
     old = current_pair(assigns)
-    link_for("<i class='fa fa-angle-double-up'></i>", new, new == old)
+    link_for("<i class='bi-chevron-double-up'></i>", new, new == old)
   end
 
   def sidebar_up_lnk(assigns) do
     new = sidebar_up(assigns)
     old = current_pair(assigns)
-    link_for("<i class='fa fa-angle-up'></i>", new, new == old)
+    link_for("<i class='bi-chevron-up'></i>", new, new == old)
   end
 
   def sidebar_dn_lnk(assigns) do
     new = sidebar_dn(assigns)
     old = current_pair(assigns)
-    link_for("<i class='fa fa-angle-down'></i>", new, new == old)
+    link_for("<i class='bi-chevron-down'></i>", new, new == old)
   end
 
   def sidebar_btm_lnk(assigns) do
     new = sidebar_btm(assigns)
     old = current_pair(assigns)
-    link_for("<i class='fa fa-angle-double-down'></i>", new, new == old)
+    link_for("<i class='bi-chevron-double-down'></i>", new, new == old)
   end
 
   def current_pair(assigns) do
