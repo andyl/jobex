@@ -136,9 +136,15 @@
 
 - [x] Add new WebUi
 
-## TBD
+## 2021 Apr 02 Fri
 
-- [ ] Get UI working
+- [x] Get UI working
+- [x] Get Oban working
+- [ ] Create separate pubsub app
+- [ ] Fix icons
+- [ ] Replace Timex.strftime with builtin elixir
+
+## TBD
 
 - [ ] V1 - Schedule: Edit the Schedule
 - [ ] V1 - Schedule: Multiple Schedules (on/off) (exportable/sharable)

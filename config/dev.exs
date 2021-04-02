@@ -66,4 +66,4 @@ config :jobex_core, JobexCore.Repo,
 
 # ----- Misc
 
-config :logger, level: :info
+config :logger, level: :debug

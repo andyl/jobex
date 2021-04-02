@@ -17,7 +17,9 @@ defmodule JobexUi.Router do
   scope "/", JobexUi do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", HomeLive, :index
+    live "/jobs", JobsLive, :index
+    live "/test", TestLive, :index
   end
 
   # Other scopes may use custom stacks.

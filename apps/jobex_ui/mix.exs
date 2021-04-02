@@ -48,7 +48,9 @@ defmodule JobexUi.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:jobex_core, in_umbrella: true},
+      {:plug_cowboy, "~> 2.0"}, 
+      {:jobex_io, in_umbrella: true}
     ]
   end
 

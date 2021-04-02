@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-md-3" style='border-right: 1px solid lightgray;'>
+    <%= live_component(@socket, JobexUi.SidebarComponent, session: %{"opts" => @opts}, id: "side") %>
+  </div>
+  <div class="col-md-9">
+    <%= live_component(@socket, JobexUi.BodyComponent, session: %{"opts" => @opts}, id: "body") %>
+  </div>
+</div>

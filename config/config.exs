@@ -36,15 +36,20 @@ config :jobex_core, Oban,
   repo: JobexCore.Repo,
   # prune: {:maxlen, 5_000},
   # this feature was moved to PRO - $39/month
-  crontab: [
-    # {"* * * * *", JobexCore.Worker.Test}
-    # {"* * * * *", JobexCore.Worker.Parallel, args: %{type: "sleep30", cmd: "sleep 30; date"}}
-  ],
+  # crontab: [
+  #   {"* * * * *", JobexCore.Worker.Test}, 
+  #   {"* * * * *", JobexCore.Worker.Parallel, args: %{type: "sleep30", cmd: "sleep 30; date"}}
+  # ],
   queues: [default: 10, parallel: 10, serial: 1]
 
 config :jobex_core, JobexCore.Scheduler,
   timezone: "America/Los_Angeles",
   global: false,
-  jobs: []
+  jobs: [
+    # {"* * * * *", fn -> System.cmd("uptime", []) end},
+    {"* * * * *", {JobexCore.Job, :serial,   ["sleep20", "sleep 20"]}}
+    # {"* * * * *", {JobexCore.Job, :parallel, ["sleep40", "sleep 40"]}}
+    # {"* * * * *", {JobexCore.Job.Parallel, args: %{type: "sleep30", cmd: "sleep 30; date"}}
+  ]
 
 import_config "#{Mix.env()}.exs"

@@ -3,7 +3,7 @@ defmodule JobexCore.Worker.Serial do
 
   @impl Oban.Worker
 
-  def perform(args, job) do
-    JobexCore.Worker.Base.perform(args, job)
+  def perform(job) do
+    JobexCore.Worker.Base.perform(job)
   end
 end

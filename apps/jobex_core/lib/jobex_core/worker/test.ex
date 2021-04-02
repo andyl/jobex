@@ -3,7 +3,7 @@ defmodule JobexCore.Worker.Test do
 
   @impl Oban.Worker
 
-  def perform(_args, _job) do
+  def perform(_job) do
     IO.inspect(">>")
   end
 end

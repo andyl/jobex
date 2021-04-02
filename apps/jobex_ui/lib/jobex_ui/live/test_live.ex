@@ -1,4 +1,4 @@
-defmodule JobexUi.PageLive do
+defmodule JobexUi.TestLive do
   use JobexUi, :live_view
 
   @impl true

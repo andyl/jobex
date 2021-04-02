@@ -3,7 +3,8 @@ defmodule JobexCore.Worker.Parallel do
 
   @impl Oban.Worker
 
-  def perform(args, job) do
-    JobexCore.Worker.Base.perform(args, job)
+  @impl true
+  def perform(job) do
+    JobexCore.Worker.Base.perform(job)
   end
 end

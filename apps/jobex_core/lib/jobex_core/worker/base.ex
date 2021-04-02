@@ -4,14 +4,14 @@ defmodule JobexCore.Worker.Base do
   alias JobexCore.Runner
   alias JobexCore.Repo
 
-  def perform(args, job) do
+  def perform(job) do
 
-    JobexWeb.Endpoint.broadcast_from(self(), "job-event", "shell-worker-start", %{})
+    # JobexUi.Endpoint.broadcast_from(self(), "job-event", "shell-worker-start", %{})
 
     # cmd_result = Runner.Porcelain.exec(args["cmd"])
-    cmd_result = Runner.Rambo.exec(args["cmd"]) 
+    cmd_result = Runner.Rambo.exec(job.args["cmd"]) 
 
-    args = %{
+    result = %{
       stdout: cmd_result.out,
       stderr: err_msg(cmd_result),
       status: cmd_result.status,
@@ -20,10 +20,10 @@ defmodule JobexCore.Worker.Base do
     }
 
     %Result{}
-    |> Result.changeset(args)
+    |> Result.changeset(result)
     |> Repo.insert()
 
-    JobexWeb.Endpoint.broadcast_from(self(), "job-event", "shell-worker-finish", %{})
+    # JobexUi.Endpoint.broadcast_from(self(), "job-event", "shell-worker-finish", %{})
 
     return_code(cmd_result) 
   end

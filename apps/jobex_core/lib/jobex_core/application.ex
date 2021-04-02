@@ -11,6 +11,9 @@ defmodule JobexCore.Application do
           {Oban, Application.get_env(:jobex_core, Oban)}
         ]
 
-    Supervisor.start_link(children, strategy: :one_for_one, name: JobexCore.Supervisor)
+    IO.puts "*****\nSTARTING CORE\n*****"
+
+    opts = [strategy: :one_for_one, name: JobexCore.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end
