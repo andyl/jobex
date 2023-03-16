@@ -1,5 +1,67 @@
 # Jobex
 
+## Roadmap 
+
+Prep 
+
+- [ ] Read code 
+- [ ] Study Oban 
+
+Compile 
+
+- [ ] Get app to compile 
+- [ ] Get app to run 
+- [ ] Run tests 
+
+Oban 
+
+- [ ] Upgrade Oban 
+
+Upgrade 
+
+- [ ] Oban 
+- [ ] LiveView 
+
+Jobs 
+
+- [ ] Get weather 
+- [ ] Get stocks 
+
+Future 
+
+- [ ] Study HugInn (Ruby app on Github)
+
+- [ ] V1 - Schedule: Edit the Schedule
+- [ ] V1 - Schedule: Multiple Schedules (on/off) (exportable/sharable)
+- [ ] V1 - Schedule: Run now button
+- [ ] V1 - Schedule: syntax checking of csv file
+- [ ] V1 - Schedule: live editing using LiveView
+- [ ] V1 - Schedule: add 'install' button
+- [ ] V1 - Oban: Add telemetry
+
+- [ ] Package: package as docker container
+
+- [ ] LiveView: Upgrade 
+- [ ] LiveView: Add tests
+
+- [ ] Job: job navigation (next/prev, sparklines)
+
+- [ ] Admin: Edit the Title and Logo
+- [ ] Admin: Host Limits (disk/memory)
+- [ ] Admin: Email Notification
+- [ ] Admin: documentation links
+- [ ] Admin: editable visualization link
+- [ ] Admin: editable notification email
+- [ ] Admin: editable time-threshold
+
+- [ ] ObanScheduler - get current list of jobs
+- [ ] ObanScheduler - run jobs at top of minute
+- [ ] ObanScheduler - display job list on schedule page
+- [ ] ObanScheduler - retrieve job list with original scheduler expressions
+- [ ] ObanScheduler - update schedule on a single node
+- [ ] ObanScheduler - update schedule across all Oban nodes
+
+
 ## 2019 Aug 17 Sat
 
 - [x] Initial Setup
@@ -128,38 +190,4 @@
 
 - [ ] V1 - Upgrade LiveEditable to LV 0.4.1
 - [ ] V1 - Add modal to LiveEditable
-
-## TBD
-
-- [ ] Study HugInn (Ruby app on Github)
-
-- [ ] V1 - Schedule: Edit the Schedule
-- [ ] V1 - Schedule: Multiple Schedules (on/off) (exportable/sharable)
-- [ ] V1 - Schedule: Run now button
-- [ ] V1 - Schedule: syntax checking of csv file
-- [ ] V1 - Schedule: live editing using LiveView
-- [ ] V1 - Schedule: add 'install' button
-- [ ] V1 - Oban: Add telemetry
-
-- [ ] Package: package as docker container
-
-- [ ] LiveView: Upgrade to 0.5.2
-- [ ] LiveView: Add tests
-
-- [ ] Job: job navigation (next/prev, sparklines)
-
-- [ ] Admin: Edit the Title and Logo
-- [ ] Admin: Host Limits (disk/memory)
-- [ ] Admin: Email Notification
-- [ ] Admin: documentation links
-- [ ] Admin: editable visualization link
-- [ ] Admin: editable notification email
-- [ ] Admin: editable time-threshold
-
-- [ ] ObanScheduler - get current list of jobs
-- [ ] ObanScheduler - run jobs at top of minute
-- [ ] ObanScheduler - display job list on schedule page
-- [ ] ObanScheduler - retrieve job list with original scheduler expressions
-- [ ] ObanScheduler - update schedule on a single node
-- [ ] ObanScheduler - update schedule across all Oban nodes
 
