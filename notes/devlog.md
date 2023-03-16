@@ -2,15 +2,27 @@
 
 ## Roadmap 
 
-Phase 1
-- [ ] Build a demo site with Bootstrap configuration - outside the repo 
+Phase 1 - DONE
+- [x] Build a demo site with Bootstrap configuration - outside the repo 
 
-Phase 2 
+FAIL: 
+- everything is hard coded to tailwind
+- no instructions for converting to bootstrap
+
+Notes: 
+- https://fullstackphoenix.com/tutorials/bootstrap-5-and-phoenix-liveview 
+- https://pragmaticstudio.com/tutorials/using-tailwind-css-in-phoenix
+
+Try: 
+- [x] pragstudio on nested CSS & dartsass 
+
+Phase 2 - PENDING
 - [ ] Move code under archive directory 
-- [ ] Create a new jox application (`mix phx.new jox`), configure with bootstrap
+- [ ] Create a new jox application (`mix phx.new jox`), configure with nested tailwind 
+- [ ] using tailwind and nestedCSS to replicate the JobEx look - HEEX and dead-view 
 - [ ] No auth, get everything working perfectly 
 
-Phase 3 
+Phase 3 - PENDING
 - [ ] Create a new jobex application (`mix phx.new jobex`) - TAILWIND
 - [ ] Add auth to jobex application 
 - [ ] Get backend working - profit
