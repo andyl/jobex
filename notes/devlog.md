@@ -2,30 +2,24 @@
 
 ## Roadmap 
 
-Prep 
+Phase 1
+- [ ] Build a demo site with Bootstrap configuration - outside the repo 
 
-- [ ] Read code 
-- [ ] Study Oban 
+Phase 2 
+- [ ] Move code under archive directory 
+- [ ] Create a new jox application (`mix phx.new jox`), configure with bootstrap
+- [ ] No auth, get everything working perfectly 
 
-Compile 
-
-- [ ] Get app to compile 
-- [ ] Get app to run 
-- [ ] Run tests 
-
-Oban 
-
-- [ ] Upgrade Oban 
-
-Upgrade 
-
-- [ ] Oban 
-- [ ] LiveView 
+Phase 3 
+- [ ] Create a new jobex application (`mix phx.new jobex`) - TAILWIND
+- [ ] Add auth to jobex application 
+- [ ] Get backend working - profit
 
 Jobs 
-
-- [ ] Get weather 
-- [ ] Get stocks 
+- [ ] Weather 
+- [ ] Stocks 
+- [ ] Backups 
+- [ ] Grafana integration
 
 Future 
 
@@ -60,7 +54,6 @@ Future
 - [ ] ObanScheduler - retrieve job list with original scheduler expressions
 - [ ] ObanScheduler - update schedule on a single node
 - [ ] ObanScheduler - update schedule across all Oban nodes
-
 
 ## 2019 Aug 17 Sat
 
@@ -207,45 +200,14 @@ Future
 - [x] Fix timex issue
 - [x] Merge to dev
 
-## TBD
+## 2023 Mar 15 Wed
 
-- [ ] V1 - Schedule: Edit the Schedule
-- [ ] V1 - Schedule: Multiple Schedules (on/off) (exportable/sharable)
-- [ ] V1 - Schedule: Run now button
-- [ ] V1 - Schedule: syntax checking of csv file
-- [ ] V1 - Schedule: live editing using LiveView
-- [ ] V1 - Schedule: add 'install' button
-- [ ] V1 - Add modal to LiveEditable
-- [ ] V1 - Oban: Add telemetry
-- [ ] V1 - Oban: Max Oban Jobs
+Prep 
+- [x] Read code 
+- [x] Study Oban 
 
-- [ ] V4 - Add UserLogin
-- [ ] V4 - Add MultiTenant
-
-- [ ] V2 - Add job runner using Phoenix Channels
-
-- [ ] V3 - Add workflow system
-
-- [ ] Package: package as docker container
-
-- [ ] LiveView: Add tests
-
-- [ ] Study HugInn (Ruby app on Github)
-
-- [ ] Job: job navigation (next/prev, sparklines)
-
-- [ ] Admin: Edit the Title and Logo
-- [ ] Admin: Host Limits (disk/memory)
-- [ ] Admin: Email Notification
-- [ ] Admin: documentation links
-- [ ] Admin: editable visualization link
-- [ ] Admin: editable notification email
-- [ ] Admin: editable time-threshold
-
-- [ ] ObanScheduler - get current list of jobs
-- [ ] ObanScheduler - run jobs at top of minute
-- [ ] ObanScheduler - display job list on schedule page
-- [ ] ObanScheduler - retrieve job list with original scheduler expressions
-- [ ] ObanScheduler - update schedule on a single node
-- [ ] ObanScheduler - update schedule across all Oban nodes
+Compile 
+- [x] Get app to compile 
+- [x] Get app to run (Javascript is broken...) 
+- [x] Run tests 
 
