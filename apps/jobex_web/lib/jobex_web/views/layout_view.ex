@@ -34,14 +34,14 @@ defmodule JobexWeb.LayoutView do
         "help"   -> {"/help",     "question-circle"}
         "admin"  -> {"/admin",    "cog"}
         "cal"    -> {"/schedule", "calendar"}
-        "chart"  -> {"http://hana:3030/d/Pc0ZYbKWk/cron", "chart-line"}
+        "chart"  -> {"http://grafana_host:3030/d/Pc0ZYbKWk/cron", "chart-line"}
       end
     icon_html = "<i class='fa fa-#{icon_type}'></i>"
 
     if is_current(conn, path) do
       icon_html
     else
-      tgt = if String.contains?(path, "hana"), do: "target='_blank'", else: ""
+      tgt = if String.contains?(path, "grafana_host"), do: "target='_blank'", else: ""
       "<a href='#{path}' #{tgt}>#{icon_html}</a>"
     end
   end
