@@ -2,36 +2,42 @@
 
 ## Roadmap 
 
-Phase 1 - DONE
-- [x] Build a demo site with Bootstrap configuration - outside the repo 
-
-FAIL: 
-- everything is hard coded to tailwind
-- no instructions for converting to bootstrap
-
-Notes: 
-- https://fullstackphoenix.com/tutorials/bootstrap-5-and-phoenix-liveview 
-- https://pragmaticstudio.com/tutorials/using-tailwind-css-in-phoenix
-
-Try: 
-- [x] pragstudio on nested CSS & dartsass 
-
-Phase 2 - PENDING
-- [ ] Move code under archive directory 
-- [ ] Create a new jox application (`mix phx.new joa`), configure with nested tailwind 
-- [ ] using tailwind and nestedCSS to replicate the JobEx look - HEEX and dead-view 
+Phase 2 - ACTIVE
+- [x] Move code under archive directory 
+- [x] Create a new joba application (`mix phx.new joba`), configure tailwind with custom styles 
+- [x] Forget nested custom styles for now 
+- [ ] Use tailwind and custom styles to replicate the JobEx look - HEEX and dead-view 
 - [ ] No auth, get everything working perfectly 
+
+Phase 2 Details 
+- [ ] Create live_session in router, setup to use jobs layout
+- [ ] Create /jobs layout with menu 
+- [ ] Identify hero icons for menu 
+- [ ] Use hero icon as favicon (orange clock) 
+
+Icons
+- clock    | hero-clock
+- home     | hero-home
+- chart    | hero-presentation-chart-line
+- calendar | hero-calendar
+- setup    | hero-cog-6-tooth
+- help     | hero-question-mark-circle
 
 Phase 3 - PENDING
 - [ ] Create a new jobex application (`mix phx.new jobex`) - TAILWIND
 - [ ] Add auth to jobex application 
 - [ ] Get backend working - profit
 
+Phase 4 - PENDING
+- [ ] Let jobex jobs run on remote machines via ssh
+
 Jobs 
 - [ ] Weather 
 - [ ] Stocks 
 - [ ] Backups 
 - [ ] Grafana integration
+- [ ] Uptime
+- [ ] Free memory, etc.
 
 Future 
 
@@ -222,4 +228,20 @@ Compile
 - [x] Get app to compile 
 - [x] Get app to run (Javascript is broken...) 
 - [x] Run tests 
+
+## 2023 Mar 21 Tue
+
+Phase 1 - DONE
+- [x] Build a demo site with Bootstrap configuration - outside the repo 
+
+FAIL: 
+- everything is hard coded to tailwind
+- no instructions for converting to bootstrap
+
+Notes: 
+- https://fullstackphoenix.com/tutorials/bootstrap-5-and-phoenix-liveview 
+- https://pragmaticstudio.com/tutorials/using-tailwind-css-in-phoenix
+
+Try: 
+- [x] pragstudio on nested CSS & dartsass 
 

@@ -15,6 +15,12 @@ module.exports = {
     extend: {
       colors: {
         brand: "#FD4F00",
+      }, 
+      backgroundColor: {
+        available: "lightyellow", 
+        executing: "#dbfad2", 
+        retryable: "#bbd673", 
+        discarded: "#ffb3a7", 
       }
     },
   },

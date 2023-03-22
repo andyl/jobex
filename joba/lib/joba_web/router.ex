@@ -16,8 +16,20 @@ defmodule JobaWeb.Router do
 
   scope "/", JobaWeb do
     pipe_through :browser
-
     get "/", PageController, :home
+  end
+
+  scope "/jobs", JobaWeb.Jobs do
+    pipe_through :browser
+
+    live_session :default do
+      live "/home", HomeLive
+      live "/charts", ChartsLive
+      live "/schedule", ScheduleLive
+      live "/settings", SettingsLive
+      live "/help", HelpLive
+    end
+
   end
 
   # Other scopes may use custom stacks.
