@@ -2,18 +2,31 @@
 
 ## Roadmap 
 
-Phase 2 - ACTIVE
+Phase 2 ACTIVE
 - [x] Move code under archive directory 
 - [x] Create a new joba application (`mix phx.new joba`), configure tailwind with custom styles 
 - [x] Forget nested custom styles for now 
-- [ ] Use tailwind and custom styles to replicate the JobEx look - HEEX and dead-view 
+- [-] Use tailwind and custom styles to replicate the JobEx look - HEEX and dead-view 
 - [ ] No auth, get everything working perfectly 
 
-Phase 2 Details 
-- [ ] Create live_session in router, setup to use jobs layout
-- [ ] Create /jobs layout with menu 
-- [ ] Identify hero icons for menu 
+Phase 2 UI
+- [x] Create live_session in router, setup to use jobs layout
+- [x] Create /jobs layout with menu 
+- [x] Identify hero icons for menu 
 - [ ] Use hero icon as favicon (orange clock) 
+
+Phase 2 Tailwind 
+- [ ] Watch freeCodeCamp.org course 
+- [ ] Watch Tailwind course 
+- [ ] Learn layouts (grid, flex) 
+- [ ] Learn popups (menus, modals) 
+- [ ] Build next.js demo(?)
+
+Phase 2 Backend 
+- [ ] Copy migrations 
+- [ ] Setup Oban 
+- [ ] Setup job scheduling 
+- [ ] Get tests working 
 
 Icons
 - clock    | hero-clock
