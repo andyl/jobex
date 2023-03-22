@@ -18,7 +18,7 @@ Try:
 
 Phase 2 - PENDING
 - [ ] Move code under archive directory 
-- [ ] Create a new jox application (`mix phx.new jox`), configure with nested tailwind 
+- [ ] Create a new jox application (`mix phx.new joa`), configure with nested tailwind 
 - [ ] using tailwind and nestedCSS to replicate the JobEx look - HEEX and dead-view 
 - [ ] No auth, get everything working perfectly 
 
