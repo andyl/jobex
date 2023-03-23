@@ -17,9 +17,10 @@ defmodule Joba.Application do
       # Start Finch
       {Finch, name: Joba.Finch},
       # Start the Endpoint (http/https)
-      JobaWeb.Endpoint
+      JobaWeb.Endpoint,
       # Start a worker by calling: Joba.Worker.start_link(arg)
       # {Joba.Worker, arg}
+      {Oban, Application.fetch_env!(:joba, Oban)}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
