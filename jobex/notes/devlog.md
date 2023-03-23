@@ -6,14 +6,14 @@ Phase 3 - PENDING
 - [x] Copy joba to jobex 
 - [x] Rename joba to jobex_core 
 - [x] Rename joba_web to jobex_web
+- [x] Copy to dale 
+- [x] Show supervision Tree 
+- [x] Upgrade dbeaver 
+- [x] Explore tables with dbeaver 
+- [x] Explore tables with pgc 
+- [x] Get broadcast working 
 
-- [ ] Copy to dale 
-- [ ] Show supervision Tree 
-- [ ] Upgrade dbeaver 
-- [ ] Explore tables with dbeaver 
-- [ ] Explore tables with pgcl 
-
-- [ ] Display jobs in UI 
+- [ ] Display jobs in UI on home page 
 
 - [ ] Quantum: Load test jobs from priv CSV
 - [ ] Quantum: Load dev jobs from priv CSV 
@@ -21,9 +21,6 @@ Phase 3 - PENDING
 
 - [ ] Oban Test 
 - [ ] Quantum Test 
-
-- [ ] Run jobs 
-- [ ] Display job status on home page 
 
 - [ ] Tie jobs to user accounts 
 - [ ] Create an admin account 

@@ -6,7 +6,7 @@ defmodule JobexCore.Worker.Base do
 
   def perform(job) do
 
-    # JobexIo.broadcast("shell-worker-start", %{})
+    Phoenix.PubSub.broadcast(JobexCore.PubSub, "shell-worker-start", %{})
 
     cmd_result = Runner.Rambo.exec(job.args["cmd"])
 
@@ -22,7 +22,7 @@ defmodule JobexCore.Worker.Base do
     |> Result.changeset(result)
     |> Repo.insert()
 
-    # JobexIo.broadcast("shell-worker-finish", %{})
+    Phoenix.PubSub.broadcast(JobexCore.PubSub, "shell-worker-end", %{})
 
     return_code(cmd_result)
   end
