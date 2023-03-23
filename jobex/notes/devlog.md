@@ -3,9 +3,9 @@
 ## Roadmap 
 
 Phase 3 - PENDING
-- [ ] Copy jobex_core to jobex 
-- [ ] Rename jobex_core to jobex_core 
-- [ ] Rename jobex_web to jobex_web
+- [x] Copy joba to jobex 
+- [x] Rename joba to jobex_core 
+- [x] Rename joba_web to jobex_web
 
 - [ ] Copy to dale 
 - [ ] Show supervision Tree 
@@ -39,6 +39,8 @@ Jobs
 - [ ] Free memory, etc.
 
 Future 
+
+- [ ] Get rid of compile warnings
 
 - [ ] Study HugInn (Ruby app on Github)
 
