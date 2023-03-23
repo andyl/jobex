@@ -54,6 +54,9 @@ defmodule Joba.MixProject do
       # ----- job scheduling and execution
       {:oban, "~> 2.14"},
       {:quantum, "~> 3.0"},
+      # ----- process execution
+      {:porcelain, "~> 2.0"},
+      {:rambo, "~> 0.3"},
       # ----- metrics
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
