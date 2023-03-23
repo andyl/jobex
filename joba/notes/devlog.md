@@ -2,37 +2,30 @@
 
 ## Roadmap 
 
-Phase 2 Backend 
-- [x] Add auth to jobex application 
-- [x] Copy migrations 
-- [x] Setup Oban 
-- [x] Setup job scheduling / Quantum
+Phase 3 - PENDING
+- [ ] Copy joba to jobex 
+- [ ] Rename joba to jobex_core 
+- [ ] Rename joba_web to jobex_web
 
-- [x] Copy workers from archive 
-- [x] Copy runners from archive 
-
-- [ ] Oban interactive in IEX
-- [ ] Oban Test 
-
-- [ ] Quantum interactive in IEX
-- [ ] Quantum Test 
-
-- [ ] Load test jobs from priv CSV
-- [ ] Load dev jobs from priv CSV 
-- [ ] Load production jobs from priv CSV
+- [ ] Copy to dale 
+- [ ] Show supervision Tree 
+- [ ] Upgrade dbeaver 
+- [ ] Explore tables with dbeaver 
 
 - [ ] Display jobs in UI 
+
+- [ ] Quantum: Load test jobs from priv CSV
+- [ ] Quantum: Load dev jobs from priv CSV 
+- [ ] Quantum: Load production jobs from priv CSV
+
+- [ ] Oban Test 
+- [ ] Quantum Test 
 
 - [ ] Run jobs 
 - [ ] Display job status on home page 
 
 - [ ] Tie jobs to user accounts 
 - [ ] Create an admin account 
-
-Phase 3 - PENDING
-- [ ] Copy joba to jobex and rename 
-- [ ] Get backend working 
-- [ ] Profit
 
 Phase 4 - PENDING
 - [ ] Let jobex jobs run on remote machines via ssh
@@ -279,4 +272,20 @@ Icons
 - calendar | hero-calendar
 - setup    | hero-cog-6-tooth
 - help     | hero-question-mark-circle
+
+## 2023 Mar 23 Thu
+
+Phase 2 Backend 
+- [x] Add auth to jobex application 
+- [x] Copy migrations 
+- [x] Setup Oban 
+- [x] Setup job scheduling / Quantum
+- [x] Copy workers from archive 
+- [x] Copy runners from archive 
+- [x] Oban interactive in IEX
+- [x] Quantum Supervision Tree 
+- [x] Quantum Scheduler 
+- [x] Copy CSV files 
+- [x] Scheduler / get CSV functions working 
+- [x] Quantum interactive in IEX
 

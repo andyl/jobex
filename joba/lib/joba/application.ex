@@ -8,18 +8,12 @@ defmodule Joba.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Telemetry supervisor
       JobaWeb.Telemetry,
-      # Start the Ecto repository
       Joba.Repo,
-      # Start the PubSub system
       {Phoenix.PubSub, name: Joba.PubSub},
-      # Start Finch
       {Finch, name: Joba.Finch},
-      # Start the Endpoint (http/https)
       JobaWeb.Endpoint,
-      # Start a worker by calling: Joba.Worker.start_link(arg)
-      # {Joba.Worker, arg}
+      Joba.Scheduler,
       {Oban, Application.fetch_env!(:joba, Oban)}
     ]
 

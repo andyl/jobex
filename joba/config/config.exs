@@ -66,13 +66,12 @@ config :joba, Oban,
   queues: [default: 10, parallel: 10, serial: 1]
 
 config :joba, Joba.Scheduler,
-  timezone: "America/Los_Angeles",
+  # timezone: "America/Los_Angeles",
   global: false,
   jobs: [
-    # {"* * * * *", fn -> System.cmd("uptime", []) end},
-    {"* * * * *", {Joba.Job, :serial,   ["sleep20", "sleep 20"]}}
-    # {"* * * * *", {Joba.Job, :parallel, ["sleep40", "sleep 40"]}}
-    # {"* * * * *", {Joba.Job.Parallel, args: %{type: "sleep30", cmd: "sleep 30; date"}}
+    {"* * * * *", fn -> System.cmd("uptime", []) |> IO.inspect() end},
+    {"* * * * *", {Joba.Job, :serial,   ["sleep20", "sleep 20"]}},
+    {"* * * * *", {Joba.Job, :parallel, ["sleep40", "sleep 40"]}},
   ]
 
 # Import environment specific config. This must remain at the bottom
