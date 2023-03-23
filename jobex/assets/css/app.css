@@ -1,0 +1,11 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* This file is for your main application CSS */
+
+/* "discarded" => "style='background-color: #ffb3a7;'", */
+/* "retryable" => "style='background-color: #ffc673;'", */
+/* "available" => "style='background-color: lightyellow;'", */
+/* "executing" => "style='background-color: #dbfad2;'" */
+
