@@ -11,6 +11,7 @@ Phase 3 - PENDING
 - [ ] Show supervision Tree 
 - [ ] Upgrade dbeaver 
 - [ ] Explore tables with dbeaver 
+- [ ] Explore tables with pgcl 
 
 - [ ] Display jobs in UI 
 
