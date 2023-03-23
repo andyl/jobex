@@ -1,4 +1,4 @@
-defmodule Joba.Repo.Migrations.AddObanJobsTable do
+defmodule JobexCore.Repo.Migrations.AddObanJobsTable do
   use Ecto.Migration
 
   def up do

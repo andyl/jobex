@@ -1,4 +1,4 @@
-# Joba
+# JobexCore
 
 To start your Phoenix server:
 

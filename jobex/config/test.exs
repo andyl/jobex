@@ -8,25 +8,25 @@ config :bcrypt_elixir, :log_rounds, 1
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :joba, Joba.Repo,
+config :jobex_core, JobexCore.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "joba_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "jobex_core_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :joba, JobaWeb.Endpoint,
+config :jobex_core, JobexWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
   secret_key_base: "zUi+GhluGeCna7TEMKp0u0t3ztR+vtNDcdelLLbmm7Pq0Tp4448thmdBFUbzox7/",
   server: false
 
-config :joba, Oban, testing: :manual
+config :jobex_core, Oban, testing: :manual
 
 # In test we don't send emails.
-config :joba, Joba.Mailer, adapter: Swoosh.Adapters.Test
+config :jobex_core, JobexCore.Mailer, adapter: Swoosh.Adapters.Test
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false

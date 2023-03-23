@@ -1,9 +1,9 @@
-defmodule Joba.MixProject do
+defmodule JobexCore.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :joba,
+      app: :jobex_core,
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -18,7 +18,7 @@ defmodule Joba.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Joba.Application, []},
+      mod: {JobexCore.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

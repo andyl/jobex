@@ -1,7 +1,7 @@
-defmodule Joba.AccountsFixtures do
+defmodule JobexCore.AccountsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Joba.Accounts` context.
+  entities via the `JobexCore.Accounts` context.
   """
 
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
@@ -18,7 +18,7 @@ defmodule Joba.AccountsFixtures do
     {:ok, user} =
       attrs
       |> valid_user_attributes()
-      |> Joba.Accounts.register_user()
+      |> JobexCore.Accounts.register_user()
 
     user
   end

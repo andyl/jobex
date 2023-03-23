@@ -1,4 +1,4 @@
-defmodule Joba.Repo.Migrations.CreateUsersAuthTables do
+defmodule JobexCore.Repo.Migrations.CreateUsersAuthTables do
   use Ecto.Migration
 
   def change do

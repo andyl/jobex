@@ -3,9 +3,9 @@
 ## Roadmap 
 
 Phase 3 - PENDING
-- [ ] Copy joba to jobex 
-- [ ] Rename joba to jobex_core 
-- [ ] Rename joba_web to jobex_web
+- [ ] Copy jobex_core to jobex 
+- [ ] Rename jobex_core to jobex_core 
+- [ ] Rename jobex_web to jobex_web
 
 - [ ] Copy to dale 
 - [ ] Show supervision Tree 
@@ -198,7 +198,7 @@ Future
 
 ## 2021 Mar 28 Sun
 
-- [x] Move Joba to Joba
+- [x] Move JobexCore to JobexCore
 - [x] Upgrade to latest LiveView
 - [x] Upgrade to latest Phoenix
 - [x] Upgrade to latest Oban
@@ -248,7 +248,7 @@ Try:
 
 Phase 2 ACTIVE
 - [x] Move code under archive directory 
-- [x] Create a new joba application (`mix phx.new joba`), configure tailwind with custom styles 
+- [x] Create a new jobex_core application (`mix phx.new jobex_core`), configure tailwind with custom styles 
 - [x] Forget nested custom styles for now 
 - [x] Use tailwind and custom styles to replicate the JobEx look - HEEX and dead-view 
 - [x] No auth, get everything working perfectly 
