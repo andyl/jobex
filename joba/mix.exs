@@ -32,25 +32,34 @@ defmodule Joba.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:bcrypt_elixir, "~> 3.0"},
+      # ----- phoenix
       {:phoenix, "~> 1.7.2"},
+      {:phoenix_html, "~> 3.3"},
+      {:phoenix_live_view, "~> 0.18"},
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_dashboard, "~> 0.7.2"},
+      {:floki, ">= 0.30.0", only: :test},
+      # ----- comms
+      {:swoosh, "~> 1.3"},
+      {:finch, "~> 0.13"},
+      # ----- assets
+      {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
+      # ----- ecto
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 3.3"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.18.16"},
-      {:floki, ">= 0.30.0", only: :test},
-      {:phoenix_live_dashboard, "~> 0.7.2"},
-      {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
-      {:swoosh, "~> 1.3"},
-      {:finch, "~> 0.13"},
+      # ----- job scheduling and execution
+      {:oban, "~> 2.14"},
+      {:quantum, "~> 3.0"},
+      # ----- metrics
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
+      # ----- misc
+      {:plug_cowboy, "~> 2.5"},
       {:gettext, "~> 0.20"},
+      {:bcrypt_elixir, "~> 3.0"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
     ]
   end
 

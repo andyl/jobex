@@ -23,5 +23,18 @@ defmodule Joba.Repo.Migrations.CreateUsersAuthTables do
 
     create index(:users_tokens, [:user_id])
     create unique_index(:users_tokens, [:context, :token])
+
+    create table("results") do
+      add :oban_job_id, references("oban_jobs", on_delete: :delete_all)
+      add :user_id, references("users", on_delete: :delete_all)
+      add :stdout, :text
+      add :stderr, :text
+      add :status, :integer
+
+      add :attempt, :integer
+
+      timestamps()
+    end
+
   end
 end

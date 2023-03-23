@@ -2,28 +2,9 @@
 
 ## Roadmap 
 
-Phase 2 ACTIVE
-- [x] Move code under archive directory 
-- [x] Create a new joba application (`mix phx.new joba`), configure tailwind with custom styles 
-- [x] Forget nested custom styles for now 
-- [-] Use tailwind and custom styles to replicate the JobEx look - HEEX and dead-view 
-- [ ] No auth, get everything working perfectly 
-
-Phase 2 Tailwind 
-- [x] Watch freeCodeCamp.org course 
-- [x] Watch Tailwind course 
-- [x] Learn layouts (grid, flex) 
-- [x] Learn popups (menus, modals) 
-
-Phase 2 UI
-- [x] Create live_session in router, setup to use jobs layout
-- [x] Create /jobs layout with menu 
-- [x] Identify hero icons for menu 
-- [ ] Use flex to layout home page 
-- [ ] Use hero icon as favicon (orange clock) 
-
 Phase 2 Backend 
-- [ ] Copy migrations 
+- [x] Add auth to jobex application 
+- [x] Copy migrations 
 - [ ] Setup Oban 
 - [ ] Setup job scheduling 
 - [ ] Get tests working 
@@ -38,7 +19,6 @@ Icons
 
 Phase 3 - PENDING
 - [ ] Create a new jobex application (`mix phx.new jobex`) - TAILWIND
-- [ ] Add auth to jobex application 
 - [ ] Get backend working - profit
 
 Phase 4 - PENDING
@@ -257,4 +237,25 @@ Notes:
 
 Try: 
 - [x] pragstudio on nested CSS & dartsass 
+
+## 2023 Mar 22 Wed
+
+Phase 2 ACTIVE
+- [x] Move code under archive directory 
+- [x] Create a new joba application (`mix phx.new joba`), configure tailwind with custom styles 
+- [x] Forget nested custom styles for now 
+- [x] Use tailwind and custom styles to replicate the JobEx look - HEEX and dead-view 
+- [x] No auth, get everything working perfectly 
+
+Phase 2 Tailwind 
+- [x] Watch freeCodeCamp.org course 
+- [x] Watch Tailwind course 
+- [x] Learn layouts (grid, flex) 
+- [x] Learn popups (menus, modals) 
+
+Phase 2 UI
+- [x] Create live_session in router, setup to use jobs layout
+- [x] Create /jobs layout with menu 
+- [x] Identify hero icons for menu 
+- [x] Use flex to layout home page 
 
