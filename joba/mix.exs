@@ -49,6 +49,8 @@ defmodule Joba.MixProject do
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.6"},
       {:postgrex, ">= 0.0.0"},
+      # ----- csv parsing -----
+      {:nimble_csv, "~> 1.1"},
       # ----- job scheduling and execution
       {:oban, "~> 2.14"},
       {:quantum, "~> 3.0"},
