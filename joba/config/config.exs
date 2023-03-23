@@ -59,6 +59,22 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Oban: Job Runner
+config :joba, Oban,
+  repo: Joba.Repo,
+  plugins: [{Oban.Plugins.Pruner, max_age: 3000}],
+  queues: [default: 10, parallel: 10, serial: 1]
+
+config :joba, Joba.Scheduler,
+  timezone: "America/Los_Angeles",
+  global: false,
+  jobs: [
+    # {"* * * * *", fn -> System.cmd("uptime", []) end},
+    {"* * * * *", {JobexCore.Job, :serial,   ["sleep20", "sleep 20"]}}
+    # {"* * * * *", {JobexCore.Job, :parallel, ["sleep40", "sleep 40"]}}
+    # {"* * * * *", {JobexCore.Job.Parallel, args: %{type: "sleep30", cmd: "sleep 30; date"}}
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

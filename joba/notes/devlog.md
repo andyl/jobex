@@ -5,21 +5,30 @@
 Phase 2 Backend 
 - [x] Add auth to jobex application 
 - [x] Copy migrations 
-- [ ] Setup Oban 
-- [ ] Setup job scheduling 
-- [ ] Get tests working 
+- [x] Setup Oban 
+- [x] Setup job scheduling / Quantum
 
-Icons
-- clock    | hero-clock
-- home     | hero-home
-- chart    | hero-presentation-chart-line
-- calendar | hero-calendar
-- setup    | hero-cog-6-tooth
-- help     | hero-question-mark-circle
+- [ ] Oban interactive in IEX
+- [ ] Oban Test 
+- [ ] Quantum interactive in IEX
+- [ ] Quantum Test 
+
+- [ ] Load test jobs from priv CSV
+- [ ] Load dev jobs from priv CSV 
+- [ ] Load production jobs from priv CSV
+
+- [ ] Display jobs in UI 
+
+- [ ] Run jobs 
+- [ ] Display job status on home page 
+
+- [ ] Tie jobs to user accounts 
+- [ ] Create an admin account 
 
 Phase 3 - PENDING
-- [ ] Create a new jobex application (`mix phx.new jobex`) - TAILWIND
-- [ ] Get backend working - profit
+- [ ] Copy joba to jobex and rename 
+- [ ] Get backend working 
+- [ ] Profit
 
 Phase 4 - PENDING
 - [ ] Let jobex jobs run on remote machines via ssh
@@ -258,4 +267,12 @@ Phase 2 UI
 - [x] Create /jobs layout with menu 
 - [x] Identify hero icons for menu 
 - [x] Use flex to layout home page 
+
+Icons
+- clock    | hero-clock
+- home     | hero-home
+- chart    | hero-presentation-chart-line
+- calendar | hero-calendar
+- setup    | hero-cog-6-tooth
+- help     | hero-question-mark-circle
 
