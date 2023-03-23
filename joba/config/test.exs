@@ -23,6 +23,8 @@ config :joba, JobaWeb.Endpoint,
   secret_key_base: "zUi+GhluGeCna7TEMKp0u0t3ztR+vtNDcdelLLbmm7Pq0Tp4448thmdBFUbzox7/",
   server: false
 
+config :joba, Oban, testing: :manual
+
 # In test we don't send emails.
 config :joba, Joba.Mailer, adapter: Swoosh.Adapters.Test
 

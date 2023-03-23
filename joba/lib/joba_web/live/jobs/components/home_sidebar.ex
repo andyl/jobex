@@ -15,7 +15,7 @@ defmodule JobaWeb.Jobs.Components.HomeSidebar do
   #   IO.puts "SIDEBAR MOUNT"
   #   :timer.send_interval(5000, self(), :sidebar_tick)
   #   JobexWeb.Endpoint.subscribe("job-event")
-  #   sidebar_count = JobexCore.Query.sidebar_count()
+  #   sidebar_count = Joba.Query.sidebar_count()
   #   opts = %{refresh: false, uistate: session["uistate"], sidebar_count: sidebar_count}
   #   {:ok, assign(socket, opts)}
   # end
@@ -236,7 +236,7 @@ defmodule JobaWeb.Jobs.Components.HomeSidebar do
   #
   #       %{
   #         refresh: false,
-  #         sidebar_count: JobexCore.Query.sidebar_count()
+  #         sidebar_count: Joba.Query.sidebar_count()
   #       }
   #     else
   #       %{}

@@ -8,8 +8,12 @@ Phase 2 Backend
 - [x] Setup Oban 
 - [x] Setup job scheduling / Quantum
 
+- [ ] Copy workers from archive 
+- [ ] Copy runners from archive 
+
 - [ ] Oban interactive in IEX
 - [ ] Oban Test 
+
 - [ ] Quantum interactive in IEX
 - [ ] Quantum Test 
 
@@ -201,7 +205,7 @@ Future
 
 ## 2021 Mar 28 Sun
 
-- [x] Move JobexCore to JobexCore
+- [x] Move Joba to Joba
 - [x] Upgrade to latest LiveView
 - [x] Upgrade to latest Phoenix
 - [x] Upgrade to latest Oban

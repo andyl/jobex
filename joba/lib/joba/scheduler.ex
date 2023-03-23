@@ -41,7 +41,7 @@ defmodule Joba.Scheduler do
     schedule = Enum.at(job_data, 0) |> Crontab.CronExpression.Parser.parse!()
     func = Enum.at(job_data, 1) |> String.to_atom()
     args = [Enum.at(job_data, 2), Enum.at(job_data, 3)]
-    task = {JobexCore.Job, func, args}
+    task = {Joba.Job, func, args}
     new_job()
     |> Quantum.Job.set_schedule(schedule)
     |> Quantum.Job.set_task(task)

@@ -70,9 +70,9 @@ config :joba, Joba.Scheduler,
   global: false,
   jobs: [
     # {"* * * * *", fn -> System.cmd("uptime", []) end},
-    {"* * * * *", {JobexCore.Job, :serial,   ["sleep20", "sleep 20"]}}
-    # {"* * * * *", {JobexCore.Job, :parallel, ["sleep40", "sleep 40"]}}
-    # {"* * * * *", {JobexCore.Job.Parallel, args: %{type: "sleep30", cmd: "sleep 30; date"}}
+    {"* * * * *", {Joba.Job, :serial,   ["sleep20", "sleep 20"]}}
+    # {"* * * * *", {Joba.Job, :parallel, ["sleep40", "sleep 40"]}}
+    # {"* * * * *", {Joba.Job.Parallel, args: %{type: "sleep30", cmd: "sleep 30; date"}}
   ]
 
 # Import environment specific config. This must remain at the bottom

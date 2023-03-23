@@ -31,7 +31,7 @@ defmodule JobaWeb.Jobs.Components.HomeBody do
   #   uistate = session.uistate
   #
   #   opts = %{
-  #     body_data: JobexCore.Query.job_data(uistate),
+  #     body_data: Joba.Query.job_data(uistate),
   #     uistate:   uistate,
   #     job_count: job_count,
   #     num_pages: num_pages(job_count),
@@ -224,20 +224,20 @@ defmodule JobaWeb.Jobs.Components.HomeBody do
   #
   # defp job_count(uistate) do
   #   case uistate.field do
-  #     nil       -> JobexCore.Query.all_count()
-  #     "all"     -> JobexCore.Query.all_count()
-  #     "state"   -> JobexCore.Query.state_count()[uistate.value]
-  #     "type"    -> JobexCore.Query.type_count()[uistate.value]
-  #     "queue"   -> JobexCore.Query.queue_count()[uistate.value]
-  #     "command" -> JobexCore.Query.command_count(uistate.value)[uistate.value]
-  #     "alert"   -> JobexCore.Query.alert_count()[uistate.value]
-  #     _         -> JobexCore.Query.all_count()
+  #     nil       -> Joba.Query.all_count()
+  #     "all"     -> Joba.Query.all_count()
+  #     "state"   -> Joba.Query.state_count()[uistate.value]
+  #     "type"    -> Joba.Query.type_count()[uistate.value]
+  #     "queue"   -> Joba.Query.queue_count()[uistate.value]
+  #     "command" -> Joba.Query.command_count(uistate.value)[uistate.value]
+  #     "alert"   -> Joba.Query.alert_count()[uistate.value]
+  #     _         -> Joba.Query.all_count()
   #   end
   # end
   #
   # defp num_pages(job_count) do
   #   if job_count > 0 do
-  #     size = JobexCore.Query.page_size()
+  #     size = Joba.Query.page_size()
   #     rema = if rem(job_count, size) > 0, do: 1, else: 0
   #     div(job_count, size) + rema
   #   else
@@ -316,7 +316,7 @@ defmodule JobaWeb.Jobs.Components.HomeBody do
   #   job_count = job_count(uistate)
   #
   #   opts = %{
-  #     body_data: JobexCore.Query.job_data(uistate),
+  #     body_data: Joba.Query.job_data(uistate),
   #     job_count: job_count,
   #     num_pages: num_pages(job_count)
   #   }
