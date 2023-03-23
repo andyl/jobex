@@ -7,10 +7,10 @@ defmodule JobaWeb.Jobs.HomeLive do
     ~H"""
     
     <div class="flex">
-      <div class="bg-blue-200 p-4">
+      <div class="bg-blue-200 w-28 p-4">
         <.live_component module={HomeSidebar} id="side"/>
       </div>
-      <div class="bg-green-200 p-4">
+      <div class="bg-green-200 flex-auto p-4">
         <.live_component module={HomeBody} id="home"/>
       </div>
     </div>

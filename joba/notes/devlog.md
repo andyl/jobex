@@ -9,18 +9,18 @@ Phase 2 ACTIVE
 - [-] Use tailwind and custom styles to replicate the JobEx look - HEEX and dead-view 
 - [ ] No auth, get everything working perfectly 
 
+Phase 2 Tailwind 
+- [x] Watch freeCodeCamp.org course 
+- [x] Watch Tailwind course 
+- [x] Learn layouts (grid, flex) 
+- [x] Learn popups (menus, modals) 
+
 Phase 2 UI
 - [x] Create live_session in router, setup to use jobs layout
 - [x] Create /jobs layout with menu 
 - [x] Identify hero icons for menu 
+- [ ] Use flex to layout home page 
 - [ ] Use hero icon as favicon (orange clock) 
-
-Phase 2 Tailwind 
-- [ ] Watch freeCodeCamp.org course 
-- [ ] Watch Tailwind course 
-- [ ] Learn layouts (grid, flex) 
-- [ ] Learn popups (menus, modals) 
-- [ ] Build next.js demo(?)
 
 Phase 2 Backend 
 - [ ] Copy migrations 
