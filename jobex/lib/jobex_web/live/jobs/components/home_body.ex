@@ -2,7 +2,7 @@ defmodule JobexWeb.Jobs.Components.HomeBody do
   use Phoenix.LiveComponent
 
   # import Phoenix.HTML
-  #
+
   # alias JobexWeb.Util
 
   def render(assigns) do
@@ -24,21 +24,21 @@ defmodule JobexWeb.Jobs.Components.HomeBody do
     """
   end
 
-  # def mount(session, socket) do
-  #   JobexWeb.Endpoint.subscribe("job-refresh")
-  #   JobexWeb.Endpoint.subscribe("time-tick")
-  #   job_count = job_count(session.uistate)
-  #   uistate = session.uistate
-  #
-  #   opts = %{
-  #     body_data: JobexCore.Query.job_data(uistate),
-  #     uistate:   uistate,
-  #     job_count: job_count,
-  #     num_pages: num_pages(job_count),
-  #     timestamp: hdr_timestamp()
-  #   }
-  #   {:ok, assign(socket, opts)}
-  # end
+  def mount(session, socket) do
+    JobexWeb.Endpoint.subscribe("job-refresh")
+    JobexWeb.Endpoint.subscribe("time-tick")
+    job_count = job_count(session.uistate)
+    uistate = session.uistate
+
+    opts = %{
+      body_data: JobexCore.Query.job_data(uistate),
+      uistate:   uistate,
+      job_count: job_count,
+      num_pages: num_pages(job_count),
+      timestamp: hdr_timestamp()
+    }
+    {:ok, assign(socket, opts)}
+  end
 
   # def render(assigns) do
   #   ~L"""
@@ -96,11 +96,11 @@ defmodule JobexWeb.Jobs.Components.HomeBody do
   #     %{field: fld, value: val} -> "#{fld} / #{val}"
   #   end
   # end
-  #
-  # defp hdr_timestamp do
-  #   Timex.now("US/Pacific")
-  #   |> Timex.format!("%Y %b %d | %H:%M:%S", :strftime)
-  # end
+
+  defp hdr_timestamp do
+    Timex.now("US/Pacific")
+    |> Timex.format!("%Y %b %d | %H:%M:%S", :strftime)
+  end
   #
   # # ----- table helpers -----
   #
@@ -222,29 +222,29 @@ defmodule JobexWeb.Jobs.Components.HomeBody do
   #   my_live_link("<i class='fa fa-angle-double-right'></i>", path_for(newstate))
   # end
   #
-  # defp job_count(uistate) do
-  #   case uistate.field do
-  #     nil       -> JobexCore.Query.all_count()
-  #     "all"     -> JobexCore.Query.all_count()
-  #     "state"   -> JobexCore.Query.state_count()[uistate.value]
-  #     "type"    -> JobexCore.Query.type_count()[uistate.value]
-  #     "queue"   -> JobexCore.Query.queue_count()[uistate.value]
-  #     "command" -> JobexCore.Query.command_count(uistate.value)[uistate.value]
-  #     "alert"   -> JobexCore.Query.alert_count()[uistate.value]
-  #     _         -> JobexCore.Query.all_count()
-  #   end
-  # end
-  #
-  # defp num_pages(job_count) do
-  #   if job_count > 0 do
-  #     size = JobexCore.Query.page_size()
-  #     rema = if rem(job_count, size) > 0, do: 1, else: 0
-  #     div(job_count, size) + rema
-  #   else
-  #     0
-  #   end
-  # end
-  #
+  defp job_count(uistate) do
+    case uistate.field do
+      nil       -> JobexCore.Query.all_count()
+      "all"     -> JobexCore.Query.all_count()
+      "state"   -> JobexCore.Query.state_count()[uistate.value]
+      "type"    -> JobexCore.Query.type_count()[uistate.value]
+      "queue"   -> JobexCore.Query.queue_count()[uistate.value]
+      "command" -> JobexCore.Query.command_count(uistate.value)[uistate.value]
+      "alert"   -> JobexCore.Query.alert_count()[uistate.value]
+      _         -> JobexCore.Query.all_count()
+    end
+  end
+
+  defp num_pages(job_count) do
+    if job_count > 0 do
+      size = JobexCore.Query.page_size()
+      rema = if rem(job_count, size) > 0, do: 1, else: 0
+      div(job_count, size) + rema
+    else
+      0
+    end
+  end
+
   # defp pg_msg(page, num_pages) do
   #   numpg = if num_pages == 0, do: 0, else: page
   #   "#{numpg} of #{num_pages}"

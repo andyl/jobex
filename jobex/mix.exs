@@ -63,6 +63,8 @@ defmodule JobexCore.MixProject do
       # ----- misc
       {:plug_cowboy, "~> 2.5"},
       {:gettext, "~> 0.20"},
+      {:timex, "~> 3.7"},
+      {:modex, github: "andyl/modex"},
       {:bcrypt_elixir, "~> 3.0"},
       {:jason, "~> 1.2"},
     ]
