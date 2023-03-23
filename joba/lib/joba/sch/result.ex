@@ -1,8 +1,8 @@
-defmodule JobexCore.Ctx.Result do
+defmodule Joba.Sch.Result do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias JobexCore.Ctx.ObanJob
+  alias Joba.Sch.ObanJob
 
   schema "results" do
     field :stdout, :string

@@ -8,8 +8,8 @@ Phase 2 Backend
 - [x] Setup Oban 
 - [x] Setup job scheduling / Quantum
 
-- [ ] Copy workers from archive 
-- [ ] Copy runners from archive 
+- [x] Copy workers from archive 
+- [x] Copy runners from archive 
 
 - [ ] Oban interactive in IEX
 - [ ] Oban Test 

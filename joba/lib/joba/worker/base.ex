@@ -1,12 +1,12 @@
 defmodule Joba.Worker.Base do
 
-  alias Joba.Ctx.Result
+  alias Joba.Sch.Result
   alias Joba.Runner
   alias Joba.Repo
 
   def perform(job) do
 
-    JobexIo.broadcast("shell-worker-start", %{})
+    # JobexIo.broadcast("shell-worker-start", %{})
 
     cmd_result = Runner.Rambo.exec(job.args["cmd"])
 
@@ -22,7 +22,7 @@ defmodule Joba.Worker.Base do
     |> Result.changeset(result)
     |> Repo.insert()
 
-    JobexIo.broadcast("shell-worker-finish", %{})
+    # JobexIo.broadcast("shell-worker-finish", %{})
 
     return_code(cmd_result)
   end
