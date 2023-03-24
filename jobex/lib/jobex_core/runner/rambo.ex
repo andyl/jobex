@@ -14,7 +14,6 @@ defmodule JobexCore.Runner.Rambo do
   end
 
   def cmd_run({cmd, args}, acc) do
-    IO.inspect {cmd, args, acc}, label: "CMD_RUN"
     case elem(acc, 0) do
       :ok -> Rambo.run(cmd, args, log: false)
       _ -> acc

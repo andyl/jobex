@@ -5,12 +5,12 @@ defmodule JobexWeb.Jobs.HomeLive do
 
   def mount(_alt, _session, socket) do
     JobexWeb.Endpoint.subscribe("arrow-key")
-    JobexWeb.Endpoint.subscribe("job-refresh")
-    JobexWeb.Endpoint.subscribe("time-tick")
-    :timer.send_interval(1000, self(), :tick_sec)
+    JobexWeb.Endpoint.subscribe("job-event")
+    :timer.send_interval(1000, self(), :tick_clock)
+    :timer.send_interval(2000, self(), :tick_event)
 
     opts = %{
-      tick: 0
+      tick_clock: 0
     }
 
     {:ok, assign(socket, opts)}
@@ -30,6 +30,7 @@ defmodule JobexWeb.Jobs.HomeLive do
       uistate: uistate,
       job_count: job_count,
       num_pages: num_pages(job_count),
+      refresh: false
     }
 
     {:noreply, assign(socket, opts)}
@@ -42,7 +43,7 @@ defmodule JobexWeb.Jobs.HomeLive do
         <HomeSidebar.job_list />
       </div>
       <div class="bg-green-200 flex-auto p-4">
-        <HomeBody.job_header tick={@tick} />
+        <HomeBody.job_header tick={@tick_clock} />
         <HomeBody.job_table body_data={@body_data} uistate={@uistate} />
       </div>
     </div>
@@ -80,31 +81,43 @@ defmodule JobexWeb.Jobs.HomeLive do
 
   # ----- message handlers -----
 
-  # def handle_info(%{topic: "job-refresh"}, socket) do
-  #   uistate = socket.assigns.uistate
-  #   job_count = job_count(uistate)
-  #
-  #   opts = %{
-  #     body_data: JobexCore.Query.job_data(uistate),
-  #     job_count: job_count,
-  #     num_pages: num_pages(job_count)
-  #   }
-  #
-  #   {:noreply, assign(socket, opts)}
-  # end
+  # set refresh to true whenever a job starts or stops
+  # this could be triggered many times within a five-second window
+  def handle_info(%{type: "job-event"}, socket) do
+    {:noreply, assign(socket, %{refresh: true})}
+  end
 
-  # def handle_info(%{topic: "time-tick"}, socket) do
-  #   new_timestamp = hdr_timestamp()
-  #   {:noreply, assign(socket, %{timestamp: new_timestamp})}
-  # end
+  # this callback is triggered every few seconds.
+  # when refresh is set to true, query the database and update the count
+  # in this way, we batch updates in order to minimize UI flickering and rapid DB hits
+  def handle_info(:tick_event, socket) do
 
-  def handle_info(:tick_sec, socket) do
-    {:noreply, update(socket, :tick, &(&1 + 1))}
+    opts =
+      if socket.assigns.refresh do
+        uistate = socket.assigns.uistate
+        job_count = job_count(uistate)
+
+        %{
+          body_data: JobexCore.Query.job_data(uistate),
+          job_count: job_count,
+          num_pages: num_pages(job_count),
+          refresh: false
+        }
+      else
+        %{}
+      end
+
+    {:noreply, assign(socket, opts)}
+  end
+
+  def handle_info(:tick_clock, socket) do
+    {:noreply, update(socket, :tick_clock, &(&1 + 1))}
   end
 
   def handle_info(target, socket) do
+    IO.puts("<<<<< UNHANDLED HOMELIVE MESSAGE >>>>>")
     IO.inspect(target, label: "TARGET")
-    IO.inspect(socket, label: "SOCKET")
+    # IO.inspect(socket, label: "SOCKET")
     {:noreply, socket}
   end
 end

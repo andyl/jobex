@@ -12,10 +12,9 @@ Phase 3 - PENDING
 - [x] Explore tables with dbeaver 
 - [x] Explore tables with pgc 
 - [x] Get broadcast working 
-
 - [x] Display jobs in UI on home page 
 
-- [ ] Reload every 5 seconds
+- [ ] Reload every second
 - [ ] PubSub when job starts 
 - [ ] PubSub when job ends
 

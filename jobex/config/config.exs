@@ -69,7 +69,7 @@ config :jobex_core, JobexCore.Scheduler,
   # timezone: "America/Los_Angeles",
   global: false,
   jobs: [
-    {"* * * * *", fn -> System.cmd("uptime", []) |> IO.inspect() end},
+    {"* * * * *", fn -> System.cmd("uptime", []) end},
     {"* * * * *", {JobexCore.Job, :serial,   ["sleep20", "sleep 20"]}},
     {"* * * * *", {JobexCore.Job, :parallel, ["sleep40", "sleep 40"]}},
   ]

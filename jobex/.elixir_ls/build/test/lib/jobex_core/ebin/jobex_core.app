@@ -36,7 +36,7 @@
                         'Elixir.JobexWeb.Jobs.ChartsLive',
                         'Elixir.JobexWeb.Jobs.Components.HomeBody',
                         'Elixir.JobexWeb.Jobs.Components.HomeSidebar',
-                        'Elixir.JobexWeb.Jobs.Components.Jtable',
+                        'Elixir.JobexWeb.Jobs.Components.JobTable',
                         'Elixir.JobexWeb.Jobs.Components.Util',
                         'Elixir.JobexWeb.Jobs.HelpLive',
                         'Elixir.JobexWeb.Jobs.HomeLive',
