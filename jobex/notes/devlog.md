@@ -2,7 +2,7 @@
 
 ## Roadmap 
 
-Phase 3 - PENDING
+Phase 3 - CORE FEATURES
 - [x] Copy joba to jobex 
 - [x] Rename joba to jobex_core 
 - [x] Rename joba_web to jobex_web
@@ -13,22 +13,27 @@ Phase 3 - PENDING
 - [x] Explore tables with pgc 
 - [x] Get broadcast working 
 - [x] Display jobs in UI on home page 
+- [x] Reload every second
+- [x] PubSub when job starts 
+- [x] PubSub when job ends
+- [x] Test with failing commands
 
-- [ ] Reload every second
-- [ ] PubSub when job starts 
-- [ ] PubSub when job ends
+Phase 4 - Cleanup 
+- [ ] Make an IO module for pub-sub 
+- [ ] Do not check .elixir_ls into git
+- [ ] Ignore the SVG directory in nvim/telegraf fuzzy find 
+- [ ] Add sidebar 
+
+- [ ] Oban Test 
+- [ ] Quantum Test 
 
 - [ ] Quantum: Load test jobs from priv CSV
 - [ ] Quantum: Load dev jobs from priv CSV 
 - [ ] Quantum: Load production jobs from priv CSV
 
-- [ ] Oban Test 
-- [ ] Quantum Test 
-
+Phase 4 - Features
 - [ ] Tie jobs to user accounts 
 - [ ] Create an admin account 
-
-Phase 4 - PENDING
 - [ ] Let jobex jobs run on remote machines via ssh
 
 Jobs 

@@ -70,8 +70,15 @@ config :jobex_core, JobexCore.Scheduler,
   global: false,
   jobs: [
     {"* * * * *", fn -> System.cmd("uptime", []) end},
-    {"* * * * *", {JobexCore.Job, :serial,   ["sleep20", "sleep 20"]}},
-    {"* * * * *", {JobexCore.Job, :parallel, ["sleep40", "sleep 40"]}},
+    {"* * * * *", {JobexCore.Job, :serial,   ["test", "cat /home/aleak/.bashrc"]}},
+    {"* * * * *", {JobexCore.Job, :serial,   ["test", "whoami"]}},
+    {"* * * * *", {JobexCore.Job, :parallel, ["test", "hostname"]}},
+    {"* * * * *", {JobexCore.Job, :serial,   ["test", "uptime"]}},
+    {"* * * * *", {JobexCore.Job, :serial,   ["test", "cat notafile"]}},
+    {"* * * * *", {JobexCore.Job, :serial,   ["sleep20", "sleep 20; date"]}},
+    # {"* * * * *", {JobexCore.Job, :serial,   ["sleep70", "sleep 70; date"]}},
+    # {"* * * * *", {JobexCore.Job, :parallel, ["sleep90", "sleep 90; date"]}},
+    {"* * * * *", {JobexCore.Job, :parallel, ["sleep40", "sleep 40; date"]}},
   ]
 
 # Import environment specific config. This must remain at the bottom
