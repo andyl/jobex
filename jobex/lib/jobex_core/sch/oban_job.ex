@@ -1,7 +1,7 @@
-defmodule JobexCore.Ctx.ObanJob do
+defmodule JobexCore.Sch.ObanJob do
   use Ecto.Schema
 
-  alias JobexCore.Ctx.Result
+  alias JobexCore.Sch.Result
 
   schema "oban_jobs" do
     field :state, :string

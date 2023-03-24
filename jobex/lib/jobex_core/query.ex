@@ -1,6 +1,7 @@
 defmodule JobexCore.Query do
   alias JobexCore.Repo
-  alias JobexCore.Sch.{ObanJob, Result}
+  alias JobexCore.Sch.ObanJob
+  alias JobexCore.Sch.Result
   import Ecto.Query
   import Modex.AltMap
 

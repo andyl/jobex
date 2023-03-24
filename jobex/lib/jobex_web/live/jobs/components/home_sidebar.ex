@@ -1,10 +1,7 @@
-# defmodule JobexWeb.Live.Home.Sidebar do
 defmodule JobexWeb.Jobs.Components.HomeSidebar do
-  use Phoenix.LiveComponent
+  use Phoenix.Component
 
-  # import Phoenix.HTML
-
-  def render(assigns) do
+  def job_list(assigns) do
     ~H"""
     <div>SIDEBAR</div>
     """

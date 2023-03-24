@@ -13,7 +13,11 @@ Phase 3 - PENDING
 - [x] Explore tables with pgc 
 - [x] Get broadcast working 
 
-- [ ] Display jobs in UI on home page 
+- [x] Display jobs in UI on home page 
+
+- [ ] Reload every 5 seconds
+- [ ] PubSub when job starts 
+- [ ] PubSub when job ends
 
 - [ ] Quantum: Load test jobs from priv CSV
 - [ ] Quantum: Load dev jobs from priv CSV 
