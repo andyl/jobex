@@ -1,0 +1,16 @@
+{application, telemetry_registry,
+ [{description, "A library for telemetry event declaration, discovery, and registration."},
+  {vsn, "0.3.0"},
+  {registered, []},
+  {mod, []},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.
+
