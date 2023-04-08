@@ -1,0 +1,20 @@
+[Unit]
+Description=Jobex
+After=network.target
+
+[Service]
+Type=simple
+User=aleak
+Group=aleak
+WorkingDirectory=/home/aleak
+ExecStart=/bin/bash --login -c 'source /home/aleak/.bashrc; cd /home/aleak; PHX_SERVER=true /home/aleak/src/jobex/_build/dev/rel/jobex/bin/jobex start'
+Restart=on-failure
+RestartSec=5
+Environment=PORT=4030
+Environment=LANG=en_US.UTF-8
+SyslogIdentifier=jobex
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
+
