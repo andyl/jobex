@@ -19,7 +19,7 @@ release managed by SystemD, rather than a Docker container.
 
 ## System requirements
 
-- Ubuntu Host running 20.04
+- Ubuntu Host running 24.04
 - SystemD
 - Postgres (user/pass = postgres/postgres)
 
