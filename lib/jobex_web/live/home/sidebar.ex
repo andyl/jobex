@@ -1,99 +1,119 @@
 defmodule JobexWeb.Live.Home.Sidebar do
-  use Phoenix.LiveView
+  use JobexWeb, :live_view
 
-  import Phoenix.HTML
-
-  # ----- lifecycle callbacks -----
-  def mount(_alt, session, socket) do
-    # IO.puts "SIDEBAR MOUNT"
+  @impl true
+  def mount(_params, session, socket) do
     :timer.send_interval(5000, self(), :sidebar_tick)
     JobexWeb.Endpoint.subscribe("job-event")
     sidebar_count = JobexCore.Query.sidebar_count()
+
     opts = %{refresh: false, uistate: session["uistate"], sidebar_count: sidebar_count}
     {:ok, assign(socket, opts)}
   end
 
+  @impl true
   def render(assigns) do
-    ~L"""
-    <div phx-keydown='keydown' phx-target='window'></div>
-    <%= raw all_for(@uistate, @sidebar_count) %>
-    <hr/>
+    ~H"""
+    <div phx-keydown="keydown" phx-target="window">
+    </div>
+    <div>
+      <%= if @uistate.field == "all" || @uistate.value == nil do %>
+        <span class="sidebar-active">&gt; <b>ALL ({@sidebar_count.all_count})</b></span>
+      <% else %>
+        <a href="/home"><b>ALL ({@sidebar_count.all_count})</b></a>
+      <% end %>
+    </div>
+    <hr class="my-2" />
     <b>States</b>
-    <small>
-    <ul class="nav flex-column">
+    <ul class="menu menu-xs pl-2">
       <%= for {key, val} <- @sidebar_count.state_count do %>
-        <%= raw link_for(@uistate, "state", key, "#{key} (#{val})") %>
+        <li>
+          <.sidebar_link uistate={@uistate} field="state" value={key} label={"#{key} (#{val})"} />
+        </li>
       <% end %>
     </ul>
-    </small>
-    <hr/>
+    <hr class="my-2" />
     <b>Queues</b>
-    <small>
-    <ul class="nav flex-column">
+    <ul class="menu menu-xs pl-2">
       <%= for {key, val} <- @sidebar_count.queue_count do %>
-        <%= raw link_for(@uistate, "queue", key, "#{key} (#{val})") %>
+        <li>
+          <.sidebar_link uistate={@uistate} field="queue" value={key} label={"#{key} (#{val})"} />
+        </li>
       <% end %>
     </ul>
-    </small>
-    <hr/>
+    <hr class="my-2" />
     <b>Types</b>
-    <small>
-    <ul class="nav flex-column">
+    <ul class="menu menu-xs pl-2">
       <%= for {key, val} <- @sidebar_count.type_count do %>
-        <%= raw link_for(@uistate, "type", key, "#{key} (#{val})") %>
+        <li>
+          <.sidebar_link uistate={@uistate} field="type" value={key} label={"#{key} (#{val})"} />
+        </li>
       <% end %>
     </ul>
-    </small>
-    <hr/>
+    <hr class="my-2" />
     <b>Alerts</b>
-    <small>
-    <ul class="nav flex-column">
+    <ul class="menu menu-xs pl-2">
       <%= for {key, val} <- @sidebar_count.alert_count do %>
-        <%= raw link_for(@uistate, "alert", key, "#{key} (#{val})") %>
+        <li>
+          <.sidebar_link uistate={@uistate} field="alert" value={key} label={"#{key} (#{val})"} />
+        </li>
       <% end %>
     </ul>
-    <nav area-label="pagination" style='padding-top: 30px;'>
-    <ul class="pagination justify-content-center">
-    <%= raw sidebar_top_lnk(assigns) %>
-    <%= raw sidebar_up_lnk(assigns) %>
-    <%= raw sidebar_dn_lnk(assigns) %>
-    <%= raw sidebar_btm_lnk(assigns) %>
-    </ul>
+    <nav class="pt-6">
+      <div class="join">
+        <.page_btn disabled={nav_disabled?(assigns, "top")} path={nav_path(assigns, "top")} icon="fa-angle-double-up" />
+        <.page_btn disabled={nav_disabled?(assigns, "up")} path={nav_path(assigns, "up")} icon="fa-angle-up" />
+        <.page_btn disabled={nav_disabled?(assigns, "dn")} path={nav_path(assigns, "dn")} icon="fa-angle-down" />
+        <.page_btn disabled={nav_disabled?(assigns, "btm")} path={nav_path(assigns, "btm")} icon="fa-angle-double-down" />
+      </div>
     </nav>
-    </small>
     """
   end
 
-  # ----- view helpers -----
+  attr :uistate, :map, required: true
+  attr :field, :string, required: true
+  attr :value, :string, required: true
+  attr :label, :string, required: true
 
-  defp link_for(uistate, field, value, text) do
-    path = "/home?field=#{field}&value=#{value}&page=1"
+  defp sidebar_link(assigns) do
+    active = assigns.uistate.field == assigns.field && assigns.uistate.value == assigns.value
+    path = "/home?field=#{assigns.field}&value=#{assigns.value}&page=1"
+    assigns = assign(assigns, active: active, path: path)
 
-    {ldr, klas} =
-      if [uistate.field, uistate.value] == [field, value], do: {">", "disabled"}, else: {"", ""}
-
+    ~H"""
+    <%= if @active do %>
+      <span class="sidebar-active">&gt; {@label}</span>
+    <% else %>
+      <a href={@path} data-phx-link="patch" data-phx-link-state="push">{@label}</a>
+    <% end %>
     """
-    <li class="nav-item">
-      <a href="#{path}" to="#{path}" data-phx-live-link="push" class="nav-link #{klas}" style="padding-top: .1rem; padding-bottom: .1rem;">
-        #{ldr} #{text}
+  end
+
+  attr :disabled, :boolean, required: true
+  attr :path, :string, required: true
+  attr :icon, :string, required: true
+
+  defp page_btn(assigns) do
+    ~H"""
+    <%= if @disabled do %>
+      <button class="btn btn-xs join-item btn-disabled">
+        <i class={"fa #{@icon}"}></i>
+      </button>
+    <% else %>
+      <a href={@path} data-phx-link="patch" data-phx-link-state="push" class="btn btn-xs join-item">
+        <i class={"fa #{@icon}"}></i>
       </a>
-    </li>
+    <% end %>
     """
   end
 
-  defp all_for(uistate, sidebar_count) do
-    text = "<b>ALL (#{sidebar_count.all_count})</b>"
+  defp nav_target(assigns, "top"), do: sidebar_top(assigns)
+  defp nav_target(assigns, "up"), do: sidebar_up(assigns)
+  defp nav_target(assigns, "dn"), do: sidebar_dn(assigns)
+  defp nav_target(assigns, "btm"), do: sidebar_btm(assigns)
 
-    if uistate.field == "all" || uistate.value == nil do
-      "<span style='color: gray;'>> #{text}</span>"
-    else
-      """
-      <a href="/home">
-        #{text}
-      </a>
-      """
-    end
-  end
+  defp nav_disabled?(assigns, action), do: nav_target(assigns, action) == current_pair(assigns)
+  defp nav_path(assigns, action), do: path_for(nav_target(assigns, action))
 
   # ----- navigation helpers -----
 
@@ -111,11 +131,7 @@ defmodule JobexWeb.Live.Home.Sidebar do
     [["all", "na"]] ++ base
   end
 
-  def sidebar_top(assigns) do
-    assigns
-    |> sidebar_pairs()
-    |> List.first()
-  end
+  def sidebar_top(assigns), do: sidebar_pairs(assigns) |> List.first()
 
   def sidebar_up(assigns) do
     current = [assigns.uistate.field, assigns.uistate.value]
@@ -134,57 +150,15 @@ defmodule JobexWeb.Live.Home.Sidebar do
     Enum.at(pairs, nindx)
   end
 
-  def sidebar_btm(assigns) do
-    assigns
-    |> sidebar_pairs()
-    |> List.last()
-  end
+  def sidebar_btm(assigns), do: sidebar_pairs(assigns) |> List.last()
 
-  def sidebar_top_lnk(assigns) do
-    new = sidebar_top(assigns)
-    old = current_pair(assigns)
-    link_for("<i class='fa fa-angle-double-up'></i>", new, new == old)
-  end
-
-  def sidebar_up_lnk(assigns) do
-    new = sidebar_up(assigns)
-    old = current_pair(assigns)
-    link_for("<i class='fa fa-angle-up'></i>", new, new == old)
-  end
-
-  def sidebar_dn_lnk(assigns) do
-    new = sidebar_dn(assigns)
-    old = current_pair(assigns)
-    link_for("<i class='fa fa-angle-down'></i>", new, new == old)
-  end
-
-  def sidebar_btm_lnk(assigns) do
-    new = sidebar_btm(assigns)
-    old = current_pair(assigns)
-    link_for("<i class='fa fa-angle-double-down'></i>", new, new == old)
-  end
-
-  def current_pair(assigns) do
-    [assigns.uistate.field, assigns.uistate.value]
-  end
+  def current_pair(assigns), do: [assigns.uistate.field, assigns.uistate.value]
 
   def path_for([field, value]), do: "/home?field=#{field}&value=#{value}&page=1"
 
-  def link_for(lbl, [field, value], disabled) do
-    distxt = if disabled, do: "disabled", else: ""
-    path = path_for([field, value])
-
-    """
-    <li class="page-item #{distxt}">
-    <a class="page-link" href="#{path}" to="#{path}" data-phx-live-link="push">
-    #{lbl}
-    </a>
-    </li>
-    """
-  end
-
   # ----- keyboard event handlers -----
 
+  @impl true
   def handle_event("keydown", key = %{"key" => "ArrowUp"}, socket) do
     new = if key["ctrlKey"], do: sidebar_top(socket.assigns), else: sidebar_up(socket.assigns)
     old = current_pair(socket.assigns)
@@ -197,6 +171,7 @@ defmodule JobexWeb.Live.Home.Sidebar do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_event("keydown", key = %{"key" => "ArrowDown"}, socket) do
     new = if key["ctrlKey"], do: sidebar_btm(socket.assigns), else: sidebar_dn(socket.assigns)
     old = current_pair(socket.assigns)
@@ -209,19 +184,17 @@ defmodule JobexWeb.Live.Home.Sidebar do
     {:noreply, socket}
   end
 
+  @impl true
   def handle_event("keydown", _alt, socket), do: {:noreply, socket}
 
   # ----- pub-sub handlers -----
 
-  # set refresh to true whenever a job starts or stops
-  # this could be triggered many times within a five-second window
+  @impl true
   def handle_info(%{topic: "job-event"}, socket) do
     {:noreply, assign(socket, %{refresh: true})}
   end
 
-  # this callback is triggered every five seconds.
-  # when refresh is set to true, update the sidebar count
-  # in this way, we batch updates in order to minimize UI flickering and rapid DB hits
+  @impl true
   def handle_info(:sidebar_tick, socket) do
     opts =
       if socket.assigns.refresh do

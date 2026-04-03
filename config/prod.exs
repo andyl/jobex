@@ -1,4 +1,4 @@
-import config
+import Config
 
 config :jobex, JobexWeb.Endpoint,
   url: [host: "localhost", port: 5070],

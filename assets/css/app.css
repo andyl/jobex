@@ -1,3 +1,40 @@
-/* This file is for your main application css. */
+@import "tailwindcss";
+@import "../node_modules/daisyui/daisyui.css" source(none);
+@import "../node_modules/daisyui/themes.css" source(none);
 
-@import "../../../../deps/phoenix_live_view/assets/css/live_view.css";
+/* Phoenix LiveView specific */
+.phx-no-feedback.invalid-feedback,
+.phx-no-feedback .invalid-feedback {
+  display: none;
+}
+
+.phx-click-loading {
+  opacity: 0.5;
+  transition: opacity 1s ease-out;
+}
+
+.phx-loading {
+  cursor: wait;
+}
+
+/* Job row state colors */
+.row-discarded {
+  background-color: #ffb3a7;
+}
+
+.row-retryable {
+  background-color: #ffc673;
+}
+
+.row-available {
+  background-color: lightyellow;
+}
+
+.row-executing {
+  background-color: #dbfad2;
+}
+
+/* Sidebar active link */
+.sidebar-active {
+  color: #9ca3af;
+}

@@ -1,24 +1,27 @@
 defmodule JobexWeb.TimeMin do
-  use Phoenix.LiveView
+  use JobexWeb, :live_view
 
-  def mount(_session, socket) do
+  @impl true
+  def mount(_params, _session, socket) do
     :timer.send_interval(10000, self(), :tick)
     {:ok, assign(socket, date: ldate())}
   end
 
+  @impl true
   def render(assigns) do
-    ~L"""
-    <%= @date %>
+    ~H"""
+    {@date}
     """
   end
 
+  @impl true
   def handle_info(:tick, socket) do
-    {:noreply, update(socket, :date, fn (_) -> ldate() end)}
+    {:noreply, update(socket, :date, fn _ -> ldate() end)}
   end
 
   defp ldate do
     DateTime.utc_now()
-    |> DateTime.shift_zone!("US/Pacific")
+    |> DateTime.shift_zone!("America/Los_Angeles")
     |> Calendar.strftime("%Y %b %d | %H:%M")
   end
 end

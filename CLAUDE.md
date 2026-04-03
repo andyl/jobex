@@ -12,7 +12,7 @@ Jobex is a cron-like job scheduler with a web UI — "Cron meets Airflow." It re
 # Setup
 mix deps.get
 cd assets && npm install && cd ..
-mix ecto.setup          # creates DB + runs migrations
+mix setup              # deps.get + ecto.setup + assets.setup + assets.build
 
 # Development
 mix phx.server          # starts all endpoints (web on :4070)
@@ -21,9 +21,8 @@ mix test test/jobex_core_test.exs     # test a specific file
 mix test path/to/test.exs:42         # run a single test by line
 
 # Production release
-cd assets && npm run deploy && cd ..
-mix phx.digest
-MIX_ENV=prod mix distillery.release
+mix assets.deploy
+MIX_ENV=prod mix release
 ```
 
 ## Architecture
@@ -41,7 +40,9 @@ Single flat Elixir Mix project (OTP app `:jobex`) with three logical namespaces:
 - Events: `"shell-worker-start"`, `"shell-worker-finish"` from workers; `"job-event"`, `"job-refresh"` for UI updates
 
 ### JobexWeb — Main Web UI (lib/jobex_web/, port 4070 dev, 5070 prod)
-- Phoenix LiveView app at `/home` route
+- Phoenix 1.8 + LiveView 1.1 with HEEx templates
+- Build: esbuild (JS) + Tailwind CSS v4 + DaisyUI (styling)
+- Layouts in `lib/jobex_web/components/layouts/`
 - Two nested LiveViews: `Sidebar` (filter counts, refreshes every 5s) and `Body` (paginated job table, 24 rows/page)
 - Filtering on: state, queue, type, command (substring), alert type
 - Keyboard navigation: arrow keys for pagination and filter selection

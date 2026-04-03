@@ -1,28 +1,27 @@
 defmodule JobexWeb.TimeSec do
-  use Phoenix.LiveView
+  use JobexWeb, :live_view
 
-  # to mount in a view:
-  # <%= live_render(@conn, JobexWeb.TimeSec) %>
-
-  def render(assigns) do
-    ~L"""
-    <%= @date %>
-    """
-  end
-
-  def mount(_session, socket) do
+  @impl true
+  def mount(_params, _session, socket) do
     :timer.send_interval(1000, self(), :tick)
     {:ok, assign(socket, date: ldate())}
   end
 
+  @impl true
+  def render(assigns) do
+    ~H"""
+    {@date}
+    """
+  end
+
+  @impl true
   def handle_info(:tick, socket) do
-    new_date = ldate()
-    {:noreply, assign(socket, %{date: new_date})}
+    {:noreply, assign(socket, %{date: ldate()})}
   end
 
   defp ldate do
     DateTime.utc_now()
-    |> DateTime.shift_zone!("US/Pacific")
+    |> DateTime.shift_zone!("America/Los_Angeles")
     |> Calendar.strftime("%Y %b %d | %H:%M:%S")
   end
 end

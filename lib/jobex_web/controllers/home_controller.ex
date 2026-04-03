@@ -9,22 +9,22 @@ defmodule JobexWeb.HomeController do
   def schedule(conn, _params) do
     conn
     |> assign(:schedule, JobexCore.Scheduler.jobs())
-    |> render("schedule.html")
+    |> render(:schedule)
   end
 
   def jobs(conn, params) do
     conn
     |> assign(:job, JobexCore.Query.job(params["id"]))
-    |> render("jobs.html")
+    |> render(:jobs)
   end
 
   def admin(conn, _params) do
     conn
-    |> render("admin.html")
+    |> render(:admin)
   end
 
   def help(conn, _params) do
     conn
-    |> render("help.html")
+    |> render(:help)
   end
 end

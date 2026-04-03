@@ -4,11 +4,10 @@ defmodule JobexWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
+    plug :put_root_layout, html: {JobexWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    # plug Phoenix.LiveView.Flash
-    plug :fetch_live_flash
   end
 
   pipeline :api do
@@ -18,11 +17,11 @@ defmodule JobexWeb.Router do
   scope "/", JobexWeb do
     pipe_through :browser
 
-    get "/",         HomeController, :index
+    get "/", HomeController, :index
     get "/jobs/:id", HomeController, :jobs
     get "/schedule", HomeController, :schedule
-    get "/admin",    HomeController, :admin
-    get "/help",     HomeController, :help
+    get "/admin", HomeController, :admin
+    get "/help", HomeController, :help
 
     live "/home", Live.Home
     live "/demo", Live.Demo

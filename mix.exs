@@ -7,7 +7,6 @@ defmodule Jobex.MixProject do
       version: "0.0.1",
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
@@ -18,7 +17,7 @@ defmodule Jobex.MixProject do
   def application do
     [
       mod: {Jobex.Application, []},
-      extra_applications: [:logger, :runtime_tools, :phoenix_html_simplified_helpers]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -44,23 +43,26 @@ defmodule Jobex.MixProject do
       # ----- pubsub
       {:phoenix_pubsub, "~> 2.0"},
       # ----- phoenix backend
-      {:phoenix, "~> 1.5"},
+      {:phoenix, "~> 1.8"},
       {:plug_cowboy, "~> 2.0"},
-      {:phoenix_html, "~> 2.11"},
-      {:phoenix_html_simplified_helpers, "~> 2.1.0"},
-      # ----- phoenix view helpers
-      {:phoenix_active_link, "~> 0.3.0"},
-      {:phoenix_live_view, "~> 0.15"},
+      {:phoenix_html, "~> 4.3"},
+      {:phoenix_html_helpers, "~> 1.0"},
+      {:phoenix_ecto, "~> 4.7"},
+      # ----- phoenix liveview
+      {:phoenix_live_view, "~> 1.1"},
+      # ----- timezone
+      {:tz, "~> 0.28.1"},
       # ----- i18n
       {:gettext, "~> 0.11"},
       # ----- monitoring
       # {:observer_cli, "~> 1.5"},
       # ----- development and test
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:esbuild, "~> 0.10.0", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.4.1", runtime: Mix.env() == :dev},
+      {:phoenix_live_reload, "~> 1.6", only: :dev},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:ex_projections, github: "andyl/ex_projections", only: :dev, runtime: false},
-      # ----- deployment
-      {:distillery, "~> 2.1", warn_missing: false}
+      # ----- deployment (use mix release)
     ]
   end
 
@@ -84,9 +86,13 @@ defmodule Jobex.MixProject do
 
   defp aliases do
     [
+      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
+      "assets.build": ["tailwind jobex", "esbuild jobex"],
+      "assets.deploy": ["tailwind jobex --minify", "esbuild jobex --minify", "phx.digest"]
     ]
   end
 end

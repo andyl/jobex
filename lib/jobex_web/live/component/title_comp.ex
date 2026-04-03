@@ -1,8 +1,8 @@
 defmodule JobexWeb.Live.Component.TitleComp do
-  use Phoenix.LiveComponent
+  use JobexWeb, :live_component
 
   def render(assigns) do
-    ~L"""
+    ~H"""
     <h1>Title</h1>
     """
   end

@@ -6,22 +6,16 @@ config :jobex, JobexWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [
-    node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
-      cd: Path.expand("../assets", __DIR__)
-    ]
+    esbuild: {Esbuild, :install_and_run, [:jobex, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:jobex, ~w(--watch)]}
   ]
 
 config :jobex, JobexWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/jobex_web/{live,views}/.*(ex)$",
-      ~r"lib/jobex_web/templates/.*(eex)$"
+      ~r"lib/jobex_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
 
@@ -34,3 +28,5 @@ config :jobex, JobexCore.Repo,
   pool_size: 10
 
 config :logger, level: :debug
+
+config :phoenix, :plug_init_mode, :runtime

@@ -8,7 +8,7 @@ config :jobex,
 config :jobex, JobexWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "QS8kX5FCVfibbmDoqgt4hvDjBg8ibIX6GB4Nu8uwaCCrklexWWHBhZ9Z39TA4c4z",
-  render_errors: [view: JobexWeb.ErrorView, accepts: ~w(html json)],
+  render_errors: [formats: [html: JobexWeb.ErrorHTML, json: JobexWeb.ErrorJSON], layout: false],
   pubsub_server: JobexWeb.PubSub,
   live_view: [signing_salt: "FnCl0cD24kFBQQZBsupersecretandlong"]
 
@@ -20,6 +20,26 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :phoenix, :json_library, Jason
+
+config :elixir, :time_zone_database, Tz.TimeZoneDatabase
+
+config :esbuild,
+  version: "0.25.0",
+  jobex: [
+    args: ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+config :tailwind,
+  version: "4.1.4",
+  jobex: [
+    args: ~w(
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 config :jobex, Oban,
   repo: JobexCore.Repo,

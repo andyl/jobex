@@ -1,12 +1,12 @@
 defmodule JobexWeb.Live.Component.CounterComp do
-  use Phoenix.LiveComponent
+  use JobexWeb, :live_component
 
   def render(assigns) do
-    ~L"""
+    ~H"""
     <div>
-      <h4>CounterComponent: <%= @count %></h4>
-      <button phx-click="com_dec">-</button>
-      <button phx-click="com_inc">+</button>
+      <h4>CounterComponent: {@count}</h4>
+      <button phx-click="com_dec" phx-target={@myself}>-</button>
+      <button phx-click="com_inc" phx-target={@myself}>+</button>
     </div>
     """
   end
@@ -18,5 +18,4 @@ defmodule JobexWeb.Live.Component.CounterComp do
   def handle_event("com_dec", _, socket) do
     {:noreply, update(socket, :count, &(&1 - 1))}
   end
-
 end

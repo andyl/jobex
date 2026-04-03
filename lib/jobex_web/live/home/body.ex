@@ -1,70 +1,146 @@
 defmodule JobexWeb.Live.Home.Body do
-  use Phoenix.LiveView
+  use JobexWeb, :live_view
 
-  import Phoenix.HTML
-
-  alias JobexWeb.Util
-
-  def mount(session, socket) do
+  @impl true
+  def mount(_params, session, socket) do
     JobexWeb.Endpoint.subscribe("job-refresh")
     JobexWeb.Endpoint.subscribe("time-tick")
-    job_count = job_count(session.uistate)
-    uistate = session.uistate
+    uistate = session["uistate"]
+    job_count = job_count(uistate)
 
     opts = %{
       body_data: JobexCore.Query.job_data(uistate),
-      uistate:   uistate,
+      uistate: uistate,
       job_count: job_count,
       num_pages: num_pages(job_count),
       timestamp: hdr_timestamp()
     }
+
     {:ok, assign(socket, opts)}
   end
 
+  @impl true
   def render(assigns) do
-    ~L"""
-    <div class='row' phx-keydown='keydown' phx-target='window'>
-    <div class='col-md-6'>
-    <b><%= page_hdr_for(@uistate) %></b>
-    </div> 
-    <div class='col-md-6 text-right'>
-    <%= @timestamp %>
+    ~H"""
+    <div class="flex justify-between items-center mb-2" phx-keydown="keydown" phx-target="window">
+      <b>{page_hdr_for(@uistate)}</b>
+      <span>{@timestamp}</span>
     </div>
+    <div class="text-sm">
+      <table class="table table-xs table-bordered w-full border border-base-300 mb-4">
+        <tbody>
+          <%= for job <- @body_data do %>
+            <tr class={row_class(job)}>
+              <td>
+                <a href={"/jobs/#{job.id}"} class="link">{job.id}</a>
+              </td>
+              <td>
+                <.cell_link uistate={@uistate} field="state" value={job.state} />
+              </td>
+              <td>
+                <.cell_link uistate={@uistate} field="queue" value={job.queue} />
+              </td>
+              <td>
+                <.cell_link uistate={@uistate} field="type" value={job.args["type"]} />
+              </td>
+              <td>{tbl_start(job)}</td>
+              <td class="text-right">
+                <.secs_cell uistate={@uistate} job={job} />
+              </td>
+              <td>
+                <.cmd_cell uistate={@uistate} job={job} />
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <nav class="pb-1">
+        <div class="join flex justify-center">
+          <.pg_btn uistate={@uistate} num_pages={@num_pages} action="page_min" icon="fa-angle-double-left" />
+          <.pg_btn uistate={@uistate} num_pages={@num_pages} action="page_dec" icon="fa-angle-left" />
+          <button class="btn btn-xs join-item btn-disabled">
+            page {pg_msg(@uistate[:page] || 1, @num_pages)}
+          </button>
+          <.pg_btn uistate={@uistate} num_pages={@num_pages} action="page_inc" icon="fa-angle-right" />
+          <.pg_btn uistate={@uistate} num_pages={@num_pages} action="page_max" icon="fa-angle-double-right" />
+        </div>
+      </nav>
     </div>
-    <small>
-    <table class='table table-sm table-bordered' style='margin-bottom: 20px;'>
-      <%= for job <- @body_data do %>
-        <tr <%= raw tbl_rowstyle(job) %>>
-          <td> 
-          <a href="/jobs/<%= job.id %>">
-          <%= job.id %>
-          </a>
-          </td>
-          <td> 
-            <%= raw tbl_cell(@uistate, "state", job.state) %>
-          </td>
-          <td>
-            <%= raw tbl_cell(@uistate, "queue", job.queue) %>
-          </td>
-          <td> 
-            <%= raw tbl_cell(@uistate, "type", job.args["type"]) %>
-          </td>
-          <td><%= tbl_start(job) %></td>
-          <td align='right'><%= raw tbl_secs(@uistate, job) %></td>
-          <td><%= raw tbl_cmd(@uistate, job) %></td>
-        </tr>
-      <% end %>
-    </table>
-    <nav area-label="pagination" style='padding-bottom: 5px;'>
-    <ul class="pagination justify-content-center">
-    <%= raw pg_prev_links(assigns) %>
-    <li class="page-item disabled">
-    <a class="page-link" href='#'>page <%= pg_msg(@uistate[:page] || 1, @num_pages) %></a>
-    </li>
-    <%= raw pg_next_links(assigns) %>
-    </ul>
-    </nav>
-    </small>
+    """
+  end
+
+  # ----- components -----
+
+  attr :uistate, :map, required: true
+  attr :field, :string, required: true
+  attr :value, :string, required: true
+
+  defp cell_link(assigns) do
+    active = assigns.uistate.field == assigns.field && assigns.uistate.value == assigns.value
+    assigns = assign(assigns, :active, active)
+
+    ~H"""
+    <%= if @active do %>
+      <b>{@value}</b>
+    <% else %>
+      <a href={"/home?field=#{@field}&value=#{@value}"}>{@value}</a>
+    <% end %>
+    """
+  end
+
+  attr :uistate, :map, required: true
+  attr :job, :map, required: true
+
+  defp secs_cell(assigns) do
+    val = tbl_secs(assigns.uistate, assigns.job)
+    assigns = assign(assigns, :val, val)
+
+    ~H"""
+    {Phoenix.HTML.raw(@val)}
+    """
+  end
+
+  attr :uistate, :map, required: true
+  attr :job, :map, required: true
+
+  defp cmd_cell(assigns) do
+    val = tbl_cmd(assigns.uistate, assigns.job)
+    assigns = assign(assigns, :val, val)
+
+    ~H"""
+    {Phoenix.HTML.raw(@val)}
+    """
+  end
+
+  attr :uistate, :map, required: true
+  attr :num_pages, :integer, required: true
+  attr :action, :string, required: true
+  attr :icon, :string, required: true
+
+  defp pg_btn(assigns) do
+    page = assigns.uistate[:page] || 1
+    num_pages = assigns.num_pages
+
+    {disabled, new_page} =
+      case assigns.action do
+        "page_min" -> {page == 1 || num_pages == 0, 1}
+        "page_dec" -> {page == 1 || num_pages == 0, Enum.max([page - 1, 1])}
+        "page_inc" -> {page == num_pages || num_pages == 0, Enum.min([page + 1, num_pages])}
+        "page_max" -> {page == num_pages || num_pages == 0, num_pages}
+      end
+
+    new_uistate = Map.merge(assigns.uistate, %{page: new_page})
+    path = path_for(new_uistate)
+    assigns = assign(assigns, disabled: disabled, path: path)
+
+    ~H"""
+    <%= if @disabled do %>
+      <button class="btn btn-xs join-item btn-disabled"><i class={"fa #{@icon}"}></i></button>
+    <% else %>
+      <a href={@path} data-phx-link="patch" data-phx-link-state="push" class="btn btn-xs join-item">
+        <i class={"fa #{@icon}"}></i>
+      </a>
+    <% end %>
     """
   end
 
@@ -80,31 +156,19 @@ defmodule JobexWeb.Live.Home.Body do
 
   defp hdr_timestamp do
     DateTime.utc_now()
-    |> DateTime.shift_zone!("US/Pacific")
+    |> DateTime.shift_zone!("America/Los_Angeles")
     |> Calendar.strftime("%Y %b %d | %H:%M:%S")
   end
-  
+
   # ----- table helpers -----
 
-  defp tbl_rowstyle(job) do
+  defp row_class(job) do
     %{
-      "discarded" => "style='background-color: #ffb3a7;'",
-      "retryable" => "style='background-color: #ffc673;'",
-      "available" => "style='background-color: lightyellow;'",
-      "executing" => "style='background-color: #dbfad2;'"
+      "discarded" => "row-discarded",
+      "retryable" => "row-retryable",
+      "available" => "row-available",
+      "executing" => "row-executing"
     }[job.state]
-  end
-
-  defp tbl_cell(uistate, field, value) do
-    if {uistate.field, uistate.value} == {field, value} do
-      "<b>#{value}</b>"
-    else
-      """
-      <a href="/home?field=#{field}&value=#{value}">
-      #{value}
-      </a>
-      """
-    end
   end
 
   def tbl_start(job) do
@@ -117,11 +181,12 @@ defmodule JobexWeb.Live.Home.Body do
     end
   end
 
-  def esecs(job), do: DateTime.diff(job.completed_at, job.attempted_at) 
+  def esecs(job), do: DateTime.diff(job.completed_at, job.attempted_at)
 
-  def tbl_secs(uistate, job) do
+  defp tbl_secs(uistate, job) do
     if job.completed_at do
       secs = esecs(job)
+
       if secs >= 100 do
         if {uistate.field, uistate.value} == {"alert", "speed"} do
           "<b>#{secs}</b>"
@@ -137,83 +202,45 @@ defmodule JobexWeb.Live.Home.Body do
   end
 
   defp tbl_cmd(uistate, job) do
-    job.args["cmd"]
-    |> Phoenix.HTML.SimplifiedHelpers.Truncate.truncate(length: 22)
-    |> split_if_present()
-    |> Enum.map(&(cmd_link(uistate, &1)))
-    |> Enum.join(" ")
-  end
+    cmd = job.args["cmd"]
 
-  defp split_if_present(input) do
-    case input do
-      nil -> [""]
-      _ -> String.split(input, " ")
+    if cmd do
+      cmd
+      |> String.slice(0, 22)
+      |> String.split(" ")
+      |> Enum.map(&cmd_link(uistate, &1))
+      |> Enum.join(" ")
+    else
+      ""
     end
   end
 
   defp cmd_link(uistate, word) do
-    cleanword =
-      word
-      |> String.replace("...", "")
+    cleanword = String.replace(word, "...", "")
+
     if {uistate.field, uistate.value} == {"command", cleanword} do
       "<b>#{word}</b>"
     else
-      """
-      <a href='/home?field=command&value=#{cleanword}'>#{word}</a>
-      """
+      "<a href='/home?field=command&value=#{cleanword}'>#{word}</a>"
     end
   end
 
   # ----- pagination helpers -----
-  
+
   defp path_for(uistate) do
     "/home?field=#{uistate.field}&value=#{uistate.value}&page=#{uistate[:page] || 1}"
   end
 
-  def my_live_link(lbl, path) do
-    """
-    <li class="page-item">
-    #{Util.live_link(lbl, to: path, class: "page-link")}
-    </li>
-    """
-  end
-
-  def page_link_for("page_min", assigns) do
-    newstate = Map.merge(assigns.uistate, %{page: 1})
-    my_live_link("<i class='fa fa-angle-double-left'></i>", path_for(newstate))
-  end
-
-  def page_link_for("page_dec", assigns) do
-    oldpage = assigns.uistate[:page] || 1
-    newpage = Enum.max([oldpage - 1, 1])
-    newstate = Map.merge(assigns.uistate, %{page: newpage})
-    my_live_link("<i class='fa fa-angle-left'></i>", path_for(newstate))
-  end
-
-  def page_link_for("page_inc", assigns) do
-    num_pages = assigns.num_pages
-    oldpage   = assigns.uistate[:page] || 1
-    newpage   = Enum.min([oldpage + 1, num_pages])
-    newstate  = Map.merge(assigns.uistate, %{page: newpage})
-    my_live_link("<i class='fa fa-angle-right'></i>", path_for(newstate))
-  end
-
-  def page_link_for("page_max", assigns) do
-    num_pages = assigns.num_pages
-    newstate = Map.merge(assigns.uistate, %{page: num_pages})
-    my_live_link("<i class='fa fa-angle-double-right'></i>", path_for(newstate))
-  end
-  
   defp job_count(uistate) do
     case uistate.field do
-      nil       -> JobexCore.Query.all_count()
-      "all"     -> JobexCore.Query.all_count()
-      "state"   -> JobexCore.Query.state_count()[uistate.value]
-      "type"    -> JobexCore.Query.type_count()[uistate.value]
-      "queue"   -> JobexCore.Query.queue_count()[uistate.value]
+      nil -> JobexCore.Query.all_count()
+      "all" -> JobexCore.Query.all_count()
+      "state" -> JobexCore.Query.state_count()[uistate.value]
+      "type" -> JobexCore.Query.type_count()[uistate.value]
+      "queue" -> JobexCore.Query.queue_count()[uistate.value]
       "command" -> JobexCore.Query.command_count(uistate.value)[uistate.value]
-      "alert"   -> JobexCore.Query.alert_count()[uistate.value]
-      _         -> JobexCore.Query.all_count()
+      "alert" -> JobexCore.Query.alert_count()[uistate.value]
+      _ -> JobexCore.Query.all_count()
     end
   end
 
@@ -232,67 +259,43 @@ defmodule JobexWeb.Live.Home.Body do
     "#{numpg} of #{num_pages}"
   end
 
-  defp pg_prev_links(assigns) do
-    page = assigns.uistate[:page] || 1
-    if page == 1 || assigns.num_pages == 0 do
-    """
-    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-double-left'></i></a></li>
-    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-left'></i></a></li>
-    """
-    else
-    """
-    #{page_link_for("page_min", assigns)}
-    #{page_link_for("page_dec", assigns)}
-    """
-    end
-  end
-
-  defp pg_next_links(assigns) do
-    page = assigns.uistate[:page] || 1
-    if page == assigns.num_pages || assigns.num_pages == 0 do
-    """
-    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-right'></i></a></li>
-    <li class="page-item disabled"><a class="page-link" href='#'><i class='fa fa-angle-double-right'></i></a></li>
-    """
-    else
-    """
-    #{page_link_for("page_inc", assigns)}
-    #{page_link_for("page_max", assigns)}
-    """
-    end
-  end
-
   # ----- keyboard event handlers -----
 
+  @impl true
   def handle_event("keydown", keypress = %{"key" => "ArrowLeft"}, socket) do
     oldpage = socket.assigns.uistate[:page] || 1
     newpage = if keypress["ctrlKey"], do: 1, else: Enum.max([oldpage - 1, 1])
     newstate = Map.merge(socket.assigns.uistate, %{page: newpage})
-    newpath   = %{newpath: path_for(newstate)}
+    newpath = %{newpath: path_for(newstate)}
+
     if newpage != oldpage && socket.assigns.num_pages != 0 do
       JobexWeb.Endpoint.broadcast_from(self(), "arrow-key", "page-nav", newpath)
     end
+
     {:noreply, socket}
   end
 
+  @impl true
   def handle_event("keydown", keypress = %{"key" => "ArrowRight"}, socket) do
     num_pages = socket.assigns.num_pages
-    oldpage   = socket.assigns.uistate[:page] || 1
-    newpage   = if keypress["ctrlKey"], do: num_pages, else: Enum.min([oldpage + 1, num_pages])
-    newstate  = Map.merge(socket.assigns.uistate, %{page: newpage})
-    newpath   = %{newpath: path_for(newstate)}
+    oldpage = socket.assigns.uistate[:page] || 1
+    newpage = if keypress["ctrlKey"], do: num_pages, else: Enum.min([oldpage + 1, num_pages])
+    newstate = Map.merge(socket.assigns.uistate, %{page: newpage})
+    newpath = %{newpath: path_for(newstate)}
+
     if newpage != oldpage && num_pages != 0 do
       JobexWeb.Endpoint.broadcast_from(self(), "arrow-key", "page-nav", newpath)
     end
+
     {:noreply, socket}
   end
 
-  def handle_event("keydown", _keypress, socket) do
-    {:noreply, socket}
-  end
-  
+  @impl true
+  def handle_event("keydown", _keypress, socket), do: {:noreply, socket}
+
   # ----- pub/sub handlers -----
 
+  @impl true
   def handle_info(%{topic: "job-refresh"}, socket) do
     uistate = socket.assigns.uistate
     job_count = job_count(uistate)
@@ -306,6 +309,7 @@ defmodule JobexWeb.Live.Home.Body do
     {:noreply, assign(socket, opts)}
   end
 
+  @impl true
   def handle_info(%{topic: "time-tick"}, socket) do
     new_timestamp = hdr_timestamp()
     {:noreply, assign(socket, %{timestamp: new_timestamp})}

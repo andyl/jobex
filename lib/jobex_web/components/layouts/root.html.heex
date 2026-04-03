@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <title>Jobex</title>
+    <link rel="shortcut icon" href="/favicon.ico?" sizes="32x32" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.1.1/css/all.css"
+      integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ"
+      crossorigin="anonymous"
+    />
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    </script>
+  </head>
+  <body class="min-h-screen bg-base-100">
+    <div class="navbar bg-neutral text-neutral-content px-4 fixed top-0 z-50">
+      <div class="flex-1">
+        <a href="/home" class="flex items-center gap-2 text-lg font-bold">
+          <img src="/images/icon.svg" class="h-6 w-6" />
+          Jobex
+        </a>
+      </div>
+      <div class="flex-none">
+        <ul class="flex items-center gap-3">
+          <li><.nav_icon conn={@conn} path="/home" icon="home" /></li>
+          <li><.nav_icon conn={@conn} path="http://grafana_host:3030/d/Pc0ZYbKWk/cron" icon="chart-line" /></li>
+          <li><.nav_icon conn={@conn} path="/schedule" icon="calendar" /></li>
+          <li><.nav_icon conn={@conn} path="/admin" icon="cog" /></li>
+          <li><.nav_icon conn={@conn} path="/help" icon="question-circle" /></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container mx-auto px-4 pt-20 pb-4">
+      <.flash_messages flash={@flash} />
+      {@inner_content}
+      <div class="mt-4 pt-4 border-t border-base-300">
+        <div class="flex justify-between text-sm text-base-content/60">
+          <span>Cron Workflow</span>
+          <span>
+            Environment: <%= Application.get_env(:jobex, :env) |> inspect() |> String.replace(":", "") |> String.capitalize() %>
+          </span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
