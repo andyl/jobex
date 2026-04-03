@@ -18,7 +18,7 @@ defmodule Jobex.MixProject do
   def application do
     [
       mod: {Jobex.Application, []},
-      extra_applications: [:logger, :runtime_tools, :timex, :phoenix_html_simplified_helpers]
+      extra_applications: [:logger, :runtime_tools, :phoenix_html_simplified_helpers]
     ]
   end
 
@@ -41,7 +41,6 @@ defmodule Jobex.MixProject do
       # ----- jobs
       {:oban, "~> 2.5"},
       {:quantum, "~> 3.3"},
-      {:timex, "~> 3.0"},
       # ----- pubsub
       {:phoenix_pubsub, "~> 2.0"},
       # ----- phoenix backend

@@ -1,6 +1,5 @@
 defmodule JobexWeb.TimeSec do
   use Phoenix.LiveView
-  use Timex
 
   # to mount in a view:
   # <%= live_render(@conn, JobexWeb.TimeSec) %>
@@ -22,7 +21,8 @@ defmodule JobexWeb.TimeSec do
   end
 
   defp ldate do
-    Timex.now("US/Pacific")
-    |> Timex.format!("%Y %b %d | %H:%M:%S", :strftime)
+    DateTime.utc_now()
+    |> DateTime.shift_zone!("US/Pacific")
+    |> Calendar.strftime("%Y %b %d | %H:%M:%S")
   end
 end

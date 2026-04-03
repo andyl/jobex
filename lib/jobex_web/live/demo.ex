@@ -1,6 +1,5 @@
 defmodule JobexWeb.Live.Demo do
   use Phoenix.LiveView
-  use Timex
   alias JobexWeb.DemoView
 
   def render(assigns) do
@@ -48,8 +47,9 @@ defmodule JobexWeb.Live.Demo do
   # ----- misc
 
   defp ldate do
-    Timex.now("US/Pacific")
-    |> Timex.format!("%d %b %H:%M", :strftime)
+    DateTime.utc_now()
+    |> DateTime.shift_zone!("US/Pacific")
+    |> Calendar.strftime("%d %b %H:%M")
   end
 
   defp validate_url(str) do

@@ -1,6 +1,5 @@
 defmodule JobexWeb.TimeMin do
   use Phoenix.LiveView
-  use Timex
 
   def mount(_session, socket) do
     :timer.send_interval(10000, self(), :tick)
@@ -18,7 +17,8 @@ defmodule JobexWeb.TimeMin do
   end
 
   defp ldate do
-    Timex.now("US/Pacific")
-    |> Timex.format!("%Y %b %d | %H:%M", :strftime)
+    DateTime.utc_now()
+    |> DateTime.shift_zone!("US/Pacific")
+    |> Calendar.strftime("%Y %b %d | %H:%M")
   end
 end

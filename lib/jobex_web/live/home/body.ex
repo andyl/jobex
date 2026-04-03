@@ -79,8 +79,9 @@ defmodule JobexWeb.Live.Home.Body do
   end
 
   defp hdr_timestamp do
-    Timex.now("US/Pacific")
-    |> Timex.format!("%Y %b %d | %H:%M:%S", :strftime)
+    DateTime.utc_now()
+    |> DateTime.shift_zone!("US/Pacific")
+    |> Calendar.strftime("%Y %b %d | %H:%M:%S")
   end
   
   # ----- table helpers -----
@@ -109,8 +110,8 @@ defmodule JobexWeb.Live.Home.Body do
   def tbl_start(job) do
     if job.attempted_at do
       job.attempted_at
-      |> Timex.Timezone.convert("PDT")
-      |> Timex.Format.DateTime.Formatters.Strftime.format!("%m-%d %H:%M")
+      |> DateTime.shift_zone!("America/Los_Angeles")
+      |> Calendar.strftime("%m-%d %H:%M")
     else
       nil
     end
