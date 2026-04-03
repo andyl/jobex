@@ -63,6 +63,8 @@ defmodule Jobex.MixProject do
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:ex_projections, github: "andyl/ex_projections", only: :dev, runtime: false},
       # ----- deployment (use mix release)
+      # ----- AI
+      {:tidewave, "~> 0.5", only: :dev},
     ]
   end
 

@@ -17,6 +17,10 @@ defmodule JobexWeb.Endpoint do
     gzip: false,
     only: JobexWeb.static_paths()
 
+  if Code.ensure_loaded?(Tidewave) do
+    plug Tidewave
+  end
+
   if code_reloading? do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
