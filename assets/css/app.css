@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../../lib/";
 @import "../node_modules/daisyui/daisyui.css" source(none);
 @import "../node_modules/daisyui/themes.css" source(none);
 
