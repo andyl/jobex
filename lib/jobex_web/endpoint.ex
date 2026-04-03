@@ -7,10 +7,6 @@ defmodule JobexWeb.Endpoint do
     signing_salt: "aYF2j5RA"
   ]
 
-  socket "/socket", JobexWeb.UserSocket,
-    websocket: true,
-    longpoll: false
-
   socket "/live", Phoenix.LiveView.Socket,
     websocket: [connect_info: [session: @session_options]]
 

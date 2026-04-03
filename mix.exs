@@ -55,7 +55,7 @@ defmodule Jobex.MixProject do
       # ----- i18n
       {:gettext, "~> 0.11"},
       # ----- monitoring
-      {:observer_cli, "~> 1.5"},
+      # {:observer_cli, "~> 1.5"},
       # ----- development and test
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
