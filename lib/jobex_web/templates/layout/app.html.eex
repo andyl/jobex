@@ -23,9 +23,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav mr-auto">
-            <%# hdr_link(@conn, "Schedule", "/schedule") %>
-            <%# hdr_link(@conn, "LOGS", "/logs") %>
-            <%# hdr_link(@conn, "STATS", "/stats") %>
+            <%!-- hdr_link(@conn, "Schedule", "/schedule") --%>
+            <%!-- hdr_link(@conn, "LOGS", "/logs") --%>
+            <%!-- hdr_link(@conn, "STATS", "/stats") --%>
           </ul>
           <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
             <li class="text-white" style='padding-right: 10px;'><%= raw hdr_icon(@conn, "home") %></li>

@@ -22,7 +22,7 @@ defmodule JobexWeb do
       use Phoenix.Controller, namespace: JobexWeb
 
       import Plug.Conn
-      import JobexWeb.Gettext
+      use Gettext, backend: JobexWeb.Gettext
       import Phoenix.LiveView.Controller
       alias JobexWeb.Router.Helpers, as: Routes
     end
@@ -42,7 +42,7 @@ defmodule JobexWeb do
 
       import PhoenixActiveLink
       import JobexWeb.ErrorHelpers
-      import JobexWeb.Gettext
+      use Gettext, backend: JobexWeb.Gettext
       alias JobexWeb.Router.Helpers, as: Routes
       import Phoenix.LiveView# , only: [live_render: 2, live_render: 3, live_link: 1, live_link: 2, live_component: 2, live_component: 3, live_component: 4]
       # import Phoenix.LiveView.Helpers
@@ -61,7 +61,7 @@ defmodule JobexWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import JobexWeb.Gettext
+      use Gettext, backend: JobexWeb.Gettext
     end
   end
 

@@ -172,7 +172,7 @@ defmodule JobexWeb.Live.Home.Body do
   def my_live_link(lbl, path) do
     """
     <li class="page-item">
-    #{Util.live_link(lbl, to: path, class: 'page-link')}
+    #{Util.live_link(lbl, to: path, class: "page-link")}
     </li>
     """
   end

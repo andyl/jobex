@@ -5,7 +5,7 @@ defmodule JobexWeb.Live.Home.Sidebar do
 
   # ----- lifecycle callbacks -----
   def mount(_alt, session, socket) do
-    IO.puts "SIDEBAR MOUNT"
+    # IO.puts "SIDEBAR MOUNT"
     :timer.send_interval(5000, self(), :sidebar_tick)
     JobexWeb.Endpoint.subscribe("job-event")
     sidebar_count = JobexCore.Query.sidebar_count()

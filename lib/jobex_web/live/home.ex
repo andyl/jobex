@@ -1,11 +1,11 @@
 defmodule JobexWeb.Live.Home do
   use Phoenix.LiveView
 
-  # ----- lifecycle callbacks ----- 
+  # ----- lifecycle callbacks -----
 
   @impl true
   def mount(_alt, _session, socket) do
-    IO.puts "MOUNT"
+    # IO.puts "MOUNT"
     # JobexWeb.Endpoint.subscribe("arrow-key")
     # :timer.apply_interval(1000, JobexWeb.Endpoint, :broadcast_from, [self(), "time-tick", "home", %{}])
     {:ok, socket}
@@ -13,7 +13,7 @@ defmodule JobexWeb.Live.Home do
 
   @impl true
   def handle_params(params, _url, socket) do
-    IO.puts "HANDLE_PARAMS"
+    # IO.puts "HANDLE_PARAMS"
 
     uistate = %{
       field: params["field"] || "all",
@@ -26,7 +26,7 @@ defmodule JobexWeb.Live.Home do
 
   @impl true
   def render(assigns) do
-    IO.inspect(assigns,  label: "RENDER ASSIGNS: ")
+    # IO.inspect(assigns,  label: "RENDER ASSIGNS: ")
     rand = :rand.uniform(10000)
     ~L"""
     <div class="row">
@@ -34,7 +34,7 @@ defmodule JobexWeb.Live.Home do
         <%= live_render(@socket, JobexWeb.Live.Home.Sidebar, session: %{"uistate" => @uistate}, id: "yy#{rand}") %>
       </div>
       <div class="col-md-9">
-        <%# live_render(@socket, JobexWeb.Live.Home.Body, session: %{uistate: @uistate}, id: "xx#{rand}") %>
+        <%!-- live_render(@socket, JobexWeb.Live.Home.Body, session: %{uistate: @uistate}, id: "xx#{rand}") --%>
       </div>
     </div>
     """
