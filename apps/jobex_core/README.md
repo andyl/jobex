@@ -1,3 +1,0 @@
-# JobexCore
-
-**TODO: Add description**

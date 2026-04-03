@@ -11,43 +11,44 @@ Jobex is a cron-like job scheduler with a web UI — "Cron meets Airflow." It re
 ```bash
 # Setup
 mix deps.get
-cd apps/jobex_web/assets && npm install && cd ../../..
+cd assets && npm install && cd ..
 mix ecto.setup          # creates DB + runs migrations
 
 # Development
 mix phx.server          # starts all endpoints (web on :4070)
 mix test                # runs all tests (auto-creates/migrates test DB)
-mix test apps/jobex_core # test a single umbrella app
-mix test path/to/test.exs:42  # run a single test by line
+mix test test/jobex_core_test.exs     # test a specific file
+mix test path/to/test.exs:42         # run a single test by line
 
 # Production release
-cd apps/jobex_web/assets && npm run deploy && cd ../../..
+cd assets && npm run deploy && cd ..
 mix phx.digest
 MIX_ENV=prod mix distillery.release
 ```
 
 ## Architecture
 
-Elixir umbrella app with 4 child applications:
+Single flat Elixir Mix project (OTP app `:jobex`) with three logical namespaces:
 
-### jobex_core — Business Logic
+### JobexCore — Business Logic (lib/jobex_core/)
 - **Quantum scheduler** reads CSV files (`priv/dev_schedule.csv`, `priv/prod_schedule.csv`) at startup and creates cron jobs dynamically
 - **Oban** processes jobs in two queues: `serial` (max 1 concurrent) and `parallel` (max 10 concurrent). Workers retry up to 3 times on failure.
-- **Execution flow**: Quantum cron trigger → `JobexCore.Job.serial/2` or `.parallel/2` → Oban enqueue → `Worker.Base.perform/1` → `Runner.Rambo.exec/1` → result saved to DB → PubSub broadcast
-- **Key modules**: `Scheduler` (CSV→cron), `Worker.Base` (execution), `Query` (filtering/pagination for UI), `Runner.Rambo` (command execution)
+- **Execution flow**: Quantum cron trigger -> `JobexCore.Job.serial/2` or `.parallel/2` -> Oban enqueue -> `Worker.Base.perform/1` -> `Runner.Rambo.exec/1` -> result saved to DB -> PubSub broadcast
+- **Key modules**: `Scheduler` (CSV->cron), `Worker.Base` (execution), `Query` (filtering/pagination for UI), `Runner.Rambo` (command execution)
 
-### jobex_io — PubSub Bridge
-- Thin wrapper around Phoenix.PubSub (named `:jobex_io`)
+### JobexIo — PubSub Bridge (lib/jobex_io/)
+- Thin wrapper around Phoenix.PubSub (named `JobexIo.PubSub`)
 - Events: `"shell-worker-start"`, `"shell-worker-finish"` from workers; `"job-event"`, `"job-refresh"` for UI updates
 
-### jobex_web — Main Web UI (port 4070 dev, 5070 prod)
+### JobexWeb — Main Web UI (lib/jobex_web/, port 4070 dev, 5070 prod)
 - Phoenix LiveView app at `/home` route
 - Two nested LiveViews: `Sidebar` (filter counts, refreshes every 5s) and `Body` (paginated job table, 24 rows/page)
 - Filtering on: state, queue, type, command (substring), alert type
 - Keyboard navigation: arrow keys for pagination and filter selection
 
-### jobex_ui — Experimental/Prototype UI (port 4075)
-- Alternative LiveView UI, not actively used
+### Unified Application (lib/jobex/application.ex)
+- Single supervision tree: PubSub -> Repo -> Scheduler -> Oban -> Endpoint
+- All config under `:jobex` OTP app
 
 ## Database
 

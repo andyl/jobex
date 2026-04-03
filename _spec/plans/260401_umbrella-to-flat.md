@@ -238,6 +238,6 @@ Convert Jobex from an Elixir umbrella app (4 child apps) to a single flat Mix pr
 
 ## Open Questions
 
-- [ ] Should the two PubSub instances (JobexIo.PubSub, JobexWeb.PubSub) be consolidated into one? The spec says keep existing module names, so keeping both is safer for now.
-- [ ] Should database names be renamed from `jobex_core_*` to `jobex_*`? Keeping them avoids migration hassle but is a cosmetic inconsistency.
-- [ ] The `modex` path dep (`~/src/modex`) — should this be vendored or published? Not blocking for conversion but worth noting.
+- [x] Should the two PubSub instances (JobexIo.PubSub, JobexWeb.PubSub) be consolidated into one? The spec says keep existing module names, so keeping both is safer for now.  Answer: keep both for now
+- [x] Should database names be renamed from `jobex_core_*` to `jobex_*`? Keeping them avoids migration hassle but is a cosmetic inconsistency.  Answer: yes rename the databases
+- [ ] The `modex` path dep (`~/src/modex`) — should this be vendored or published? Not blocking for conversion but worth noting. Answer: for get about this for now.
