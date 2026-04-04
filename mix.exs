@@ -19,6 +19,7 @@ defmodule Jobex.MixProject do
         ]
       ],
       usage_rules: usage_rules(),
+      listeners: [Phoenix.CodeReloader],
     ]
   end
 

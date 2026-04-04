@@ -15,17 +15,12 @@ defmodule JobexWeb.Layouts do
     is_current = current == assigns.path
 
     assigns = assign(assigns, :is_current, is_current)
-    assigns = assign(assigns, :external, String.contains?(assigns.path, "grafana_host"))
 
     ~H"""
     <%= if @is_current do %>
       <i class={"fa fa-#{@icon}"}></i>
     <% else %>
-      <a
-        href={@path}
-        class="text-neutral-content hover:text-white"
-        target={if @external, do: "_blank"}
-      >
+      <a href={@path} class="text-neutral-content hover:text-white">
         <i class={"fa fa-#{@icon}"}></i>
       </a>
     <% end %>
