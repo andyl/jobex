@@ -10,7 +10,8 @@ defmodule Jobex.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      deb_package: deb_package()
+      usage_rules: usage_rules(),
+      # deb_package: deb_package()
     ]
   end
 
@@ -56,34 +57,60 @@ defmodule Jobex.MixProject do
       {:gettext, "~> 1.0"},
       # ----- monitoring
       # {:observer_cli, "~> 1.5"},
-      # ----- development and test
-      {:esbuild, "~> 0.10.0", runtime: Mix.env() == :dev},
+      # ----- UI
       {:tailwind, "~> 0.4.1", runtime: Mix.env() == :dev},
       {:phoenix_live_reload, "~> 1.6", only: :dev},
+      {:heroicons,
+       github: "tailwindlabs/heroicons",
+       tag: "v2.2.0",
+       sparse: "optimized",
+       app: false,
+       compile: false,
+       depth: 1},
+      # ----- ops
+      {:commit_hook, "~> 0.4"},
+      {:igniter, "~> 0.6"},
+      {:ziprel, path: "~/src/Tool/ziprel"},
+      {:git_ops, "~> 2.0", only: [:dev], runtime: false},
+      # ----- development and test
+      {:esbuild, "~> 0.10.0", runtime: Mix.env() == :dev},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:ex_projections, github: "andyl/ex_projections", only: :dev, runtime: false},
+      {:live_debugger, "~> 0.7", only: :dev},
       # ----- AI
       {:tidewave, "~> 0.5", only: :dev},
+      {:usage_rules, "~> 1.2", only: [:dev, :test]},
     ]
   end
 
-  def deb_package do
-   [
-      vendor: "Andy Leak",
-      maintainers: ["AndyL <andy@r210.com>"],
-      homepage: "NA",
-      base_path: "/opt",
-      external_dependencies: [],
-      maintainer_scripts: [
-         pre_install: "rel/distillery_packager/debian/install_scripts/pre_install.sh",
-         post_install: "rel/distillery_packager/debian/install_scripts/post_install.sh",
-         pre_uninstall: "rel/distillery_packager/debian/install_scripts/pre_uninstall.sh"
-      ],
-      config_files: ["/etc/init/.conf"],
-      additional_files: [{"configs", "/etc/distillery_packager/configs"}],
-      owner: [user: "root", group: "root"]
-   ]
+  defp usage_rules do
+    [
+      file: "RULES.md",
+      usage_rules: [{~r/.*/, link: :markdown}],
+      skills: [
+        location: ".claude/skills",
+        build: []
+      ]
+    ]
   end
+
+  # def deb_package do
+  #  [
+  #     vendor: "Andy Leak",
+  #     maintainers: ["AndyL <andy@r210.com>"],
+  #     homepage: "NA",
+  #     base_path: "/opt",
+  #     external_dependencies: [],
+  #     maintainer_scripts: [
+  #        pre_install: "rel/distillery_packager/debian/install_scripts/pre_install.sh",
+  #        post_install: "rel/distillery_packager/debian/install_scripts/post_install.sh",
+  #        pre_uninstall: "rel/distillery_packager/debian/install_scripts/pre_uninstall.sh"
+  #     ],
+  #     config_files: ["/etc/init/.conf"],
+  #     additional_files: [{"configs", "/etc/distillery_packager/configs"}],
+  #     owner: [user: "root", group: "root"]
+  #  ]
+  # end
 
   defp aliases do
     [
