@@ -4,7 +4,7 @@ defmodule JobexWeb.Live.Home.Body do
   @impl true
   def mount(_params, session, socket) do
     JobexWeb.Endpoint.subscribe("job-refresh")
-    JobexWeb.Endpoint.subscribe("time-tick")
+    if connected?(socket), do: schedule_next_tick()
     uistate = session["uistate"]
     job_count = job_count(uistate)
 
@@ -152,6 +152,13 @@ defmodule JobexWeb.Live.Home.Body do
       %{field: "all", value: _} -> "ALL JOBS"
       %{field: fld, value: val} -> "#{fld} / #{val}"
     end
+  end
+
+  defp schedule_next_tick do
+    now = System.system_time(:millisecond)
+    ms_into_interval = rem(now, 5000)
+    delay = 5000 - ms_into_interval
+    Process.send_after(self(), :time_tick, delay)
   end
 
   defp hdr_timestamp do
@@ -310,8 +317,8 @@ defmodule JobexWeb.Live.Home.Body do
   end
 
   @impl true
-  def handle_info(%{topic: "time-tick"}, socket) do
-    new_timestamp = hdr_timestamp()
-    {:noreply, assign(socket, %{timestamp: new_timestamp})}
+  def handle_info(:time_tick, socket) do
+    schedule_next_tick()
+    {:noreply, assign(socket, %{timestamp: hdr_timestamp()})}
   end
 end
