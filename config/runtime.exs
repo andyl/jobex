@@ -38,7 +38,7 @@ if config_env() == :prod do
 
   config :jobex, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
-  config :jobex, jobexWeb.Endpoint,
+  config :jobex, JobexWeb.Endpoint,
     url: [scheme: "http"],
     check_origin: false,
     http: [
