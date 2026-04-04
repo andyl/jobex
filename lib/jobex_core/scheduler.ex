@@ -25,11 +25,11 @@ defmodule JobexCore.Scheduler do
   end
   
   defp dev_jobs do
-    "dev_schedule.csv" |> load_csv()
+    "csv/dev_schedule.csv" |> load_csv()
   end
 
   defp prod_jobs do
-    "prod_schedule.csv" |> load_csv()
+    "csv/prod_schedule.csv" |> load_csv()
   end
 
   defp load_all(joblst) do

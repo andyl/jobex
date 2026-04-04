@@ -30,7 +30,7 @@ MIX_ENV=prod mix release
 Single flat Elixir Mix project (OTP app `:jobex`) with three logical namespaces:
 
 ### JobexCore — Business Logic (lib/jobex_core/)
-- **Quantum scheduler** reads CSV files (`priv/dev_schedule.csv`, `priv/prod_schedule.csv`) at startup and creates cron jobs dynamically
+- **Quantum scheduler** reads CSV files (`priv/csv/dev_schedule.csv`, `priv/csv/prod_schedule.csv`) at startup and creates cron jobs dynamically
 - **Oban** processes jobs in two queues: `serial` (max 1 concurrent) and `parallel` (max 10 concurrent). Workers retry up to 3 times on failure.
 - **Execution flow**: Quantum cron trigger -> `JobexCore.Job.serial/2` or `.parallel/2` -> Oban enqueue -> `Worker.Base.perform/1` -> `Runner.Rambo.exec/1` -> result saved to DB -> PubSub broadcast
 - **Key modules**: `Scheduler` (CSV->cron), `Worker.Base` (execution), `Query` (filtering/pagination for UI), `Runner.Rambo` (command execution)
