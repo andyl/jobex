@@ -1,10 +1,12 @@
 defmodule Jobex.MixProject do
   use Mix.Project
 
+  @version "0.0.1"
+
   def project do
     [
       app: :jobex,
-      version: "0.0.1",
+      version: @version,
       elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
