@@ -38,7 +38,7 @@ defmodule Jobex.MixProject do
       # ----- csv parsing
       {:nimble_csv, "~> 1.1"},
       # ----- jobs
-      {:oban, "~> 2.5"},
+      {:oban, "~> 2.19"},
       {:quantum, "~> 3.3"},
       # ----- pubsub
       {:phoenix_pubsub, "~> 2.0"},
@@ -53,7 +53,7 @@ defmodule Jobex.MixProject do
       # ----- timezone
       {:tz, "~> 0.28.1"},
       # ----- i18n
-      {:gettext, "~> 0.11"},
+      {:gettext, "~> 1.0"},
       # ----- monitoring
       # {:observer_cli, "~> 1.5"},
       # ----- development and test
@@ -62,7 +62,6 @@ defmodule Jobex.MixProject do
       {:phoenix_live_reload, "~> 1.6", only: :dev},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:ex_projections, github: "andyl/ex_projections", only: :dev, runtime: false},
-      # ----- deployment (use mix release)
       # ----- AI
       {:tidewave, "~> 0.5", only: :dev},
     ]
