@@ -1,0 +1,4 @@
+servers:
+  - camp
+ssh:
+  user: aleak

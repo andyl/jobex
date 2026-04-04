@@ -1,0 +1,15 @@
+[Unit]
+Description=jobex
+After=network.target
+
+[Service]
+Type=simple
+User=aleak
+Environment=PHX_SERVER=true
+ExecStart=/opt/ziprel/jobex/current/bin/jobex start
+ExecStop=/opt/ziprel/jobex/current/bin/jobex stop
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
