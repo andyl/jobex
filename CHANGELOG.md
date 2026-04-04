@@ -5,6 +5,19 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## v0.0.6 (2026-04-04)
+
+
+
+
+### Bug Fixes:
+
+* add csv reload by andyl
+
+* display schedule by andyl
+
+* update assets by andyl
+
 ## v0.0.5 (2026-04-04)
 
 
