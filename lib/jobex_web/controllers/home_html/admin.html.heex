@@ -1,1 +1,15 @@
-<h3>Admin</h3>
+<h3 class="text-lg font-bold mb-4">Admin</h3>
+
+<div class="mb-6">
+  <h4 class="font-semibold mb-2">CSV Schedule</h4>
+  <p class="text-sm mb-3">
+    Currently loaded: <strong><%= length(@schedule) %></strong> jobs
+    (env: <strong><%= @env %></strong>)
+  </p>
+  <form method="post" action="/admin/reload-csv">
+    <input type="hidden" name="_csrf_token" value={Phoenix.Controller.get_csrf_token()} />
+    <button type="submit" class="btn btn-sm btn-primary">
+      Reload CSV
+    </button>
+  </form>
+</div>

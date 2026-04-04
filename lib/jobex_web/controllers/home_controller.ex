@@ -19,8 +19,25 @@ defmodule JobexWeb.HomeController do
   end
 
   def admin(conn, _params) do
+    schedule = JobexCore.Scheduler.jobs()
+    env = Application.get_env(:jobex, :env)
+
     conn
+    |> assign(:schedule, schedule)
+    |> assign(:env, env)
     |> render(:admin)
+  end
+
+  def reload_csv(conn, _params) do
+    if Application.get_env(:jobex, :env) == :dev do
+      JobexCore.Scheduler.load_dev_jobs()
+    else
+      JobexCore.Scheduler.load_prod_jobs()
+    end
+
+    conn
+    |> put_flash(:info, "CSV schedule reloaded (#{length(JobexCore.Scheduler.jobs())} jobs loaded)")
+    |> redirect(to: "/admin")
   end
 
   def help(conn, _params) do

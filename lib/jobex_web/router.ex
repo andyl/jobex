@@ -21,6 +21,7 @@ defmodule JobexWeb.Router do
     get "/jobs/:id", HomeController, :jobs
     get "/schedule", HomeController, :schedule
     get "/admin", HomeController, :admin
+    post "/admin/reload-csv", HomeController, :reload_csv
     get "/help", HomeController, :help
 
     live "/home", Live.Home
