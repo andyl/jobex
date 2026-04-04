@@ -15,14 +15,6 @@ config :jobex, JobexWeb.Endpoint,
 config :jobex,
   ecto_repos: [JobexCore.Repo]
 
-config :git_ops,
-  mix_project: Mix.Project.get!(),
-  types: [tidbit: [hidden?: true], important: [header: "Important Changes"]],
-  github_handle_lookup?: false,
-  version_tag_prefix: "v",
-  manage_mix_version?: true,
-  manage_readme_version: true
-
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]

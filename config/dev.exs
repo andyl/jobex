@@ -27,6 +27,14 @@ config :jobex, JobexCore.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :git_ops,
+  mix_project: Mix.Project.get!(),
+  types: [tidbit: [hidden?: true], important: [header: "Important Changes"]],
+  github_handle_lookup?: false,
+  version_tag_prefix: "v",
+  manage_mix_version?: true,
+  manage_readme_version: true
+
 config :logger, level: :debug
 
 config :phoenix, :plug_init_mode, :runtime
