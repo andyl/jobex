@@ -14,7 +14,23 @@ defmodule Jobex.Application do
     ]
 
     opts = [strategy: :one_for_one, name: Jobex.Supervisor]
-    Supervisor.start_link(children, opts)
+    result = Supervisor.start_link(children, opts)
+
+    case result do
+      {:ok, _pid} -> load_selected_csv()
+      _ -> :ok
+    end
+
+    result
+  end
+
+  defp load_selected_csv do
+    case JobexCore.CsvManager.selected_file() do
+      nil -> :ok
+      filename -> JobexCore.Scheduler.load_file(filename)
+    end
+  rescue
+    _ -> :ok
   end
 
   def config_change(changed, _new, removed) do

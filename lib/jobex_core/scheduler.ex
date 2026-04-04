@@ -23,22 +23,40 @@ defmodule JobexCore.Scheduler do
     |> String.replace(", ", ",")
     |> CSV.parse_string
   end
-  
-  defp dev_jobs do
-    "csv/dev_schedule.csv" |> load_csv()
+
+  def load_file(filename) do
+    path = Path.join(JobexCore.CsvManager.csv_dir(), filename)
+
+    IO.puts "*****"
+    IO.puts "LOADING CSV #{path}"
+    IO.puts "*****"
+
+    rows =
+      path
+      |> File.read!()
+      |> String.replace(~r/ +/, " ")
+      |> String.replace(", ", ",")
+      |> CSV.parse_string()
+
+    delete_all_jobs()
+    load_all(rows)
   end
 
-  defp prod_jobs do
-    "csv/prod_schedule.csv" |> load_csv()
+  def load_dev_jobs do
+    load_file("dev_schedule.csv")
+  end
+
+  def load_prod_jobs do
+    load_file("prod_schedule.csv")
   end
 
   defp load_all(joblst) do
-    joblst 
-    |> Enum.each(&(load_one(&1)))
+    joblst
+    |> Enum.each(&load_one(&1))
   end
 
   defp load_one(job_data) do
-    schedule = Enum.at(job_data, 0) |> Crontab.CronExpression.Parser.parse!() 
+    schedule = Enum.at(job_data, 0) |> Crontab.CronExpression.Parser.parse!()
     func = Enum.at(job_data, 1) |> String.to_atom()
     args = [Enum.at(job_data, 2), Enum.at(job_data, 3)]
     task = {JobexCore.Job, func, args}
@@ -46,15 +64,5 @@ defmodule JobexCore.Scheduler do
     |> Quantum.Job.set_schedule(schedule)
     |> Quantum.Job.set_task(task)
     |> add_job()
-  end
-
-  def load_dev_jobs do
-    delete_all_jobs()
-    dev_jobs() |> load_all()
-  end
-
-  def load_prod_jobs do
-    delete_all_jobs()
-    prod_jobs() |> load_all()
   end
 end

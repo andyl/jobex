@@ -2,14 +2,11 @@
 
 <div class="mb-6">
   <h4 class="font-semibold mb-2">CSV Schedule</h4>
-  <p class="text-sm mb-3">
-    Currently loaded: <strong><%= length(@schedule) %></strong> jobs
-    (env: <strong><%= @env %></strong>)
-  </p>
-  <form method="post" action="/admin/reload-csv">
-    <input type="hidden" name="_csrf_token" value={Phoenix.Controller.get_csrf_token()} />
-    <button type="submit" class="btn btn-sm btn-primary">
-      Reload CSV
-    </button>
-  </form>
+  <%= live_render(@conn, JobexWeb.Live.Admin.CsvManager, id: "csv-manager") %>
+</div>
+
+<hr class="my-4" />
+
+<div class="mb-6">
+  <%= live_render(@conn, JobexWeb.Live.Admin.Base, id: "admin-base") %>
 </div>

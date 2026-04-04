@@ -29,10 +29,16 @@ defmodule JobexWeb.HomeController do
   end
 
   def reload_csv(conn, _params) do
-    if Application.get_env(:jobex, :env) == :dev do
-      JobexCore.Scheduler.load_dev_jobs()
-    else
-      JobexCore.Scheduler.load_prod_jobs()
+    case JobexCore.CsvManager.selected_file() do
+      nil ->
+        if Application.get_env(:jobex, :env) == :dev do
+          JobexCore.Scheduler.load_dev_jobs()
+        else
+          JobexCore.Scheduler.load_prod_jobs()
+        end
+
+      filename ->
+        JobexCore.Scheduler.load_file(filename)
     end
 
     conn
