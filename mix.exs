@@ -12,8 +12,13 @@ defmodule Jobex.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
+      releases: [
+        jobex: [
+          steps: [:assemble, :tar],
+          include_executables_for: [:unix]
+        ]
+      ],
       usage_rules: usage_rules(),
-      # deb_package: deb_package()
     ]
   end
 
