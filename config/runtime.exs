@@ -12,15 +12,15 @@ import Config
 # If you use `mix release`, you need to explicitly enable the server
 # by passing the PHX_SERVER=true when you start it:
 #
-#     PHX_SERVER=true bin/checkdown start
+#     PHX_SERVER=true bin/jobex start
 #
 # Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
 # script that automatically sets the env var above.
 if System.get_env("PHX_SERVER") do
-  config :checkdown, CheckdownWeb.Endpoint, server: true
+  config :jobex, jobexWeb.Endpoint, server: true
 end
 
-config :checkdown, CheckdownWeb.Endpoint,
+config :jobex, jobexWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "6666"))]
 
 if config_env() == :prod do
@@ -36,9 +36,9 @@ if config_env() == :prod do
     #   You can generate one by calling: mix phx.gen.secret
     #   """
 
-  config :checkdown, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
+  config :jobex, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
-  config :checkdown, CheckdownWeb.Endpoint,
+  config :jobex, jobexWeb.Endpoint,
     url: [scheme: "http"],
     check_origin: false,
     http: [
@@ -55,7 +55,7 @@ if config_env() == :prod do
   # To get SSL working, you will need to add the `https` key
   # to your endpoint configuration:
   #
-  #     config :checkdown, CheckdownWeb.Endpoint,
+  #     config :jobex, jobexWeb.Endpoint,
   #       https: [
   #         ...,
   #         port: 443,
@@ -77,7 +77,7 @@ if config_env() == :prod do
   # We also recommend setting `force_ssl` in your config/prod.exs,
   # ensuring no data is ever sent via http, always redirecting to https:
   #
-  #     config :checkdown, CheckdownWeb.Endpoint,
+  #     config :jobex, jobexWeb.Endpoint,
   #       force_ssl: [hsts: true]
   #
   # Check `Plug.SSL` for all available options in `force_ssl`.
@@ -87,7 +87,7 @@ if config_env() == :prod do
   # In production you need to configure the mailer to use a different adapter.
   # Here is an example configuration for Mailgun:
   #
-  #     config :checkdown, Checkdown.Mailer,
+  #     config :jobex, jobex.Mailer,
   #       adapter: Swoosh.Adapters.Mailgun,
   #       api_key: System.get_env("MAILGUN_API_KEY"),
   #       domain: System.get_env("MAILGUN_DOMAIN")
