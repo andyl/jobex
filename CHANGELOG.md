@@ -5,6 +5,19 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## v0.0.9 (2026-04-04)
+
+
+
+
+### Bug Fixes:
+
+* update execution queues by andyl
+
+* schedule update problem by andyl
+
+* job status display by andyl
+
 ## v0.0.8 (2026-04-04)
 
 
