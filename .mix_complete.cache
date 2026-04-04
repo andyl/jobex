@@ -1,0 +1,168 @@
+app.config	Configures all registered apps
+app.start	Starts all registered apps
+app.tree	Prints the application tree
+archive	Lists installed archives
+archive.build	Archives this project into a .ez file
+archive.install	Installs an archive locally
+archive.uninstall	Uninstalls archives
+assets.build	Alias defined in mix.exs
+assets.deploy	Alias defined in mix.exs
+assets.setup	Alias defined in mix.exs
+build_devtools	Builds the DevTools extension for Chrome or Firefox
+clean	Deletes generated application files
+cmd	Executes the given command
+commit_hook.disable	Disable the Conventional Commits commit-msg hook
+commit_hook.enable	Enable the Conventional Commits commit-msg hook
+commit_hook.info	Show valid fields for a Convtional Commit message
+compile	Compiles source files
+complete	Cache tab completions for mix
+complete.bash	Output bash completion source for mix
+complete.zsh	Output zsh completion source for mix
+deps	Lists dependencies and their status
+deps.clean	Deletes the given dependencies' files
+deps.compile	Compiles dependencies
+deps.get	Fetches unavailable and out of date dependencies
+deps.tree	Prints the dependency tree
+deps.unlock	Unlocks the given dependencies
+deps.update	Updates the given dependencies
+do	Executes the tasks separated by plus
+docs	Generate documentation for the project
+ecto	Prints Ecto help information
+ecto.create	Creates the repository storage
+ecto.drop	Drops the repository storage
+ecto.dump	Dumps the repository database structure
+ecto.gen.migration	Generates a new migration for the repo
+ecto.gen.repo	Generates a new repository
+ecto.load	Loads previously dumped database structure
+ecto.migrate	Runs the repository migrations
+ecto.migrations	Displays the repository migration status
+ecto.reset	Alias defined in mix.exs
+ecto.rollback	Rolls back the repository migrations
+ecto.setup	Alias defined in mix.exs
+esbuild	Invokes esbuild with the profile and args
+esbuild.install	Installs esbuild under _build
+escript	Lists installed escripts
+escript.build	Builds an escript for the project
+escript.install	Installs an escript locally
+escript.uninstall	Uninstalls escripts
+eval	Evaluates the given code
+ex_projections	Write vim-projectionist file
+expo.msgfmt	Generate binary message catalog from textual message description.
+expo.msguniq	Unifies duplicate translations in message catalog
+format	Formats the given files/patterns
+gettext.extract	Extracts messages from source code
+gettext.merge	Merge template files into message files
+git_ops.check_message	Check if a file's content follows the Conventional Commits spec
+git_ops.install	Installs GitOps into a project.
+git_ops.message_hook	Enables automatic check if git commit message follows Conventional Commits spec
+git_ops.project_info	Return information about the project.
+git_ops.release	Parses the commit log and writes any updates to the changelog
+help	Prints help information for tasks, aliases, modules, and applications
+hex	Prints Hex help information
+hex.audit	Shows retired Hex deps for the current project
+hex.build	Builds a new package version locally
+hex.config	Reads, updates or deletes local Hex config
+hex.docs	Fetches or opens documentation of a package
+hex.info	Prints Hex information
+hex.organization	Manages Hex.pm organizations
+hex.outdated	Shows outdated Hex deps for the current project
+hex.owner	Manages Hex package ownership
+hex.package	Fetches or diffs packages
+hex.publish	Publishes a new package version
+hex.registry	Manages local Hex registries
+hex.repo	Manages Hex repositories
+hex.retire	Retires a package version
+hex.search	Open and perform searches
+hex.sponsor	Show Hex packages accepting sponsorships
+hex.user	Manages your Hex user account
+igniter.add	Adds the provided deps to `mix.exs`
+igniter.add_extension	Adds an extension to your `.igniter.exs` configuration file.
+igniter.apply_upgrades	Applies the upgrade scripts for the list of package version changes provided.
+igniter.gen.task	Generates a new igniter task
+igniter.init_library	Set up a library to use Igniter. Adds the optional dependency and an install task.
+igniter.install	Install a package or packages, and run any associated installers.
+igniter.move_files	Moves any relevant files to their 'correct' location.
+igniter.new	Creates a new Igniter application
+igniter.refactor.rename_function	Rename functions across a project with automatic reference updates.
+igniter.refactor.unless_to_if_not	Rewrites occurrences of `unless x` to `if !x` across the project.
+igniter.remove	Removes the provided deps from `mix.exs`
+igniter.setup	Creates or updates a .igniter.exs file, used to configure Igniter for end user's preferences.
+igniter.update_gettext	Applies changes to resolve a warning introduced in gettext 0.26.0
+igniter.upgrade	Fetch and upgrade dependencies. A drop in replacement for `mix deps.update` that also runs upgrade tasks.
+live_debugger.install	Installs live_debugger. Use `mix igniter.install live_debugger` to call. Requires igniter to run.
+loadconfig	Loads and persists the given configuration
+local	Lists tasks installed locally via archives
+local.hex	Installs Hex locally
+local.igniter	Updates the Igniter project generator locally
+local.phx	Updates the Phoenix project generator locally
+local.rebar	Installs Rebar locally
+new	Creates a new Elixir project
+nimble_parsec.compile	Compiles a parser and injects its content into the parser file
+oban.install	Install and configure Oban for use in an application.
+phx	Prints Phoenix help information
+phx.digest	Digests and compresses static files
+phx.digest.clean	Removes old versions of static assets.
+phx.gen	Lists all available Phoenix generators
+phx.gen.auth	Generates authentication logic for a resource
+phx.gen.cert	Generates a self-signed certificate for HTTPS testing
+phx.gen.channel	Generates a Phoenix channel
+phx.gen.context	Generates a context with functions around an Ecto schema
+phx.gen.embedded	Generates an embedded Ecto schema file
+phx.gen.html	Generates context and controller for an HTML resource
+phx.gen.json	Generates context and controller for a JSON resource
+phx.gen.live	Generates LiveView, templates, and context for a resource
+phx.gen.notifier	Generates a notifier that delivers emails by default
+phx.gen.presence	Generates a Presence tracker
+phx.gen.release	Generates release files and optional Dockerfile for release-based deployments
+phx.gen.schema	Generates an Ecto schema and migration file
+phx.gen.secret	Generates a secret
+phx.gen.socket	Generates a Phoenix socket handler
+phx.new	Creates a new Phoenix v1.8.5 application
+phx.new.ecto	Creates a new Ecto project within an umbrella project
+phx.new.web	Creates a new Phoenix web project within an umbrella project
+phx.routes	Prints all routes
+phx.server	Starts applications and their servers
+profile.cprof	Profiles the given file or expression with cprof
+profile.eprof	Profiles the given file or expression with eprof
+profile.fprof	Profiles the given file or expression with fprof
+profile.tprof	Profiles the given file or expression with tprof
+progen	Print help for all progen tasks
+progen.action.cat	Print the source code of a ProGen action
+progen.action.edit	Open a ProGen action's source in $EDITOR
+progen.action.info	Show metadata for a ProGen action
+progen.action.list	List all registered ProGen actions
+progen.action.run	Run a ProGen action
+progen.command.run	Run a shell command with auto-commit
+progen.install	Install ProGen and configured libraries globally
+progen.puts	Print a formatted ProGen message
+progen.validate.cat	Print the source code of a ProGen validator
+progen.validate.edit	Open a ProGen validator's source in $EDITOR
+progen.validate.info	Show metadata for a ProGen validator
+progen.validate.list	List all registered ProGen validators
+progen.validate.run	Run a ProGen validator with specified checks
+release	Assembles a self-contained release
+release.init	Generates sample files for releases
+run	Runs the current application
+setup	Alias defined in mix.exs
+tableau.new	Generate a new Tableau website
+tailwind	Invokes tailwind with the profile and args
+tailwind.install	Installs Tailwind executable
+test	Alias defined in mix.exs
+test	Runs a project's tests
+test.coverage	Build report from exported test coverage
+test.watch	Automatically run tests on file changes
+tz.download	Downloads the IANA time zone data.
+usage_rules.docs	Shows documentation for Elixir modules and functions
+usage_rules.install	Installs usage_rules
+usage_rules.search_docs	Searches hexdocs with human-readable output
+usage_rules.sync	Sync AGENTS.md and agent skills from project config
+xref	Prints cross reference information
+ziprel	Display Ziprel help
+ziprel.cleanup	Remove everything from server
+ziprel.deploy	Deploy app to servers
+ziprel.init	Generate config stubs
+ziprel.remove	Remove old releases
+ziprel.rollback	Rollback to a previous version
+ziprel.setup	Setup servers for deployment
+ziprel.sshcheck	Check SSH connection and permissions
+ziprel.versions	List release versions on servers
