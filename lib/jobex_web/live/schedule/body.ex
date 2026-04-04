@@ -4,12 +4,12 @@ defmodule JobexWeb.Live.Schedule.Body do
   alias JobexCore.CsvManager
 
   @impl true
-  def mount(_params, session, socket) do
+  def mount(_params, _session, socket) do
     selected = CsvManager.selected_file()
 
     {:ok,
      assign(socket, %{
-       schedule: session["schedule"],
+       schedule: JobexCore.Scheduler.jobs(),
        selected: selected,
        editing: nil,
        creating: false,
@@ -92,50 +92,44 @@ defmodule JobexWeb.Live.Schedule.Body do
           <%= for {{_, job}, idx} <- Enum.with_index(@schedule) do %>
             <%= if @editing == idx do %>
               <tr>
-                <form phx-submit="save_edit" phx-change="validate_cron_edit" id={"edit-form-#{idx}"}>
-                  <input type="hidden" name="index" value={idx} />
-                  <td>
-                    <input
-                      type="text"
-                      name="schedule"
-                      value={Crontab.CronExpression.Composer.compose(job.schedule)}
-                      class="input input-xs input-bordered w-28"
-                    />
-                  </td>
-                  <td>
-                    <select name="queue" class="select select-xs select-bordered">
-                      <option value="serial" selected={elem(job.task, 1) == :serial}>serial</option>
-                      <option value="parallel" selected={elem(job.task, 1) == :parallel}>parallel</option>
-                    </select>
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      name="type"
-                      value={elem(job.task, 2) |> List.first()}
-                      class="input input-xs input-bordered w-24"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      name="command"
-                      value={elem(job.task, 2) |> List.last()}
-                      class="input input-xs input-bordered w-40"
-                    />
-                  </td>
-                  <td class="flex gap-1">
-                    <button type="submit" class="btn btn-xs btn-success">Save</button>
-                    <button type="button" phx-click="cancel_edit" class="btn btn-xs">Cancel</button>
-                  </td>
-                </form>
-                <%= if @edit_error do %>
-                  <td colspan="5" class="text-error text-xs"><%= @edit_error %></td>
-                <% end %>
+                <td colspan={if @selected, do: 5, else: 4}>
+                  <form phx-submit="save_edit" phx-change="validate_cron_edit" id={"edit-form-#{idx}"}>
+                    <input type="hidden" name="index" value={idx} />
+                    <div class="flex gap-2 items-center flex-wrap">
+                      <input
+                        type="text"
+                        name="schedule"
+                        value={Crontab.CronExpression.Composer.compose(job.schedule)}
+                        class="input input-xs input-bordered w-28"
+                      />
+                      <select name="queue" class="select select-xs select-bordered">
+                        <option value="serial" selected={elem(job.task, 1) == :serial}>serial</option>
+                        <option value="parallel" selected={elem(job.task, 1) == :parallel}>parallel</option>
+                      </select>
+                      <input
+                        type="text"
+                        name="type"
+                        value={elem(job.task, 2) |> List.first()}
+                        class="input input-xs input-bordered w-24"
+                      />
+                      <input
+                        type="text"
+                        name="command"
+                        value={elem(job.task, 2) |> List.last()}
+                        class="input input-xs input-bordered w-40"
+                      />
+                      <button type="submit" class="btn btn-xs btn-success">Save</button>
+                      <button type="button" phx-click="cancel_edit" class="btn btn-xs">Cancel</button>
+                      <%= if @edit_error do %>
+                        <span class="text-error text-xs"><%= @edit_error %></span>
+                      <% end %>
+                    </div>
+                  </form>
+                </td>
               </tr>
             <% else %>
               <tr>
-                <td>{inspect(job.schedule)}</td>
+                <td><code><%= Crontab.CronExpression.Composer.compose(job.schedule) %></code></td>
                 <td>{elem(job.task, 1)}</td>
                 <td>{elem(job.task, 2) |> List.first()}</td>
                 <td>{elem(job.task, 2) |> List.last()}</td>

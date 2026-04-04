@@ -8,7 +8,6 @@ defmodule JobexWeb.HomeController do
 
   def schedule(conn, _params) do
     conn
-    |> assign(:schedule, JobexCore.Scheduler.jobs())
     |> render(:schedule)
   end
 
