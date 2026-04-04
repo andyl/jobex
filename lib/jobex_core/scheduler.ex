@@ -56,13 +56,18 @@ defmodule JobexCore.Scheduler do
   end
 
   defp load_one(job_data) do
-    schedule = Enum.at(job_data, 0) |> Crontab.CronExpression.Parser.parse!()
-    func = Enum.at(job_data, 1) |> String.to_atom()
-    args = [Enum.at(job_data, 2), Enum.at(job_data, 3)]
-    task = {JobexCore.Job, func, args}
-    new_job()
-    |> Quantum.Job.set_schedule(schedule)
-    |> Quantum.Job.set_task(task)
-    |> add_job()
+    case Enum.at(job_data, 0) |> Crontab.CronExpression.Parser.parse() do
+      {:ok, schedule} ->
+        func = Enum.at(job_data, 1) |> String.to_atom()
+        args = [Enum.at(job_data, 2), Enum.at(job_data, 3)]
+        task = {JobexCore.Job, func, args}
+        new_job()
+        |> Quantum.Job.set_schedule(schedule)
+        |> Quantum.Job.set_task(task)
+        |> add_job()
+
+      {:error, reason} ->
+        IO.puts("Skipping invalid job row: #{inspect(job_data)} (#{inspect(reason)})")
+    end
   end
 end

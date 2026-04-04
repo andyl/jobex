@@ -10,7 +10,7 @@
     <tr>
       <td><b>Type</b>: {@job.args["type"]}</td>
       <td><b>State</b>: {@job.state}</td>
-      <td><b>Secs</b>: {JobexWeb.Live.Home.Body.esecs(@job)}</td>
+      <td><b>Secs</b>: {if @job.completed_at, do: JobexWeb.Live.Home.Body.esecs(@job), else: "NA"}</td>
     </tr>
   </table>
 

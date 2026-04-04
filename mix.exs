@@ -81,6 +81,7 @@ defmodule Jobex.MixProject do
       {:ziprel, path: "~/src/Tool/ziprel"},
       {:git_ops, "~> 2.0", only: [:dev], runtime: false},
       # ----- development and test
+      {:lazy_html, ">= 0.1.0", only: :test},
       {:esbuild, "~> 0.10.0", runtime: Mix.env() == :dev},
       {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
       {:ex_projections, github: "andyl/ex_projections", only: :dev, runtime: false},

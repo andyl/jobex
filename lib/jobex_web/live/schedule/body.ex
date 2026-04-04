@@ -258,7 +258,7 @@ defmodule JobexWeb.Live.Schedule.Body do
      )}
   end
 
-  defp validate_cron_expr(""), do: nil
+  defp validate_cron_expr(""), do: "Schedule is required"
 
   defp validate_cron_expr(expr) do
     case Crontab.CronExpression.Parser.parse(expr) do
