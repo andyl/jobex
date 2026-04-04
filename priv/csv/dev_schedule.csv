@@ -1,5 +1,5 @@
 SCHEDULE,    QUEUE,    TYPE,       COMMAND
-* * * * * *,parallel,sleep3,sleep 3; date
+* * * * *,   parallel, test,       notacommand
 * * * * *,   parallel, test,       cat /etc/passwd
 * * * * *,   parallel, test,       cat notafile
 * * * * *,   serial,   sync,       cron_jobs sync_who
@@ -12,6 +12,4 @@ SCHEDULE,    QUEUE,    TYPE,       COMMAND
 */2 * * * *, serial,   who,        whoami
 */3 * * * *, serial,   host,       hostname
 */4 * * * *, serial,   uptime,     uptime
-* * * * *,serial,sleep3,sleep 3; date
-* * * * *,serial,testjob,echo hello
-* * * * * *,serial,sleep3,sleep 3 ; date
+* * * * *,parallel,sleep3,sleep 3; date

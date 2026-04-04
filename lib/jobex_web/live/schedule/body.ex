@@ -9,7 +9,8 @@ defmodule JobexWeb.Live.Schedule.Body do
 
     {:ok,
      assign(socket, %{
-       schedule: JobexCore.Scheduler.jobs(),
+       csv_rows: load_csv_rows(selected),
+       quantum_jobs: JobexCore.Scheduler.jobs(),
        selected: selected,
        editing: nil,
        creating: false,
@@ -29,7 +30,7 @@ defmodule JobexWeb.Live.Schedule.Body do
         <% end %>
       </h3>
       <div class="text-sm flex gap-2 items-center">
-        <%= if @schedule == [] do %>
+        <%= if display_rows(@csv_rows, @quantum_jobs, @selected) == [] do %>
           <a href="#" phx-click="devload">Load Dev Schedule</a>
           |
           <a href="#" phx-click="prodload">Load Prod Schedule</a>
@@ -75,7 +76,7 @@ defmodule JobexWeb.Live.Schedule.Body do
       </div>
     <% end %>
 
-    <%= if @schedule != [] do %>
+    <%= if display_rows(@csv_rows, @quantum_jobs, @selected) != [] do %>
       <table class="table table-sm">
         <thead>
           <tr>
@@ -89,56 +90,65 @@ defmodule JobexWeb.Live.Schedule.Body do
           </tr>
         </thead>
         <tbody>
-          <%= for {{_, job}, idx} <- Enum.with_index(@schedule) do %>
-            <%= if @editing == idx do %>
-              <tr>
-                <td colspan={if @selected, do: 5, else: 4}>
-                  <form phx-submit="save_edit" phx-change="validate_cron_edit" id={"edit-form-#{idx}"}>
-                    <input type="hidden" name="index" value={idx} />
-                    <div class="flex gap-2 items-center flex-wrap">
-                      <input
-                        type="text"
-                        name="schedule"
-                        value={Crontab.CronExpression.Composer.compose(job.schedule)}
-                        class="input input-xs input-bordered w-28"
-                      />
-                      <select name="queue" class="select select-xs select-bordered">
-                        <option value="serial" selected={elem(job.task, 1) == :serial}>serial</option>
-                        <option value="parallel" selected={elem(job.task, 1) == :parallel}>parallel</option>
-                      </select>
-                      <input
-                        type="text"
-                        name="type"
-                        value={elem(job.task, 2) |> List.first()}
-                        class="input input-xs input-bordered w-24"
-                      />
-                      <input
-                        type="text"
-                        name="command"
-                        value={elem(job.task, 2) |> List.last()}
-                        class="input input-xs input-bordered w-40"
-                      />
-                      <button type="submit" class="btn btn-xs btn-success">Save</button>
-                      <button type="button" phx-click="cancel_edit" class="btn btn-xs">Cancel</button>
-                      <%= if @edit_error do %>
-                        <span class="text-error text-xs"><%= @edit_error %></span>
-                      <% end %>
-                    </div>
-                  </form>
-                </td>
-              </tr>
-            <% else %>
+          <%= if @selected do %>
+            <%= for {row, idx} <- Enum.with_index(@csv_rows) do %>
+              <%= if @editing == idx do %>
+                <tr>
+                  <td colspan="5">
+                    <form phx-submit="save_edit" phx-change="validate_cron_edit" id={"edit-form-#{idx}"}>
+                      <input type="hidden" name="index" value={idx} />
+                      <div class="flex gap-2 items-center flex-wrap">
+                        <input
+                          type="text"
+                          name="schedule"
+                          value={Enum.at(row, 0)}
+                          class="input input-xs input-bordered w-28"
+                        />
+                        <select name="queue" class="select select-xs select-bordered">
+                          <option value="serial" selected={Enum.at(row, 1) == "serial"}>serial</option>
+                          <option value="parallel" selected={Enum.at(row, 1) == "parallel"}>parallel</option>
+                        </select>
+                        <input
+                          type="text"
+                          name="type"
+                          value={Enum.at(row, 2)}
+                          class="input input-xs input-bordered w-24"
+                        />
+                        <input
+                          type="text"
+                          name="command"
+                          value={Enum.at(row, 3)}
+                          class="input input-xs input-bordered w-40"
+                        />
+                        <button type="submit" class="btn btn-xs btn-success">Save</button>
+                        <button type="button" phx-click="cancel_edit" class="btn btn-xs">Cancel</button>
+                        <%= if @edit_error do %>
+                          <span class="text-error text-xs"><%= @edit_error %></span>
+                        <% end %>
+                      </div>
+                    </form>
+                  </td>
+                </tr>
+              <% else %>
+                <tr>
+                  <td><code><%= Enum.at(row, 0) %></code></td>
+                  <td>{Enum.at(row, 1)}</td>
+                  <td>{Enum.at(row, 2)}</td>
+                  <td>{Enum.at(row, 3)}</td>
+                  <td class="flex gap-1">
+                    <button phx-click="edit_job" phx-value-index={idx} class="btn btn-xs btn-ghost">Edit</button>
+                    <button phx-click="delete_job" phx-value-index={idx} class="btn btn-xs btn-error btn-outline">Delete</button>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% else %>
+            <%= for {_, job} <- @quantum_jobs do %>
               <tr>
                 <td><code><%= Crontab.CronExpression.Composer.compose(job.schedule) %></code></td>
                 <td>{elem(job.task, 1)}</td>
                 <td>{elem(job.task, 2) |> List.first()}</td>
                 <td>{elem(job.task, 2) |> List.last()}</td>
-                <%= if @selected do %>
-                  <td class="flex gap-1">
-                    <button phx-click="edit_job" phx-value-index={idx} class="btn btn-xs btn-ghost">Edit</button>
-                    <button phx-click="delete_job" phx-value-index={idx} class="btn btn-xs btn-error btn-outline">Delete</button>
-                  </td>
-                <% end %>
               </tr>
             <% end %>
           <% end %>
@@ -148,22 +158,45 @@ defmodule JobexWeb.Live.Schedule.Body do
     """
   end
 
+  defp display_rows(csv_rows, quantum_jobs, selected) do
+    if selected, do: csv_rows, else: quantum_jobs
+  end
+
+  defp load_csv_rows(nil), do: []
+
+  defp load_csv_rows(filename) do
+    case CsvManager.read_file(filename) do
+      {:ok, rows} -> rows
+      _ -> []
+    end
+  end
+
   @impl true
   def handle_event("jobstop", _, socket) do
     JobexCore.Scheduler.delete_all_jobs()
-    {:noreply, assign(socket, %{schedule: []})}
+    {:noreply, assign(socket, quantum_jobs: [], csv_rows: load_csv_rows(socket.assigns.selected))}
   end
 
   @impl true
   def handle_event("devload", _, socket) do
     JobexCore.Scheduler.load_dev_jobs()
-    {:noreply, assign(socket, %{schedule: JobexCore.Scheduler.jobs()})}
+
+    {:noreply,
+     assign(socket,
+       quantum_jobs: JobexCore.Scheduler.jobs(),
+       csv_rows: load_csv_rows(socket.assigns.selected)
+     )}
   end
 
   @impl true
   def handle_event("prodload", _, socket) do
     JobexCore.Scheduler.load_prod_jobs()
-    {:noreply, assign(socket, %{schedule: JobexCore.Scheduler.jobs()})}
+
+    {:noreply,
+     assign(socket,
+       quantum_jobs: JobexCore.Scheduler.jobs(),
+       csv_rows: load_csv_rows(socket.assigns.selected)
+     )}
   end
 
   # Phase 2: Job CRUD
@@ -196,7 +229,8 @@ defmodule JobexWeb.Live.Schedule.Body do
 
         {:noreply,
          assign(socket,
-           schedule: JobexCore.Scheduler.jobs(),
+           csv_rows: load_csv_rows(socket.assigns.selected),
+           quantum_jobs: JobexCore.Scheduler.jobs(),
            creating: false,
            create_error: nil
          )}
@@ -235,7 +269,8 @@ defmodule JobexWeb.Live.Schedule.Body do
 
         {:noreply,
          assign(socket,
-           schedule: JobexCore.Scheduler.jobs(),
+           csv_rows: load_csv_rows(socket.assigns.selected),
+           quantum_jobs: JobexCore.Scheduler.jobs(),
            editing: nil,
            edit_error: nil
          )}
@@ -253,7 +288,8 @@ defmodule JobexWeb.Live.Schedule.Body do
 
     {:noreply,
      assign(socket,
-       schedule: JobexCore.Scheduler.jobs(),
+       csv_rows: load_csv_rows(socket.assigns.selected),
+       quantum_jobs: JobexCore.Scheduler.jobs(),
        editing: nil
      )}
   end
