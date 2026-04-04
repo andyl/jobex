@@ -15,7 +15,9 @@ defmodule JobexWeb.Live.Schedule.Body do
        editing: nil,
        creating: false,
        edit_error: nil,
-       create_error: nil
+       create_error: nil,
+       sort_by: nil,
+       sort_dir: :asc
      })}
   end
 
@@ -80,10 +82,18 @@ defmodule JobexWeb.Live.Schedule.Body do
       <table class="table table-sm">
         <thead>
           <tr>
-            <th>Job Schedule</th>
-            <th>Queue</th>
-            <th>Type</th>
-            <th>Command</th>
+            <th class="cursor-pointer select-none" phx-click="sort" phx-value-field="schedule">
+              Job Schedule <%= sort_indicator(@sort_by, :schedule, @sort_dir) %>
+            </th>
+            <th class="cursor-pointer select-none" phx-click="sort" phx-value-field="queue">
+              Queue <%= sort_indicator(@sort_by, :queue, @sort_dir) %>
+            </th>
+            <th class="cursor-pointer select-none" phx-click="sort" phx-value-field="type">
+              Type <%= sort_indicator(@sort_by, :type, @sort_dir) %>
+            </th>
+            <th class="cursor-pointer select-none" phx-click="sort" phx-value-field="command">
+              Command <%= sort_indicator(@sort_by, :command, @sort_dir) %>
+            </th>
             <%= if @selected do %>
               <th>Actions</th>
             <% end %>
@@ -91,7 +101,7 @@ defmodule JobexWeb.Live.Schedule.Body do
         </thead>
         <tbody>
           <%= if @selected do %>
-            <%= for {row, idx} <- Enum.with_index(@csv_rows) do %>
+            <%= for {row, idx} <- sorted_csv_rows(@csv_rows, @sort_by, @sort_dir) do %>
               <%= if @editing == idx do %>
                 <tr>
                   <td colspan="5">
@@ -143,7 +153,7 @@ defmodule JobexWeb.Live.Schedule.Body do
               <% end %>
             <% end %>
           <% else %>
-            <%= for {_, job} <- @quantum_jobs do %>
+            <%= for {_, job} <- sorted_quantum_jobs(@quantum_jobs, @sort_by, @sort_dir) do %>
               <tr>
                 <td><code><%= Crontab.CronExpression.Composer.compose(job.schedule) %></code></td>
                 <td>{elem(job.task, 1)}</td>
@@ -156,6 +166,38 @@ defmodule JobexWeb.Live.Schedule.Body do
       </table>
     <% end %>
     """
+  end
+
+  @field_index %{schedule: 0, queue: 1, type: 2, command: 3}
+
+  defp sort_indicator(sort_by, field, dir) when sort_by == field do
+    if dir == :asc, do: "▲", else: "▼"
+  end
+
+  defp sort_indicator(_, _, _), do: ""
+
+  defp sorted_csv_rows(rows, nil, _dir), do: Enum.with_index(rows)
+
+  defp sorted_csv_rows(rows, field, dir) do
+    col = @field_index[field]
+
+    rows
+    |> Enum.with_index()
+    |> Enum.sort_by(fn {row, _idx} -> Enum.at(row, col) |> String.downcase() end, dir)
+  end
+
+  defp sorted_quantum_jobs(jobs, nil, _dir), do: jobs
+
+  defp sorted_quantum_jobs(jobs, field, dir) do
+    Enum.sort_by(jobs, fn {_, job} ->
+      case field do
+        :schedule -> Crontab.CronExpression.Composer.compose(job.schedule)
+        :queue -> Atom.to_string(elem(job.task, 1))
+        :type -> elem(job.task, 2) |> List.first() |> to_string()
+        :command -> elem(job.task, 2) |> List.last() |> to_string()
+      end
+      |> String.downcase()
+    end, dir)
   end
 
   defp display_rows(csv_rows, quantum_jobs, selected) do
@@ -197,6 +239,26 @@ defmodule JobexWeb.Live.Schedule.Body do
        quantum_jobs: JobexCore.Scheduler.jobs(),
        csv_rows: load_csv_rows(socket.assigns.selected)
      )}
+  end
+
+  @valid_sort_fields ~w(schedule queue type command)a
+
+  @impl true
+  def handle_event("sort", %{"field" => field_str}, socket) do
+    field = String.to_existing_atom(field_str)
+
+    if field in @valid_sort_fields do
+      {sort_by, sort_dir} =
+        if socket.assigns.sort_by == field do
+          if socket.assigns.sort_dir == :asc, do: {field, :desc}, else: {nil, :asc}
+        else
+          {field, :asc}
+        end
+
+      {:noreply, assign(socket, sort_by: sort_by, sort_dir: sort_dir)}
+    else
+      {:noreply, socket}
+    end
   end
 
   # Phase 2: Job CRUD

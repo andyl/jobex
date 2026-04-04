@@ -1,2 +1,152 @@
-<h3>Help</h3>
-<p>Jobex help page</p>
+<h3 class="text-xl font-bold mb-4">Help</h3>
+
+<div class="max-w-none space-y-6">
+
+  <div>
+    <h4 class="text-lg font-semibold mb-2">Overview</h4>
+    <p>
+      Jobex is a cron-like job scheduler with a web dashboard. It reads job definitions from CSV files,
+      executes them on cron schedules, captures stdout/stderr/status, and displays results in real time.
+    </p>
+  </div>
+
+  <div>
+    <h4 class="text-lg font-semibold mb-2">CSV Job Definitions</h4>
+    <p class="mb-2">
+      Jobs are defined in CSV files with four columns:
+    </p>
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Description</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>SCHEDULE</strong></td><td>Cron expression defining when the job runs</td><td><code>*/5 * * * *</code></td></tr>
+        <tr><td><strong>QUEUE</strong></td><td>Execution queue &mdash; <code>serial</code> or <code>parallel</code></td><td><code>serial</code></td></tr>
+        <tr><td><strong>TYPE</strong></td><td>A user-defined label to identify the job</td><td><code>sync</code></td></tr>
+        <tr><td><strong>COMMAND</strong></td><td>Shell command to execute</td><td><code>whoami</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <h4 class="text-lg font-semibold mb-2">Job Types</h4>
+    <p>
+      The <strong>Type</strong> field is a free-form label you assign to each job. It has no effect on
+      how the job is executed &mdash; it exists purely for identification and filtering. You can use it to
+      group related jobs (e.g. <code>sync</code>, <code>backup</code>, <code>health-check</code>) and
+      filter by type on the Jobs page.
+    </p>
+  </div>
+
+  <div>
+    <h4 class="text-lg font-semibold mb-2">Serial vs Parallel Execution</h4>
+    <p class="mb-2">
+      The <strong>Queue</strong> field controls how jobs are executed concurrently:
+    </p>
+    <table class="table table-sm mb-2">
+      <thead>
+        <tr>
+          <th>Queue</th>
+          <th>Concurrency</th>
+          <th>Behavior</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>serial</code></td>
+          <td>1 per type</td>
+          <td>
+            Each type gets its own dedicated queue (<code>serial_sync</code>,
+            <code>serial_backup</code>, etc.) with a concurrency limit of 1. If a serial
+            <code>sync</code> job is already running, newly triggered serial <code>sync</code> jobs
+            wait in line. However, a serial <code>backup</code> job can run at the same time because
+            it uses a separate queue. Use this for jobs that must not overlap within their type.
+          </td>
+        </tr>
+        <tr>
+          <td><code>parallel</code></td>
+          <td>Up to 10 total</td>
+          <td>
+            All parallel jobs &mdash; regardless of type &mdash; share a single
+            <code>parallel</code> queue with up to 10 concurrent slots. Use this for independent
+            tasks where overlap is safe &mdash; for example, health checks, read-only reports, or
+            commands that operate on isolated resources.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Serial and parallel queues are fully independent. A running serial job does not consume a
+      parallel slot, and vice versa. For example, if you have serial types <code>sync</code>,
+      <code>backup</code>, and <code>health-check</code>, each type can have one job running at
+      any given time &mdash; up to three serial jobs running concurrently (one per type) &mdash;
+      while up to 10 parallel jobs can run alongside them.
+    </p>
+  </div>
+
+  <div>
+    <h4 class="text-lg font-semibold mb-2">Execution Flow</h4>
+    <ol class="list-decimal list-inside space-y-1">
+      <li>The <strong>Scheduler</strong> reads the active CSV file and creates a cron trigger for each row.</li>
+      <li>When a cron schedule fires, the job is <strong>enqueued</strong> into its designated Oban queue (<code>serial</code> or <code>parallel</code>).</li>
+      <li>Oban dispatches the job to a <strong>worker</strong> when a slot is available in that queue.</li>
+      <li>The worker executes the shell command and captures stdout, stderr, and the exit status.</li>
+      <li>Results are saved to the database and broadcast to the dashboard in real time.</li>
+    </ol>
+  </div>
+
+  <div>
+    <h4 class="text-lg font-semibold mb-2">Retries</h4>
+    <p>
+      Failed jobs (non-zero exit status) are automatically retried up to <strong>3 attempts</strong>.
+      The Jobs page shows the current attempt number and any error output from previous attempts.
+    </p>
+  </div>
+
+  <div>
+    <h4 class="text-lg font-semibold mb-2">Cron Schedule Syntax</h4>
+    <table class="table table-sm mb-2">
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Allowed Values</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Minute</td><td>0&ndash;59</td></tr>
+        <tr><td>Hour</td><td>0&ndash;23</td></tr>
+        <tr><td>Day of Month</td><td>1&ndash;31</td></tr>
+        <tr><td>Month</td><td>1&ndash;12</td></tr>
+        <tr><td>Day of Week</td><td>0&ndash;7 (0 and 7 are Sunday)</td></tr>
+      </tbody>
+    </table>
+    <p>
+      Special characters: <code>*</code> (every), <code>*/N</code> (every N),
+      <code>N-M</code> (range), <code>N,M</code> (list).
+      Timezone: <strong>America/Los_Angeles</strong>.
+    </p>
+  </div>
+
+  <div>
+    <h4 class="text-lg font-semibold mb-2">Pages</h4>
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>Page</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Jobs</strong></td><td>Live dashboard of job executions with filtering by state, queue, type, command, and alert type. Supports keyboard navigation.</td></tr>
+        <tr><td><strong>Schedule</strong></td><td>View and edit job definitions from the active CSV file. Add, edit, or delete jobs with real-time cron validation. Columns are sortable.</td></tr>
+        <tr><td><strong>Admin</strong></td><td>Manage CSV files and control the scheduler.</td></tr>
+        <tr><td><strong>Logs</strong></td><td>View application logs.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

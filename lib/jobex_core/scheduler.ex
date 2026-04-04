@@ -51,8 +51,20 @@ defmodule JobexCore.Scheduler do
   end
 
   defp load_all(joblst) do
+    ensure_serial_queues(joblst)
     joblst
     |> Enum.each(&load_one(&1))
+  end
+
+  defp ensure_serial_queues(joblst) do
+    joblst
+    |> Enum.filter(fn row -> Enum.at(row, 1) == "serial" end)
+    |> Enum.map(fn row -> Enum.at(row, 2) end)
+    |> Enum.uniq()
+    |> Enum.each(fn type ->
+      queue_name = JobexCore.Job.serial_queue_name(type)
+      Oban.start_queue(queue: String.to_atom(queue_name), limit: 1)
+    end)
   end
 
   defp load_one(job_data) do

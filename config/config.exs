@@ -43,7 +43,7 @@ config :tailwind,
 
 config :jobex, Oban,
   repo: JobexCore.Repo,
-  queues: [default: 10, parallel: 10, serial: 1]
+  queues: [default: 10, parallel: 10]
 
 config :jobex, JobexCore.Scheduler,
   timezone: "America/Los_Angeles",

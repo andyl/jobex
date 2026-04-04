@@ -62,6 +62,22 @@ defmodule JobexCore.Query do
     )
     |> Repo.all()
     |> merge_list()
+    |> normalize_serial_queues()
+  end
+
+  defp normalize_serial_queues(queue_map) do
+    {serial_entries, other_entries} =
+      Enum.split_with(queue_map, fn {k, _v} -> String.starts_with?(k, "serial_") end)
+
+    serial_total = serial_entries |> Enum.map(fn {_k, v} -> v end) |> Enum.sum()
+    other_map = Map.new(other_entries)
+
+    if serial_total > 0 do
+      existing = Map.get(other_map, "serial", 0)
+      Map.put(other_map, "serial", existing + serial_total)
+    else
+      other_map
+    end
   end
 
   def type_count do
@@ -158,7 +174,11 @@ defmodule JobexCore.Query do
   end
 
   defp jdata_queue(uistate) do
-    from(j in jdata_all(uistate), where: j.queue == ^uistate.value)
+    if uistate.value == "serial" do
+      from(j in jdata_all(uistate), where: like(j.queue, "serial_%"))
+    else
+      from(j in jdata_all(uistate), where: j.queue == ^uistate.value)
+    end
   end
 
   defp jdata_type(uistate) do

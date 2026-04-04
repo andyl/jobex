@@ -38,7 +38,7 @@ defmodule JobexWeb.Live.Home.Body do
                 <.cell_link uistate={@uistate} field="state" value={job.state} />
               </td>
               <td>
-                <.cell_link uistate={@uistate} field="queue" value={job.queue} />
+                <.cell_link uistate={@uistate} field="queue" value={display_queue(job.queue)} />
               </td>
               <td>
                 <.cell_link uistate={@uistate} field="type" value={job.args["type"]} />
@@ -142,6 +142,10 @@ defmodule JobexWeb.Live.Home.Body do
       </a>
     <% end %>
     """
+  end
+
+  defp display_queue(queue) do
+    if String.starts_with?(queue, "serial_"), do: "serial", else: queue
   end
 
   # ----- page_hdr helper -----
