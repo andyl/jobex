@@ -17,10 +17,10 @@ import Config
 # Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
 # script that automatically sets the env var above.
 if System.get_env("PHX_SERVER") do
-  config :jobex, jobexWeb.Endpoint, server: true
+  config :jobex, JobexWeb.Endpoint, server: true
 end
 
-config :jobex, jobexWeb.Endpoint,
+config :jobex, JobexWeb.Endpoint,
   http: [port: String.to_integer(System.get_env("PORT", "6666"))]
 
 if config_env() == :prod do
