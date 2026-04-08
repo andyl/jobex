@@ -4,7 +4,7 @@ defmodule JobexWeb do
   as controllers, views, channels and so on.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+  def static_paths, do: ~w(assets fonts images favicon.ico favicon.svg robots.txt)
 
   def router do
     quote do
