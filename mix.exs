@@ -78,7 +78,7 @@ defmodule Jobex.MixProject do
       # ----- ops
       {:commit_hook, "~> 0.4"},
       {:igniter, "~> 0.6"},
-      {:ziprel, path: "~/src/Tool/ziprel"},
+      {:relman, path: "~/src/Tool/relman"},
       {:git_ops, "~> 2.0", only: [:dev], runtime: false},
       # ----- development and test
       {:lazy_html, ">= 0.1.0", only: :test},

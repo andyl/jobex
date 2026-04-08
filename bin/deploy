@@ -2,7 +2,7 @@
 
 mix git_ops.release --yes 
 git push --follow-tags 
-MIX_ENV=prod mix ziprel.deploy 
+MIX_ENV=prod mix relman.deploy 
 git add . 
 git commit -am'chore: update assets'
 
