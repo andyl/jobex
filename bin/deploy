@@ -1,8 +1,9 @@
 #!/usr/bin/env bash 
 
-mix git_ops.release --yes 
-git push --follow-tags 
-MIX_ENV=prod mix relman.deploy 
-git add . 
-git commit -am'chore: update assets'
+mix git_ops.release --yes                  && \ 
+git push --follow-tags                     && \ 
+MIX_ENV=prod mix release --overwrite       && \ 
+MIX_ENV=prod mix sysd.deploy               && \ 
+git add .                                  && \ 
+git commit -am'chore: update assets'       
 
