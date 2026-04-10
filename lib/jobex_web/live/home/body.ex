@@ -160,8 +160,8 @@ defmodule JobexWeb.Live.Home.Body do
 
   defp schedule_next_tick do
     now = System.system_time(:millisecond)
-    ms_into_interval = rem(now, 5000)
-    delay = 5000 - ms_into_interval
+    ms_into_interval = rem(now, 2000)
+    delay = 2000 - ms_into_interval
     Process.send_after(self(), :time_tick, delay)
   end
 
