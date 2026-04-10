@@ -1,7 +1,7 @@
 defmodule Jobex.MixProject do
   use Mix.Project
 
-  @version "0.0.12"
+  @version "0.0.13"
 
   def project do
     [
