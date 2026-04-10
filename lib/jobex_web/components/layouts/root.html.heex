@@ -37,8 +37,9 @@
       <.flash_messages flash={@flash} />
       {@inner_content}
       <div class="mt-4 pt-4 border-t border-base-300">
-        <div class="flex justify-between text-sm text-base-content/60">
+        <div class="flex justify-between items-baseline text-sm text-base-content/60">
           <span>Cron Workflow</span>
+          <span class="text-xs text-base-content/30">v0.0.13</span>
           <span>
             Environment: <%= Application.get_env(:jobex, :env) |> inspect() |> String.replace(":", "") |> String.capitalize() %>
           </span>
