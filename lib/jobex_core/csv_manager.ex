@@ -14,6 +14,17 @@ defmodule JobexCore.CsvManager do
       Path.join(JobexCore.Scheduler.priv_dir(), "csv")
   end
 
+  def state_dir do
+    dir =
+      case System.get_env("JOBEX_CSV_DIR") do
+        nil -> Path.join("/tmp", "jobex")
+        dir -> dir
+      end
+
+    File.mkdir_p(dir)
+    dir
+  end
+
   def list_files do
     dir = csv_dir()
 
@@ -81,8 +92,8 @@ defmodule JobexCore.CsvManager do
       with :ok <- check_not_exists(new_path) do
         case File.rename(old_path, new_path) do
           :ok ->
-            case YamlStore.read(csv_dir()) do
-              {:ok, ^old_name} -> YamlStore.write(csv_dir(), new_full)
+            case YamlStore.read(state_dir()) do
+              {:ok, ^old_name} -> YamlStore.write(state_dir(), new_full)
               _ -> :ok
             end
 
@@ -98,8 +109,8 @@ defmodule JobexCore.CsvManager do
 
     case File.rm(path) do
       :ok ->
-        case YamlStore.read(csv_dir()) do
-          {:ok, ^filename} -> YamlStore.write(csv_dir(), nil)
+        case YamlStore.read(state_dir()) do
+          {:ok, ^filename} -> YamlStore.write(state_dir(), nil)
           _ -> :ok
         end
 
@@ -114,7 +125,7 @@ defmodule JobexCore.CsvManager do
   end
 
   def selected_file do
-    case YamlStore.read(csv_dir()) do
+    case YamlStore.read(state_dir()) do
       {:ok, nil} ->
         nil
 
@@ -127,13 +138,13 @@ defmodule JobexCore.CsvManager do
     end
   end
 
-  def select_file(nil), do: YamlStore.write(csv_dir(), nil)
+  def select_file(nil), do: YamlStore.write(state_dir(), nil)
 
   def select_file(filename) do
     path = Path.join(csv_dir(), filename)
 
     if File.exists?(path) do
-      YamlStore.write(csv_dir(), filename)
+      YamlStore.write(state_dir(), filename)
     else
       {:error, :enoent}
     end

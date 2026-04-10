@@ -33,9 +33,10 @@ defmodule JobexWeb.Live.Schedule.Body do
       </h3>
       <div class="text-sm flex gap-2 items-center">
         <%= if display_rows(@csv_rows, @quantum_jobs, @selected) == [] do %>
-          <a href="#" phx-click="devload">Load Dev Schedule</a>
-          |
-          <a href="#" phx-click="prodload">Load Prod Schedule</a>
+          <%= for {f, i} <- Enum.with_index(CsvManager.list_files()) do %>
+            <%= if i > 0 do %> | <% end %>
+            <a href="#" phx-click="load_schedule" phx-value-file={f.name}>Load <%= f.name %></a>
+          <% end %>
         <% else %>
           <a href="#" phx-click="jobstop">Clear Schedule</a>
         <% end %>
@@ -220,24 +221,15 @@ defmodule JobexWeb.Live.Schedule.Body do
   end
 
   @impl true
-  def handle_event("devload", _, socket) do
-    JobexCore.Scheduler.load_dev_jobs()
+  def handle_event("load_schedule", %{"file" => filename}, socket) do
+    JobexCore.Scheduler.load_file(filename)
+    CsvManager.select_file(filename)
 
     {:noreply,
      assign(socket,
+       selected: filename,
        quantum_jobs: JobexCore.Scheduler.jobs(),
-       csv_rows: load_csv_rows(socket.assigns.selected)
-     )}
-  end
-
-  @impl true
-  def handle_event("prodload", _, socket) do
-    JobexCore.Scheduler.load_prod_jobs()
-
-    {:noreply,
-     assign(socket,
-       quantum_jobs: JobexCore.Scheduler.jobs(),
-       csv_rows: load_csv_rows(socket.assigns.selected)
+       csv_rows: load_csv_rows(filename)
      )}
   end
 
