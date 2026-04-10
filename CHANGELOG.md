@@ -5,6 +5,17 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## v0.0.11 (2026-04-10)
+
+
+
+
+### Bug Fixes:
+
+* change from relman to sysd by andyl
+
+* rename ziprel -> relman by andyl
+
 ## v0.0.10 (2026-04-09)
 
 
