@@ -5,6 +5,17 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## v0.0.12 (2026-04-10)
+
+
+
+
+### Bug Fixes:
+
+* update script by andyl
+
+* persist schedule selection to writable dir in prod by andyl
+
 ## v0.0.11 (2026-04-10)
 
 
