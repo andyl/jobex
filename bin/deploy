@@ -2,6 +2,7 @@
 
 mix git_ops.release --yes                  && \ 
 git push --follow-tags                     && \ 
+mix assets.deploy                          && \
 MIX_ENV=prod mix release --overwrite       && \ 
 MIX_ENV=prod mix sysd.deploy               && \ 
 git add .                                  && \ 
