@@ -1,4 +1,9 @@
 servers:
-  - camp
+  - host: camp
+    instances: 
+      - instance_name: jobex
+        environment_variables:
+          JOBEX_CSV_DIR: ~/util/org/notes/Codework/App/Jobex/schedules 
 ssh:
   user: aleak
+
