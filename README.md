@@ -33,10 +33,16 @@ release managed by SystemD, rather than a Docker container.
 
 ## Job schedules
 
-Job schedules are stored in csv files:
+Job schedules are stored in csv files under `priv/csv/` by default:
 
 - priv/csv/dev_schedule.csv
 - priv/csv/prod_schedule.csv
+
+To use a different directory, set the `JOBEX_CSV_DIR` environment variable:
+
+```bash
+export JOBEX_CSV_DIR=/path/to/your/csv/files
+```
 
 CSV files can be edited to run your own commands.  The CSV columns include:
 
