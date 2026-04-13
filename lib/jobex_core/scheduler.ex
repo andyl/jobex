@@ -1,6 +1,8 @@
 defmodule JobexCore.Scheduler do
   use Quantum, otp_app: :jobex
 
+  require Logger
+
   alias NimbleCSV.RFC4180, as: CSV
 
   def priv_dir do
@@ -13,9 +15,6 @@ defmodule JobexCore.Scheduler do
   end
 
   def load_csv(path) do
-    IO.puts "*****"
-    IO.puts "LOADING CSV #{path}"
-    IO.puts "*****"
     priv_dir()
     |> Path.join(path)
     |> File.read!()
@@ -26,10 +25,6 @@ defmodule JobexCore.Scheduler do
 
   def load_file(filename) do
     path = Path.join(JobexCore.CsvManager.csv_dir(), filename)
-
-    IO.puts "*****"
-    IO.puts "LOADING CSV #{path}"
-    IO.puts "*****"
 
     rows =
       path
@@ -79,7 +74,7 @@ defmodule JobexCore.Scheduler do
         |> add_job()
 
       {:error, reason} ->
-        IO.puts("Skipping invalid job row: #{inspect(job_data)} (#{inspect(reason)})")
+        Logger.warning("Skipping invalid job row: #{inspect(job_data)} (#{inspect(reason)})")
     end
   end
 end
