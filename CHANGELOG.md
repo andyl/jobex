@@ -5,6 +5,19 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## v0.1.2 (2026-04-13)
+
+
+
+
+### Bug Fixes:
+
+* use writable CSV dir by andyl
+
+* remove debug messages by andyl
+
+* expand tilde paths by andyl
+
 ## v0.1.1 (2026-04-10)
 
 
