@@ -10,15 +10,17 @@ defmodule JobexCore.CsvManager do
   @csv_header "SCHEDULE,QUEUE,TYPE,COMMAND"
 
   def csv_dir do
-    System.get_env("JOBEX_CSV_DIR") ||
-      Path.join(JobexCore.Scheduler.priv_dir(), "csv")
+    case System.get_env("JOBEX_CSV_DIR") do
+      nil -> Path.join(JobexCore.Scheduler.priv_dir(), "csv")
+      dir -> Path.expand(dir)
+    end
   end
 
   def state_dir do
     dir =
       case System.get_env("JOBEX_CSV_DIR") do
         nil -> Path.join("/tmp", "jobex")
-        dir -> dir
+        dir -> Path.expand(dir)
       end
 
     File.mkdir_p(dir)
